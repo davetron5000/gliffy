@@ -1,0 +1,3 @@
+xsddoc - http://www.gliffy.com/developer/apidocs/xsddoc/
+
+apidocs - http://www.gliffy.com/developer/apidocs/

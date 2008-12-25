@@ -34,20 +34,30 @@ module Gliffy
     end
   end
 
-  class GliffyAccounts
-    def initialize(element)
-      @accounts = Array.new
-      element.each_element do |element|
-        @accounts << GliffyAccount.new(element)
-      end
+  module ContainerArray
+    def each
+      @list.each { |list| yield account }
     end
 
     def [](index)
-      @accounts[index]
+      @list[index]
     end
 
     def length
-      @accounts.length
+      @list.length
+    end
+  end
+
+  class GliffyAccounts
+
+    include Enumerable
+    include ContainerArray
+
+    def initialize(element)
+      @list = Array.new
+      element.each_element do |element|
+        @list << GliffyAccount.new(element)
+      end
     end
   end
 
@@ -82,19 +92,15 @@ module Gliffy
   end
 
   class GliffyDiagrams
+
+    include Enumerable
+    include ContainerArray
+
     def initialize(element)
-      @diagrams = Array.new
+      @list = Array.new
       element.each_element do |element|
-        @diagrams << GliffyDiagram.new(element)
+        @list << GliffyDiagram.new(element)
       end
-    end
-
-    def [](index)
-      @diagrams[index]
-    end
-
-    def length
-      @diagrams.length
     end
   end
 
@@ -152,19 +158,14 @@ module Gliffy
 
   class GliffyFolders
 
+    include Enumerable
+    include ContainerArray
+
     def initialize(element)
-      @folders = Array.new
+      @list = Array.new
       element.each_element do |element|
-        @folders << GliffyFolder.new(element)
+        @list << GliffyFolder.new(element)
       end
-    end
-
-    def [](index)
-      @folders[index]
-    end
-
-    def length
-      @folders.length
     end
   end
 
@@ -193,19 +194,14 @@ module Gliffy
 
   class GliffyUsers
 
+    include Enumerable
+    include ContainerArray
+
     def initialize(element)
-      @users = Array.new
+      @list = Array.new
       element.each_element do |element|
-        @users << GliffyUser.new(element)
+        @list << GliffyUser.new(element)
       end
-    end
-
-    def [](index)
-      @users[index]
-    end
-
-    def length
-      @users.length
     end
   end
 

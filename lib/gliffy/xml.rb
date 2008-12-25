@@ -19,8 +19,27 @@ module Gliffy
     def initialize(xml_root)
       @not_modified = xml_root.attributes['not-modified']
       @success = xml_root.attributes['success'] == "true"
-      clazz = Kernel.const_get("Gliffy" + xml_root.elements[1].name.capitalize)
+      clazz = Kernel.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
       @element = clazz.new(xml_root.elements[1]);
+    end
+
+    private
+
+    def to_classname(name)
+      classname = ""
+      name.split(/-/).each do |part|
+        classname += part.capitalize
+      end
+      classname
+    end
+  end
+
+  class GliffyUserToken
+    attr_reader :expiration
+    attr_reader :token
+    def initialize(element)
+      @expiration = Time.at(element.attributes['expiration'].to_i)
+      @token = element.text
     end
   end
 
@@ -40,7 +59,6 @@ module Gliffy
     def length
       @users.length
     end
-
   end
 
   class GliffyUser

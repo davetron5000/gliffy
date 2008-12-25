@@ -40,4 +40,25 @@ class TC_testXML < Test::Unit::TestCase
     assert_equal('blah.crud@something.info',users[2].email)
 
   end
+
+  def test_launch_link
+    xml = File.read("test/xml/launch_link.xml")
+    response = XML.parse(xml)
+    assert_equal(true,response.success)
+
+    assert_equal("Some Diagram Name & Stuff",response.element.diagram_name)
+    assert_equal("http://www.gliffy.com/rest/diagram_launch.jsp?id=56&foo=bar",response.element.url)
+
+  end
+
+  def test_user_token
+    xml = File.read("test/xml/user_token.xml")
+    response = XML.parse(xml)
+
+    assert_equal(true,response.success)
+    token = response.element
+
+    assert_equal(Time.at(1276432200),token.expiration)
+    assert_equal('qwertyuiipasdfghjkl',token.token)
+  end
 end

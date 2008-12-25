@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<response xmlns="http://www.gliffy.com" success="true">  
+  <launch-link diagram-name="Some Diagram Name &amp; Stuff">http://www.gliffy.com/rest/diagram_launch.jsp?id=56&amp;foo=bar</launch-link>
+</response>

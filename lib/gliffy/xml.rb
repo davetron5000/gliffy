@@ -34,6 +34,17 @@ module Gliffy
     end
   end
 
+  class GliffyLaunchLink
+
+    attr_reader :diagram_name
+    attr_reader :url
+
+    def initialize(element)
+      @diagram_name = element.attributes['diagram-name']
+      @url = element.text
+    end
+  end
+
   class GliffyUserToken
     attr_reader :expiration
     attr_reader :token

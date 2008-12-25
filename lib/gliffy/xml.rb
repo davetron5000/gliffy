@@ -34,6 +34,53 @@ module Gliffy
     end
   end
 
+  class GliffyAccounts
+    def initialize(element)
+      @accounts = Array.new
+      element.each_element do |element|
+        @accounts << GliffyAccount.new(element)
+      end
+    end
+
+    def [](index)
+      @accounts[index]
+    end
+
+    def length
+      @accounts.length
+    end
+  end
+
+  class GliffyAccount
+
+    attr_reader :name
+    attr_reader :id
+    attr_reader :type
+    attr_reader :max_users
+    attr_reader :expiration_date
+    attr_reader :users
+
+    def initialize(element)
+      @id = element.attributes['id'].to_i
+      type = element.attributes['account-type']
+      if type == 'Basic'
+        @type = :basic
+      elsif type == 'Premium'
+        @type = :premium
+      else
+        raise "Unknown type #{type}"
+      end
+      @max_users = element.attributes['max-users'].to_i
+      @expiration_date = Time.at(element.elements['expiration-date'].text.to_i)
+      @name = element.elements['name'].text
+      if element.elements['users']
+        @users = GliffyUsers.new(element.elements['users'])
+      else
+        @users = Array.new
+      end
+    end
+  end
+
   class GliffyDiagrams
     def initialize(element)
       @diagrams = Array.new

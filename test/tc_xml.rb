@@ -22,6 +22,11 @@ class TC_testXML < Test::Unit::TestCase
     assert_equal(true,response.success)
     users = response.element
 
+    assert_users(users)
+  end
+
+  def assert_users(users)
+
     assert_equal(3,users.length)
 
     assert_equal(45,users[0].id)
@@ -160,7 +165,34 @@ class TC_testXML < Test::Unit::TestCase
     assert_equal('fauxml',fauxml.name)
     assert_equal('ROOT/projects/fauxml',fauxml.path)
     assert_equal(0,fauxml.folders.length)
+  end
 
+  def test_accounts
+    xml = File.read("test/xml/accounts.xml")
+    response = XML.parse(xml)
+    assert_equal(true,response.success)
 
+    accounts = response.element
+
+    assert_equal(2,accounts.length)
+
+    account = accounts[0]
+
+    assert_equal(45,account.id)
+    assert_equal(100,account.max_users)
+    assert_equal(:basic,account.type)
+    assert_equal('Some Test Account',account.name)
+    assert_equal(Time.at(1276432200),account.expiration_date)
+    assert_equal(0,account.users.length)
+
+    account = accounts[1]
+    assert_equal(48,account.id)
+    assert_equal(5,account.max_users)
+    assert_equal(:premium,account.type)
+    assert_equal('Some Other Test Account',account.name)
+    assert_equal(Time.at(1276432200),account.expiration_date)
+    assert_equal(3,account.users.length)
+
+    assert_users(account.users)
   end
 end

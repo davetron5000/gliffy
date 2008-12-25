@@ -51,6 +51,51 @@ class TC_testXML < Test::Unit::TestCase
 
   end
 
+  def test_diagrams
+
+    xml = File.read("test/xml/diagrams.xml")
+    response = XML.parse(xml)
+    assert_equal(true,response.success)
+
+    diagrams = response.element
+
+    assert_equal(3,diagrams.length)
+
+    diagram = diagrams[0]
+    assert_equal(45,diagram.id)
+    assert_equal(4,diagram.num_versions)
+    assert_equal(true,diagram.is_public?)
+    assert_equal(false,diagram.is_private?)
+    assert_equal(Time.at(1191846600),diagram.create_date)
+    assert_equal(Time.at(1192192200),diagram.mod_date)
+    assert_equal('Some Diagram',diagram.name)
+    assert_equal('davec',diagram.owner_username)
+    assert_equal(Time.at(1192192200),diagram.published_date)
+
+    diagram = diagrams[1]
+    assert_equal(46,diagram.id)
+    assert_equal(5,diagram.num_versions)
+    assert_equal(false,diagram.is_public?)
+    assert_equal(true,diagram.is_private?)
+    assert_equal(Time.at(1181846600),diagram.create_date)
+    assert_equal(Time.at(1182192200),diagram.mod_date)
+    assert_equal('Some Other Diagram',diagram.name)
+    assert_equal('rudy',diagram.owner_username)
+    assert_equal(nil,diagram.published_date)
+
+    diagram = diagrams[2]
+    assert_equal(47,diagram.id)
+    assert_equal(6,diagram.num_versions)
+    assert_equal(false,diagram.is_public?)
+    assert_equal(false,diagram.is_private?)
+    assert_equal(Time.at(1181886600),diagram.create_date)
+    assert_equal(Time.at(1182892200),diagram.mod_date)
+    assert_equal('Yet Another Diagram',diagram.name)
+    assert_equal('amy',diagram.owner_username)
+    assert_equal(nil,diagram.published_date)
+
+  end
+
   def test_user_token
     xml = File.read("test/xml/user_token.xml")
     response = XML.parse(xml)

@@ -34,6 +34,55 @@ module Gliffy
     end
   end
 
+  class GliffyDiagrams
+    def initialize(element)
+      @diagrams = Array.new
+      element.each_element do |element|
+        @diagrams << GliffyDiagram.new(element)
+      end
+    end
+
+    def [](index)
+      @diagrams[index]
+    end
+
+    def length
+      @diagrams.length
+    end
+  end
+
+  class GliffyDiagram
+
+    attr_reader :id
+    attr_reader :num_versions
+    attr_reader :create_date
+    attr_reader :mod_date
+    attr_reader :name
+    attr_reader :owner_username
+    attr_reader :published_date
+
+    def initialize(element)
+      @id = element.attributes['id'].to_i
+      @num_versions = element.attributes['num-versions'].to_i
+      @is_private = element.attributes['is-private'] == "true"
+      @is_public = element.attributes['is-public'] == "true"
+
+      @create_date = Time.at(element.elements['create-date'].text.to_i)
+      @mod_date = Time.at(element.elements['mod-date'].text.to_i)
+      @published_date = element.elements['published-date'] ? Time.at(element.elements['published-date'].text.to_i) : nil
+      @name = element.elements['name'].text
+      @owner_username = element.elements['owner'] ? element.elements['owner'].text : nil
+    end
+
+    def is_public?
+      @is_public
+    end
+
+    def is_private?
+      @is_private
+    end
+  end
+
   class GliffyLaunchLink
 
     attr_reader :diagram_name

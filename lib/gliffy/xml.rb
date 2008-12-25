@@ -103,6 +103,47 @@ module Gliffy
     end
   end
 
+  class GliffyFolders
+
+    def initialize(element)
+      @folders = Array.new
+      element.each_element do |element|
+        @folders << GliffyFolder.new(element)
+      end
+    end
+
+    def [](index)
+      @folders[index]
+    end
+
+    def length
+      @folders.length
+    end
+  end
+
+  class GliffyFolder
+
+    attr_reader :folders
+    attr_reader :id
+    attr_reader :name
+    attr_reader :path
+
+    def initialize(element)
+      @id = element.attributes['id'].to_i
+      @default = element.attributes['is-default'] == "true"
+      @name = element.elements['name'].text
+      @path = element.elements['path'].text
+      @folders = Array.new
+      element.each_element do |element|
+        @folders << GliffyFolder.new(element) if element.name == "folder"
+      end
+    end
+
+    def default?
+      @default
+    end
+  end
+
   class GliffyUsers
 
     def initialize(element)

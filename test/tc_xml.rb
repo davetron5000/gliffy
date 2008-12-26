@@ -8,16 +8,16 @@ class TC_testXML < Test::Unit::TestCase
 
   def test_error
     xml = File.read("test/xml/error.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
 
-    assert_equal(true,response.success)
+    assert_equal(false,response.success)
     assert_equal(404,response.element.http_status)
     assert_equal("That diagram couldn't be found, yo.",response.element.message)
   end
 
   def test_users
     xml = File.read("test/xml/users.xml");
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
 
     assert_equal(true,response.success)
     users = response.element
@@ -48,7 +48,7 @@ class TC_testXML < Test::Unit::TestCase
 
   def test_launch_link
     xml = File.read("test/xml/launch_link.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
     assert_equal(true,response.success)
 
     assert_equal("Some Diagram Name & Stuff",response.element.diagram_name)
@@ -59,7 +59,7 @@ class TC_testXML < Test::Unit::TestCase
   def test_diagrams
 
     xml = File.read("test/xml/diagrams.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
     assert_equal(true,response.success)
 
     diagrams = response.element
@@ -103,7 +103,7 @@ class TC_testXML < Test::Unit::TestCase
 
   def test_user_token
     xml = File.read("test/xml/user_token.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
 
     assert_equal(true,response.success)
     token = response.element
@@ -115,7 +115,7 @@ class TC_testXML < Test::Unit::TestCase
   def test_folders
 
     xml = File.read("test/xml/folders.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
     assert_equal(true,response.success)
 
     folders = response.element
@@ -169,7 +169,7 @@ class TC_testXML < Test::Unit::TestCase
 
   def test_accounts
     xml = File.read("test/xml/accounts.xml")
-    response = XML.parse(xml)
+    response = GliffyResponse.parse(xml)
     assert_equal(true,response.success)
 
     accounts = response.element

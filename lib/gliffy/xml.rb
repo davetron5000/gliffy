@@ -3,18 +3,27 @@ include REXML
 
 module Gliffy
 
-  # Parses the Gliffy XML format
-  class XML
+
+  class GliffyResponse
+    # Returns true if this response represents a "not-modified"
+    # response, which means that the requested resource can be safely
+    # fetched from the cache
+    attr_reader :not_modified
+
+    # Returns true if the response represents a successful response
+    # false indicates failure and that element is most likely a GliffyError
+    attr_reader :success
+    attr_reader :element
+
+    # Creates a GliffyResponse based on the XML passed in.
+    # The xml can be anything passable to REXML::Document.new, such as
+    # a Document, or a string containing XML
     def self.parse(xml)
       root = Document.new(xml).root
       GliffyResponse.new(root)
     end
-  end
 
-  class GliffyResponse
-    attr_reader :not_modified
-    attr_reader :success
-    attr_reader :element
+    private
 
     def initialize(xml_root)
       @not_modified = xml_root.attributes['not-modified']
@@ -23,7 +32,6 @@ module Gliffy
       @element = clazz.new(xml_root.elements[1]);
     end
 
-    private
 
     def to_classname(name)
       classname = ""

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
-<response xmlns="http://www.gliffy.com" success="true">  
+<response xmlns="http://www.gliffy.com" success="false">  
     <error http-status='404'>That diagram couldn't be found, yo.</error>
 </response>

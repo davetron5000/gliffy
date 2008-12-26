@@ -4,6 +4,11 @@ include REXML
 module Gliffy
 
 
+  # Encapsulates a response from Gliffy.  The element accessor provides
+  # access to the actual element in question.  The class method
+  # of element can provide you information as to what the response is
+  # (though it should be known from context).  Instances can
+  # be obtained via the parse method.
   class GliffyResponse
     # Returns true if this response represents a "not-modified"
     # response, which means that the requested resource can be safely

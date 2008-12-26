@@ -127,44 +127,44 @@ class TC_testXML < Test::Unit::TestCase
     assert_equal(true,folder.default?)
     assert_equal('ROOT',folder.name)
     assert_equal('ROOT',folder.path)
-    assert_equal(2,folder.folders.length)
+    assert_equal(2,folder.child_folders.length)
 
-    tmp = folder.folders[0]
-    projects = folder.folders[1]
+    tmp = folder.child_folders[0]
+    projects = folder.child_folders[1]
 
     assert_equal(46,tmp.id)
     assert_equal(false,tmp.default?)
     assert_equal('tmp',tmp.name)
     assert_equal('ROOT/tmp',tmp.path)
-    assert_equal(0,tmp.folders.length)
+    assert_equal(0,tmp.child_folders.length)
 
     assert_equal(47,projects.id)
     assert_equal(false,projects.default?)
     assert_equal('projects',projects.name)
     assert_equal('ROOT/projects',projects.path)
-    assert_equal(3,projects.folders.length)
+    assert_equal(3,projects.child_folders.length)
 
-    gliffy = projects.folders[0]
-    vimdoclet = projects.folders[1]
-    fauxml = projects.folders[2]
+    gliffy = projects.child_folders[0]
+    vimdoclet = projects.child_folders[1]
+    fauxml = projects.child_folders[2]
 
     assert_equal(48,gliffy.id)
     assert_equal(false,gliffy.default?)
     assert_equal('gliffy',gliffy.name)
     assert_equal('ROOT/projects/gliffy',gliffy.path)
-    assert_equal(0,gliffy.folders.length)
+    assert_equal(0,gliffy.child_folders.length)
 
     assert_equal(49,vimdoclet.id)
     assert_equal(false,vimdoclet.default?)
     assert_equal('vimdoclet',vimdoclet.name)
     assert_equal('ROOT/projects/vimdoclet',vimdoclet.path)
-    assert_equal(0,vimdoclet.folders.length)
+    assert_equal(0,vimdoclet.child_folders.length)
 
     assert_equal(50,fauxml.id)
     assert_equal(false,fauxml.default?)
     assert_equal('fauxml',fauxml.name)
     assert_equal('ROOT/projects/fauxml',fauxml.path)
-    assert_equal(0,fauxml.folders.length)
+    assert_equal(0,fauxml.child_folders.length)
   end
 
   def test_accounts

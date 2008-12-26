@@ -32,7 +32,7 @@ module Gliffy
       @element = clazz.new(xml_root.elements[1]);
     end
 
-
+    # Converts a dash-delimited string to a camel-cased classname
     def to_classname(name)
       classname = ""
       name.split(/-/).each do |part|
@@ -42,6 +42,10 @@ module Gliffy
     end
   end
 
+  # Defines basic array operations needed by 
+  # the various container classes.
+  # To mix this in, define a member variable
+  # @list, that contains the items in the array.
   module ContainerArray
     def each
       @list.each { |list| yield account }
@@ -56,6 +60,7 @@ module Gliffy
     end
   end
 
+  # Represents a list of accounts
   class GliffyAccounts
 
     include Enumerable
@@ -69,13 +74,19 @@ module Gliffy
     end
   end
 
+  # Represents on account
   class GliffyAccount
 
     attr_reader :name
     attr_reader :id
+    # Either :basic or :premium
     attr_reader :type
     attr_reader :max_users
+    # A Time representing the date on which this account expires
     attr_reader :expiration_date
+    # Returns a GliffyUsers representing the users that
+    # were included.  If users were not included
+    # in the response, this will be an empty array
     attr_reader :users
 
     def initialize(element)
@@ -99,6 +110,7 @@ module Gliffy
     end
   end
 
+  # A list of Gliffy diagrams
   class GliffyDiagrams
 
     include Enumerable
@@ -112,14 +124,20 @@ module Gliffy
     end
   end
 
+  # A gliffy diagram (or, rather, the meta data about that diagram)
   class GliffyDiagram
 
     attr_reader :id
     attr_reader :num_versions
-    attr_reader :create_date
-    attr_reader :mod_date
     attr_reader :name
+    # The username of the proper owner of this diagram
     attr_reader :owner_username
+    # A Time representing the date on which this diagram was created
+    attr_reader :create_date
+    # A Time representing the date on which this diagram was last modified
+    attr_reader :mod_date
+    # A Time representing the date on which this diagram was published,
+    # or nil if it was not published
     attr_reader :published_date
 
     def initialize(element)
@@ -135,17 +153,23 @@ module Gliffy
       @owner_username = element.elements['owner'] ? element.elements['owner'].text : nil
     end
 
+    # True if this diagram is public
     def is_public?
       @is_public
     end
 
+    # True if this diagram is private (and available only
+    # to the owner and account administrators)
     def is_private?
       @is_private
     end
   end
 
+  # A link to edit a specific gliffy diagram
   class GliffyLaunchLink
 
+    # The name of the diagram, which can helpful
+    # in creating HTML hyperlinks to url
     attr_reader :diagram_name
     attr_reader :url
 
@@ -155,6 +179,7 @@ module Gliffy
     end
   end
 
+  # A user token
   class GliffyUserToken
     attr_reader :expiration
     attr_reader :token
@@ -164,6 +189,9 @@ module Gliffy
     end
   end
 
+  # A list of folders.  Note that this only
+  # represents the top level access to the folders
+  # (see GliffyFolder below)
   class GliffyFolders
 
     include Enumerable
@@ -179,9 +207,13 @@ module Gliffy
 
   class GliffyFolder
 
-    attr_reader :folders
+    # An array of GliffyFolder objects that are contained within this folder
+    # If this is empty, it means this GliffyFolder is a leaf
+    attr_reader :child_folders
     attr_reader :id
     attr_reader :name
+    # The full path to this folder within the account's 
+    # folder hierarchy
     attr_reader :path
 
     def initialize(element)
@@ -189,17 +221,22 @@ module Gliffy
       @default = element.attributes['is-default'] == "true"
       @name = element.elements['name'].text
       @path = element.elements['path'].text
-      @folders = Array.new
+      @child_folders = Array.new
       element.each_element do |element|
-        @folders << GliffyFolder.new(element) if element.name == "folder"
+        @child_folders << GliffyFolder.new(element) if element.name == "folder"
       end
     end
 
+    # Returns true if this folder is the default folder
+    # used when an operation requiring a folder
+    # doesn't specify one (such as when creating a new
+    # diagram)
     def default?
       @default
     end
   end
 
+  # A list of users
   class GliffyUsers
 
     include Enumerable
@@ -213,10 +250,18 @@ module Gliffy
     end
   end
 
+  # A user of Gliffy
   class GliffyUser
+
+    # The user's username, which is their identifier within an account
     attr_reader :username
+    # The user's email, which is unique to them in the entire Gliffy system.
+    # Note that this isn't guaranteed to be a real email, nor is
+    # it guaranteed to be the user's actual email.  This is 
+    # assigned by the system unless overridden by the API.
     attr_reader :email
     attr_reader :id
+
     def initialize(element)
       @id = element.attributes['id'].to_i
       @is_admin = false
@@ -225,13 +270,18 @@ module Gliffy
       @email = element.elements['email'] ? element.elements['email'].text : nil
     end
 
+    # Returns true if this user is an admin of the account in which they live
     def is_admin?
       @is_admin
     end
   end
 
+  # An error from Gliffy
   class GliffyError
+    # The HTTP status code that can help indicate the nature of the problem
     attr_reader :http_status
+    # A description of the error that occured; not necessarily for human
+    # consumption
     attr_reader :message
 
     def initialize(element)

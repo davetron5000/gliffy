@@ -21,3 +21,5 @@ task :test do |t|
     require 'tc_xml.rb'
     Test::Unit::UI::Console::TestRunner.run(TC_testXML)
 end
+
+task :default => :test

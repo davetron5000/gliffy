@@ -1,6 +1,10 @@
-require 'gliffy/response.rb'
 require 'digest/md5'
 require 'cgi'
+require 'rubygems'
+require 'request_errors'
+require 'resource'
+require 'rest_client'
+require 'gliffy/response.rb'
 
 module Gliffy
 

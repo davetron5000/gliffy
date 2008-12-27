@@ -1,3 +1,1 @@
-xsddoc - http://www.gliffy.com/developer/apidocs/xsddoc/
-
-apidocs - http://www.gliffy.com/developer/apidocs/
+The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.

@@ -18,8 +18,8 @@ desc 'Runs tests'
 task :test do |t|
     $: << 'lib'
     $: << 'test'
-    require 'tc_xml.rb'
-    Test::Unit::UI::Console::TestRunner.run(TC_testXML)
+    require 'tc_response.rb'
+    Test::Unit::UI::Console::TestRunner.run(TC_testResponse)
 end
 
 task :default => :test

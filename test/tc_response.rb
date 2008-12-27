@@ -1,10 +1,10 @@
-require 'gliffy/xml'
+require 'gliffy/response'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 
 include Gliffy
 
-class TC_testXML < Test::Unit::TestCase
+class TC_testResponse < Test::Unit::TestCase
 
   def test_error
     xml = File.read("test/xml/error.xml")

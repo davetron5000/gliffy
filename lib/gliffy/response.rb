@@ -108,7 +108,7 @@ module Gliffy
         raise "Unknown type #{type}"
       end
       @max_users = element.attributes['max-users'].to_i
-      @expiration_date = Time.at(element.elements['expiration-date'].text.to_i)
+      @expiration_date = Time.at(element.elements['expiration-date'].text.to_i / 1000)
       @name = element.elements['name'].text
       if element.elements['users']
         @users = GliffyUsers.new(element.elements['users'])
@@ -154,9 +154,9 @@ module Gliffy
       @is_private = element.attributes['is-private'] == "true"
       @is_public = element.attributes['is-public'] == "true"
 
-      @create_date = Time.at(element.elements['create-date'].text.to_i)
-      @mod_date = Time.at(element.elements['mod-date'].text.to_i)
-      @published_date = element.elements['published-date'] ? Time.at(element.elements['published-date'].text.to_i) : nil
+      @create_date = Time.at(element.elements['create-date'].text.to_i / 1000)
+      @mod_date = Time.at(element.elements['mod-date'].text.to_i / 1000)
+      @published_date = element.elements['published-date'] ? Time.at(element.elements['published-date'].text.to_i / 1000) : nil
       @name = element.elements['name'].text
       @owner_username = element.elements['owner'] ? element.elements['owner'].text : nil
     end
@@ -192,7 +192,7 @@ module Gliffy
     attr_reader :expiration
     attr_reader :token
     def initialize(element)
-      @expiration = Time.at(element.attributes['expiration'].to_i)
+      @expiration = Time.at(element.attributes['expiration'].to_i / 1000)
       @token = element.text
     end
   end

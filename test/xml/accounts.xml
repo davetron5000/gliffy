@@ -4,12 +4,12 @@
     <account account-type="Basic" id="45" max-users="100">
       <name>Some Test Account</name>
       <!-- June 13, 2010, 12:30:00 -->
-      <expiration-date>1276432200</expiration-date>
+      <expiration-date>1276432200000</expiration-date>
     </account>
     <account account-type="Premium" id="48" max-users="5">
       <name>Some Other Test Account</name>
       <!-- June 13, 2010, 12:30:00 -->
-      <expiration-date>1276432200</expiration-date>
+      <expiration-date>1276432200000</expiration-date>
       <users>
         <user id="45" is-admin="true">
           <username>davetron5000</username>

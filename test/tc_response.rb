@@ -10,7 +10,7 @@ class TC_testResponse < Test::Unit::TestCase
     xml = File.read("test/xml/error.xml")
     response = GliffyResponse.parse(xml)
 
-    assert_equal(false,response.success)
+    assert_equal(false,response.success?)
     assert_equal(404,response.element.http_status)
     assert_equal("That diagram couldn't be found, yo.",response.element.message)
   end
@@ -19,7 +19,7 @@ class TC_testResponse < Test::Unit::TestCase
     xml = File.read("test/xml/users.xml");
     response = GliffyResponse.parse(xml)
 
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
     users = response.element
 
     assert_users(users)
@@ -49,7 +49,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_launch_link
     xml = File.read("test/xml/launch_link.xml")
     response = GliffyResponse.parse(xml)
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
 
     assert_equal("Some Diagram Name & Stuff",response.element.diagram_name)
     assert_equal("http://www.gliffy.com/rest/diagram_launch.jsp?id=56&foo=bar",response.element.url)
@@ -60,7 +60,7 @@ class TC_testResponse < Test::Unit::TestCase
 
     xml = File.read("test/xml/diagrams.xml")
     response = GliffyResponse.parse(xml)
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
 
     diagrams = response.element
 
@@ -105,7 +105,7 @@ class TC_testResponse < Test::Unit::TestCase
     xml = File.read("test/xml/user_token.xml")
     response = GliffyResponse.parse(xml)
 
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
     token = response.element
 
     assert_equal(Time.at(1276432200),token.expiration)
@@ -116,7 +116,7 @@ class TC_testResponse < Test::Unit::TestCase
 
     xml = File.read("test/xml/folders.xml")
     response = GliffyResponse.parse(xml)
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
 
     folders = response.element
 
@@ -170,7 +170,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_accounts
     xml = File.read("test/xml/accounts.xml")
     response = GliffyResponse.parse(xml)
-    assert_equal(true,response.success)
+    assert_equal(true,response.success?)
 
     accounts = response.element
 

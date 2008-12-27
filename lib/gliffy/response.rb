@@ -15,9 +15,6 @@ module Gliffy
     # fetched from the cache
     attr_reader :not_modified
 
-    # Returns true if the response represents a successful response
-    # false indicates failure and that element is most likely a GliffyError
-    attr_reader :success
     attr_reader :element
 
     # Creates a GliffyResponse based on the XML passed in.
@@ -28,12 +25,18 @@ module Gliffy
       GliffyResponse.new(root)
     end
 
+    # Returns true if the response represents a successful response
+    # false indicates failure and that element is most likely a GliffyError
+    def success?
+      @success
+    end
+
     private
 
     def initialize(xml_root)
       @not_modified = xml_root.attributes['not-modified']
       @success = xml_root.attributes['success'] == "true"
-      clazz = Kernel.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
+      clazz = Gliffy.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
       @element = clazz.new(xml_root.elements[1]);
     end
 

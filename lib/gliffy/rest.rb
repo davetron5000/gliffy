@@ -49,13 +49,9 @@ module Gliffy
       url_params['signature'] = signature
 
       url = @url_root + @url + '?'
-      url_params.sort.each do |key_val|
-        key = key_val[0]
-        val = key_val[1]
-        url += key.to_s
-        url += '='
-        url += CGI::escape(val)
-        url += '&'
+      url_params.keys.sort.each do |key|
+        val = CGI::escape(url_params[key])
+        url += "#{key}=#{val}&"
       end
       url.gsub!(/\&$/,'')
       return url

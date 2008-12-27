@@ -16,7 +16,7 @@ class TC_testSigning < Test::Unit::TestCase
 
     url = '/accounts/FooBar/diagrams/45'
     signed_url = SignedURL.new(@api_key,@secret,@root,url)
-    assert_equal('http://www.gliffy.com/rest/accounts/FooBar/diagrams/45?api_key=some_api_key&signature=4efd52954a65a736526def9cd1b7fe96',signed_url.full_url)
+    assert_equal('http://www.gliffy.com/rest/accounts/FooBar/diagrams/45?apiKey=some_api_key&signature=347cb44d17a026351168e458f3691070',signed_url.full_url)
   end
 
   def test_sign_complex
@@ -42,6 +42,6 @@ class TC_testSigning < Test::Unit::TestCase
 
   private
   def assert_complex(signed_url)
-    assert_equal('http://www.gliffy.com/rest/accounts/FooBar/diagrams/45?aaaa=crud&api_key=some_api_key&blah=foo&signature=306ecea0275272976f50882d525cac68&zzzz=booyah+booyah+booyah',signed_url.full_url)
+    assert_equal('http://www.gliffy.com/rest/accounts/FooBar/diagrams/45?aaaa=crud&apiKey=some_api_key&blah=foo&signature=c117ddb1476984eb6c72af46b0a7548c&zzzz=booyah+booyah+booyah',signed_url.full_url)
   end
 end

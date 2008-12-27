@@ -56,7 +56,7 @@ module Gliffy
   # @list, that contains the items in the array.
   module ContainerArray
     def each
-      @list.each { |list| yield account }
+      @list.each { |item| yield item }
     end
 
     def [](index)

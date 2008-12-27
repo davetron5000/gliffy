@@ -6,6 +6,15 @@ include Gliffy
 
 class TC_testResponse < Test::Unit::TestCase
 
+  def test_empty
+    xml = File.read("test/xml/empty.xml")
+    response = GliffyResponse.parse(xml)
+
+    assert_equal(true,response.success?)
+    assert_equal(nil,response.element)
+
+  end
+
   def test_error
     xml = File.read("test/xml/error.xml")
     response = GliffyResponse.parse(xml)

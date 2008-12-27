@@ -36,8 +36,10 @@ module Gliffy
     def initialize(xml_root)
       @not_modified = xml_root.attributes['not-modified']
       @success = xml_root.attributes['success'] == "true"
-      clazz = Gliffy.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
-      @element = clazz.new(xml_root.elements[1]);
+      if ! xml_root.elements.empty?
+        clazz = Gliffy.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
+        @element = clazz.new(xml_root.elements[1]);
+      end
     end
 
     # Converts a dash-delimited string to a camel-cased classname

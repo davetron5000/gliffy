@@ -12,13 +12,17 @@ module Gliffy
   # and parsing of the results
   class Rest
 
+    # Provides access to the current token, 
+    # returning nil if none has been set
+    attr_accessor :current_token
+
     # Create an accessor to the Gliffy REST api
     #
-    # [api_key] your Gliffy API ey
+    # [api_key] your Gliffy API key
     # [secret_key] the shared secret for signing requests
     # [gliffy_root] root URL of the Gliffy API
     #
-    def initialize(api_key,secret_key,gliffy_root = 'http://www.gliffy.com/rest')
+    def initialize(api_key,secret_key,gliffy_root = 'http://www.gliffy.com/gliffy/rest')
       @api_key = api_key
       @secret_key = secret_key
       @gliffy_root = gliffy_root
@@ -26,6 +30,20 @@ module Gliffy
     end
 
     def get(url,params=nil,headers=nil)
+      request_url = create_url(url,params)
+      puts "Getting #{request_url}"
+      xml = RestClient.get(request_url)
+      GliffyResponse.parse(xml)
+    end
+
+    private
+
+    def create_url(url,params)
+      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url)
+      url.params=params if params
+      url['token'] = @current_token if @current_token
+
+      url.full_url
     end
   end
 

@@ -5,6 +5,7 @@ require 'request_errors'
 require 'resource'
 require 'rest_client'
 require 'gliffy/response.rb'
+require 'logger'
 
 module Gliffy
 
@@ -27,13 +28,19 @@ module Gliffy
       @secret_key = secret_key
       @gliffy_root = gliffy_root
       @current_token = nil
+      @logger = Logger.new(STDERR)
+      @logger.level = Logger::DEBUG
+
+      @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{gliffy_root}")
     end
 
     def get(url,params=nil,headers=nil)
       request_url = create_url(url,params)
-      puts "Getting #{request_url}"
+      @logger.debug("GET #{request_url}")
       xml = RestClient.get(request_url)
-      GliffyResponse.parse(xml)
+      response = GliffyResponse.parse(xml)
+      @logger.debug("Got a #{response.element.class.to_s}")
+      return response
     end
 
     private

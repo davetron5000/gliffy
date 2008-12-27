@@ -29,10 +29,22 @@ module Gliffy
   class SignedURL
     def initialize(api_key,secret_key,url_root,url)
       @params = Hash.new
-      @params[:api_key] = api_key
+      @params['api_key'] = api_key
       @secret_key = secret_key
       @url_root = url_root
       @url = url
+    end
+
+    # Sets a request parameter
+    #
+    # [param] the name of the parameter, as a string
+    # [value] the value of the parameter, unencoded
+    #
+    def []=(param,value)
+      if (param == 'api_key')
+        raise 'You may not override the api_key in this way'
+      end
+      @params[param] = value
     end
 
     # Gets the full URL, signed and ready to be requested
@@ -40,7 +52,7 @@ module Gliffy
       to_sign = @url
       url_params = Hash.new
       @params.keys.sort.each do |key|
-        to_sign += key.to_s
+        to_sign += key
         to_sign += @params[key]
         url_params[key.to_s] = @params[key]
       end

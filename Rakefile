@@ -19,7 +19,9 @@ task :test do |t|
     $: << 'lib'
     $: << 'test'
     require 'tc_response.rb'
+    require 'tc_signing.rb'
     Test::Unit::UI::Console::TestRunner.run(TC_testResponse)
+    Test::Unit::UI::Console::TestRunner.run(TC_testSigning)
 end
 
 task :default => :test

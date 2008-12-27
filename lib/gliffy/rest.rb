@@ -34,12 +34,38 @@ module Gliffy
       @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{gliffy_root}")
     end
 
-    def get(url,params=nil,headers=nil)
+    # Gets the resource without attempting to parse.  This is useful if the expected
+    # representation type is not the Gliffy XML format
+    def get_raw(url,params=nil,headers={})
       request_url = create_url(url,params)
       @logger.debug("GET #{request_url}")
-      xml = RestClient.get(request_url)
+      RestClient.get(request_url,headers)
+    end
+
+    # Does a GET on the given resource
+    #
+    # [url] the url to GET
+    # [params] request parameters, as a hash of string to string
+    # [headers] request headers, as a hash of string to string
+    #
+    def get(url,params=nil,headers={})
+      xml = get_raw(url,params,headers)
       response = GliffyResponse.parse(xml)
       @logger.debug("Got a #{response.element.class.to_s}")
+      return response
+    end
+
+    # Does a PUT on the given resource
+    #
+    # [url] the url to PUT
+    # [params] request parameters, as a hash of string to string
+    # [headers] request headers, as a hash of string to string
+    #
+    def put(url,params=nil,headers={})
+      request_url = create_url(url,params)
+      @logger.debug("GET #{request_url}")
+      xml = RestClient.put(request_url,headers)
+      response = GliffyResponse.parse(xml)
       return response
     end
 

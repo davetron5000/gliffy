@@ -47,6 +47,13 @@ module Gliffy
       @params[param] = value
     end
 
+    # Sets all request parameters to those in the hash.
+    def params=(params_hash)
+      api_key = @params['api_key']
+      @params.replace(params_hash)
+      @params['api_key'] = api_key
+    end
+
     # Gets the full URL, signed and ready to be requested
     def full_url
       to_sign = @url

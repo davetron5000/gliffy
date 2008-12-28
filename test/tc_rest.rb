@@ -6,11 +6,13 @@ include Gliffy
 
 class MockRestClient
 
+  XML = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><response xmlns="http://www.gliffy.com" success="true" />'
+
   def method_missing(symbol,*args)
     @method = symbol
     @url = args[0]
     @headers = args[1]
-    return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><response xmlns="http://www.gliffy.com" success="true" />'
+    return XML
   end
 
   def method_requested; @method; end
@@ -60,6 +62,11 @@ class TC_testRest < Test::Unit::TestCase
   def test_put_with_params_and_headers; test(:put,@params,@headers); end
   def test_post_with_params_and_headers; test(:post,@params,@headers); end
   def test_delete_with_params_and_headers; test(:delete,@params,@headers); end
+
+  def test_get_raw
+    xml = @rest.get_raw(@simple_url)
+    assert_equal(xml,MockRestClient::XML)
+  end
 
   private
 

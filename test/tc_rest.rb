@@ -87,13 +87,15 @@ class TC_testRest < Test::Unit::TestCase
       end
     end
     param_string.gsub!(/\&$/,'')
-    do_asserts(symbol,signature,param_string,headers)
+    expected_url = "#{@root}#{@simple_url}?apiKey=#{@api_key}#{param_string}&signature=#{signature}"
+    assert_equal(expected_url,@rest.get_url(@simple_url,params))
+    do_asserts(symbol,headers,expected_url)
   end
 
-  def do_asserts(method,signature,param_string,headers)
+  def do_asserts(method,headers,expected_url)
 
     assert_equal(method,@mock_rest_client.method_requested)
-    assert_equal("#{@root}#{@simple_url}?apiKey=#{@api_key}#{param_string}&signature=#{signature}",@mock_rest_client.url_requested)
+    assert_equal(expected_url,@mock_rest_client.url_requested)
     assert_equal(headers.length,@mock_rest_client.headers_sent.length)
     headers.each_pair do |key,value|
       assert_equal(value,@mock_rest_client.headers_sent[key])

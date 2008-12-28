@@ -33,6 +33,10 @@ module Gliffy
     # refs to the RestClient implementation
     attr_accessor :rest_client
 
+    # Provides access to the logger
+    # Do not set this to nil
+    attr_accessor :logger
+
     # Create an accessor to the Gliffy REST api
     #
     # [api_key] your Gliffy API key

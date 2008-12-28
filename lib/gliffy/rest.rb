@@ -10,12 +10,28 @@ require 'logger'
 module Gliffy
 
   # Provides REST access to Gliffy, handling the signing of the requests
-  # and parsing of the results
+  # and parsing of the results.  This class responds to the four primary HTTP methods:
+  #
+  # * get
+  # * put
+  # * post
+  # * delete
+  #
+  # Each method takes three parameters:
+  # [url] - the relative URL being requested
+  # [params] - a hash of parameters to include in the request (these are specific to the request, not things like apiKey or token)
+  # [headers] - any HTTP headers you want to set
+  #
+  # params and headers are optional.
+  #
   class Rest
 
     # Provides access to the current token, 
     # returning nil if none has been set
     attr_accessor :current_token
+
+    # refs to the RestClient implementation
+    attr_accessor :rest_client
 
     # Create an accessor to the Gliffy REST api
     #
@@ -28,6 +44,7 @@ module Gliffy
       @secret_key = secret_key
       @gliffy_root = gliffy_root
       @current_token = nil
+      @rest_client = RestClient
       @logger = Logger.new(STDERR)
       @logger.level = Logger::DEBUG
 
@@ -39,37 +56,48 @@ module Gliffy
     def get_raw(url,params=nil,headers={})
       request_url = create_url(url,params)
       @logger.debug("GET #{request_url}")
-      RestClient.get(request_url,headers)
+      @rest_client.get(request_url,headers)
     end
 
-    # Does a GET on the given resource
+    # Returns the complete URL that would be requested for
+    # the given URL and parameters
     #
-    # [url] the url to GET
-    # [params] request parameters, as a hash of string to string
-    # [headers] request headers, as a hash of string to string
+    # [url] the URL, relative to the Gliffy API Root
+    # [params] a hash of parameters
     #
-    def get(url,params=nil,headers={})
-      xml = get_raw(url,params,headers)
-      response = GliffyResponse.parse(xml)
-      @logger.debug("Got a #{response.element.class.to_s}")
-      return response
+    def get_url(url,params=nil)
+      return create_url(url,params)
     end
 
-    # Does a PUT on the given resource
-    #
-    # [url] the url to PUT
-    # [params] request parameters, as a hash of string to string
-    # [headers] request headers, as a hash of string to string
-    #
-    def put(url,params=nil,headers={})
-      request_url = create_url(url,params)
-      @logger.debug("GET #{request_url}")
-      xml = RestClient.put(request_url,headers)
-      response = GliffyResponse.parse(xml)
-      return response
+    # Implements the http methods
+    def method_missing(symbol,*args)
+      if HTTP_METHODS[symbol]  && (args.length > 0)
+        url,params,headers = args
+        make_rest_request(symbol,url,params,headers)
+      else
+        @logger.warn("Wrong number of arguments for method #{symbol.to_s}") if (HTTP_METHODS[symbol])
+        super.method_missing(symbol,args)
+      end
     end
 
     private
+
+    def make_rest_request(method,url,params,headers)
+      headers = Hash.new if !headers
+      request_url = create_url(url,params)
+      @logger.debug("#{method.to_s.upcase} #{request_url}")
+      xml = @rest_client.send(method,request_url,headers)
+      response = GliffyResponse.parse(xml)
+      return response
+    end
+
+    HTTP_METHODS = {
+      :get => true,
+      :put => true,
+      :delete => true,
+      :post => true,
+    };
+
 
     def create_url(url,params)
       url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url)

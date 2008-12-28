@@ -70,7 +70,7 @@ module Gliffy
     end
   end
 
-  # Represents a list of accounts
+  # Represents a list of GliffyAccount objects
   class GliffyAccounts
 
     include Enumerable
@@ -120,7 +120,7 @@ module Gliffy
     end
   end
 
-  # A list of Gliffy diagrams
+  # A list of GliffyDiagram objects
   class GliffyDiagrams
 
     include Enumerable
@@ -246,7 +246,7 @@ module Gliffy
     end
   end
 
-  # A list of users
+  # A list of GliffyUser objects
   class GliffyUsers
 
     include Enumerable

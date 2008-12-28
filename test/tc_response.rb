@@ -34,9 +34,20 @@ class TC_testResponse < Test::Unit::TestCase
     assert_users(users)
   end
 
+  def test_bad_account
+    xml = File.read("test/xml/accounts_bad.xml")
+    assert_raises(RuntimeError) do
+      response = GliffyResponse.parse(xml)
+    end
+  end
+
   def assert_users(users)
 
     assert_equal(3,users.length)
+
+    users.each do |user|
+      assert_equal(false,user.id.nil?)
+    end
 
     assert_equal(45,users[0].id)
     assert_equal(true,users[0].is_admin?)

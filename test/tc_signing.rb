@@ -12,6 +12,14 @@ class TC_testSigning < Test::Unit::TestCase
     @secret = 'some_big_secret'
   end
 
+  def test_bad_param_override
+    url = '/accounts/FooBar/diagrams/45'
+    signed_url = SignedURL.new(@api_key,@secret,@root,url)
+    assert_raises(ArgumentError) do 
+      signed_url['apiKey'] = 'asdfasdfasdf'
+    end
+  end
+
   def test_sign_simple
 
     url = '/accounts/FooBar/diagrams/45'

@@ -79,8 +79,11 @@ module Gliffy
         url,params,headers = args
         make_rest_request(symbol,url,params,headers)
       else
-        @logger.warn("Wrong number of arguments for method #{symbol.to_s}") if (HTTP_METHODS[symbol])
-        super.method_missing(symbol,args)
+        if (HTTP_METHODS[symbol])
+          raise ArgumentError.new("Wrong number of arguments for method #{symbol.to_s}") 
+        else
+          super.method_missing(symbol,args)
+        end
       end
     end
 
@@ -129,7 +132,7 @@ module Gliffy
     #
     def []=(param,value)
       if (param == 'apiKey')
-        raise 'You may not override the api_key in this way'
+        raise ArgumentError.new('You may not override the api_key in this way')
       end
       @params[param] = value
     end

@@ -68,6 +68,15 @@ class TC_testRest < Test::Unit::TestCase
     assert_equal(xml,MockRestClient::XML)
   end
 
+  def test_bad_method_call
+    assert_raises(NoMethodError) do
+      @rest.head(@simple_url)
+    end
+    assert_raises(ArgumentError) do
+      @rest.get
+    end
+  end
+
   private
 
   def test(symbol,params=nil,headers={})

@@ -8,7 +8,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_empty
     xml = File.read("test/xml/empty.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
 
     assert_equal(true,response.success?)
     assert_equal(nil,response.element)
@@ -17,7 +17,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_error
     xml = File.read("test/xml/error.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
 
     assert_equal(false,response.success?)
     assert_equal(404,response.element.http_status)
@@ -26,7 +26,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_users
     xml = File.read("test/xml/users.xml");
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
 
     assert_equal(true,response.success?)
     users = response.element
@@ -37,7 +37,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_bad_account
     xml = File.read("test/xml/accounts_bad.xml")
     assert_raises(RuntimeError) do
-      response = GliffyResponse.parse(xml)
+      response = Response.parse(xml)
     end
   end
 
@@ -68,7 +68,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_launch_link
     xml = File.read("test/xml/launch_link.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
     assert_equal(true,response.success?)
 
     assert_equal("Some Diagram Name & Stuff",response.element.diagram_name)
@@ -79,7 +79,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_diagrams
 
     xml = File.read("test/xml/diagrams.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
     assert_equal(true,response.success?)
 
     diagrams = response.element
@@ -123,7 +123,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_user_token
     xml = File.read("test/xml/user_token.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
 
     assert_equal(true,response.success?)
     token = response.element
@@ -135,7 +135,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_folders
 
     xml = File.read("test/xml/folders.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
     assert_equal(true,response.success?)
 
     folders = response.element
@@ -189,7 +189,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_accounts
     xml = File.read("test/xml/accounts.xml")
-    response = GliffyResponse.parse(xml)
+    response = Response.parse(xml)
     assert_equal(true,response.success?)
 
     accounts = response.element

@@ -9,7 +9,7 @@ module Gliffy
   # of element can provide you information as to what the response is
   # (though it should be known from context).  Instances can
   # be obtained via the parse method.
-  class GliffyResponse
+  class Response
     # Returns true if this response represents a "not-modified"
     # response, which means that the requested resource can be safely
     # fetched from the cache
@@ -17,16 +17,16 @@ module Gliffy
 
     attr_reader :element
 
-    # Creates a GliffyResponse based on the XML passed in.
+    # Creates a Response based on the XML passed in.
     # The xml can be anything passable to REXML::Document.new, such as
     # a Document, or a string containing XML
     def self.parse(xml)
       root = Document.new(xml).root
-      GliffyResponse.new(root)
+      Response.new(root)
     end
 
     # Returns true if the response represents a successful response
-    # false indicates failure and that element is most likely a GliffyError
+    # false indicates failure and that element is most likely a Error
     def success?
       @success
     end
@@ -37,7 +37,7 @@ module Gliffy
       @not_modified = xml_root.attributes['not-modified']
       @success = xml_root.attributes['success'] == "true"
       if ! xml_root.elements.empty?
-        clazz = Gliffy.const_get("Gliffy" + to_classname(xml_root.elements[1].name))
+        clazz = Gliffy.const_get(to_classname(xml_root.elements[1].name))
         @element = clazz.new(xml_root.elements[1]);
       end
     end
@@ -70,8 +70,8 @@ module Gliffy
     end
   end
 
-  # Represents a list of GliffyAccount objects
-  class GliffyAccounts
+  # Represents a list of Account objects
+  class Accounts
 
     include Enumerable
     include ContainerArray
@@ -79,13 +79,13 @@ module Gliffy
     def initialize(element)
       @list = Array.new
       element.each_element do |element|
-        @list << GliffyAccount.new(element)
+        @list << Account.new(element)
       end
     end
   end
 
   # Represents on account
-  class GliffyAccount
+  class Account
 
     attr_reader :name
     attr_reader :id
@@ -94,7 +94,7 @@ module Gliffy
     attr_reader :max_users
     # A Time representing the date on which this account expires
     attr_reader :expiration_date
-    # Returns a GliffyUsers representing the users that
+    # Returns a Users representing the users that
     # were included.  If users were not included
     # in the response, this will be an empty array
     attr_reader :users
@@ -113,15 +113,15 @@ module Gliffy
       @expiration_date = Time.at(element.elements['expiration-date'].text.to_i / 1000)
       @name = element.elements['name'].text
       if element.elements['users']
-        @users = GliffyUsers.new(element.elements['users'])
+        @users = Users.new(element.elements['users'])
       else
         @users = Array.new
       end
     end
   end
 
-  # A list of GliffyDiagram objects
-  class GliffyDiagrams
+  # A list of Diagram objects
+  class Diagrams
 
     include Enumerable
     include ContainerArray
@@ -129,13 +129,13 @@ module Gliffy
     def initialize(element)
       @list = Array.new
       element.each_element do |element|
-        @list << GliffyDiagram.new(element)
+        @list << Diagram.new(element)
       end
     end
   end
 
   # A gliffy diagram (or, rather, the meta data about that diagram)
-  class GliffyDiagram
+  class Diagram
 
     attr_reader :id
     attr_reader :num_versions
@@ -176,7 +176,7 @@ module Gliffy
   end
 
   # A link to edit a specific gliffy diagram
-  class GliffyLaunchLink
+  class LaunchLink
 
     # The name of the diagram, which can helpful
     # in creating HTML hyperlinks to url
@@ -190,7 +190,7 @@ module Gliffy
   end
 
   # A user token
-  class GliffyUserToken
+  class UserToken
     attr_reader :expiration
     attr_reader :token
     def initialize(element)
@@ -201,8 +201,8 @@ module Gliffy
 
   # A list of folders.  Note that this only
   # represents the top level access to the folders
-  # (see GliffyFolder below)
-  class GliffyFolders
+  # (see Folder below)
+  class Folders
 
     include Enumerable
     include ContainerArray
@@ -210,15 +210,15 @@ module Gliffy
     def initialize(element)
       @list = Array.new
       element.each_element do |element|
-        @list << GliffyFolder.new(element)
+        @list << Folder.new(element)
       end
     end
   end
 
-  class GliffyFolder
+  class Folder
 
-    # An array of GliffyFolder objects that are contained within this folder
-    # If this is empty, it means this GliffyFolder is a leaf
+    # An array of Folder objects that are contained within this folder
+    # If this is empty, it means this Folder is a leaf
     attr_reader :child_folders
     attr_reader :id
     attr_reader :name
@@ -233,7 +233,7 @@ module Gliffy
       @path = element.elements['path'].text
       @child_folders = Array.new
       element.each_element do |element|
-        @child_folders << GliffyFolder.new(element) if element.name == "folder"
+        @child_folders << Folder.new(element) if element.name == "folder"
       end
     end
 
@@ -246,8 +246,8 @@ module Gliffy
     end
   end
 
-  # A list of GliffyUser objects
-  class GliffyUsers
+  # A list of User objects
+  class Users
 
     include Enumerable
     include ContainerArray
@@ -255,13 +255,13 @@ module Gliffy
     def initialize(element)
       @list = Array.new
       element.each_element do |element|
-        @list << GliffyUser.new(element)
+        @list << User.new(element)
       end
     end
   end
 
   # A user of Gliffy
-  class GliffyUser
+  class User
 
     # The user's username, which is their identifier within an account
     attr_reader :username
@@ -284,10 +284,11 @@ module Gliffy
     def is_admin?
       @is_admin
     end
+
   end
 
   # An error from Gliffy
-  class GliffyError
+  class Error
     # The HTTP status code that can help indicate the nature of the problem
     attr_reader :http_status
     # A description of the error that occured; not necessarily for human

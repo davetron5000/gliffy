@@ -82,7 +82,7 @@ module Gliffy
         if (HTTP_METHODS[symbol])
           raise ArgumentError.new("Wrong number of arguments for method #{symbol.to_s}") 
         else
-          super.method_missing(symbol,args)
+          super.method_missing(symbol,*args)
         end
       end
     end
@@ -107,7 +107,7 @@ module Gliffy
 
 
     def create_url(url,params)
-      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url)
+      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url,@logger)
       url.params=params if params
       url['token'] = @current_token if @current_token
 
@@ -117,7 +117,13 @@ module Gliffy
 
   # Handles signing and assembling the URL
   class SignedURL
-    def initialize(api_key,secret_key,url_root,url)
+
+    def initialize(api_key,secret_key,url_root,url,logger=nil)
+      @logger = logger
+      if (!@logger)
+        @logger = Logger.new(STDERR)
+        @logger.level = Logger::DEBUG
+      end
       @params = Hash.new
       @params['apiKey'] = api_key
       @secret_key = secret_key
@@ -146,9 +152,11 @@ module Gliffy
 
     # Gets the full URL, signed and ready to be requested
     def full_url
+      @logger.debug("Getting full_url of #{@url}")
       to_sign = @url
       url_params = Hash.new
       @params.keys.sort.each do |key|
+        @logger.debug("Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}")
         to_sign += key
         to_sign += @params[key]
         url_params[key.to_s] = @params[key]

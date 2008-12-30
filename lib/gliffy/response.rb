@@ -3,6 +3,10 @@ include REXML
 
 module Gliffy
 
+  class ActiveGliffyObject
+    # A GliffyHandle 
+    attr_accessor :handle
+  end
 
   # Encapsulates a response from Gliffy.  The element accessor provides
   # access to the actual element in question.  The class method
@@ -85,7 +89,7 @@ module Gliffy
   end
 
   # Represents on account
-  class Account
+  class Account < ActiveGliffyObject
 
     attr_reader :name
     attr_reader :id
@@ -118,6 +122,26 @@ module Gliffy
         @users = Array.new
       end
     end
+
+    # Returns the users of this account
+    def all_users
+      users = @handle.get(@handle.url_for('users'))
+      users.element.each() { |user| user.handle = @handle }
+      users.element
+    end
+
+    def all_folders
+      folders = @handle.get(@handle.url_for('folders'))
+      folders.element.each() { |folder| folder.handle = @handle }
+      folders.element
+    end
+
+    def all_diagrams
+      diagrams = @handle.get(@handle.url_for('diagrams'))
+      diagrams.element.each() { |diagram| diagram.handle = @handle }
+      diagrams.element
+    end
+
   end
 
   # A list of Diagram objects
@@ -135,7 +159,7 @@ module Gliffy
   end
 
   # A gliffy diagram (or, rather, the meta data about that diagram)
-  class Diagram
+  class Diagram < ActiveGliffyObject
 
     attr_reader :id
     attr_reader :num_versions
@@ -213,9 +237,10 @@ module Gliffy
         @list << Folder.new(element)
       end
     end
+
   end
 
-  class Folder
+  class Folder < ActiveGliffyObject
 
     # An array of Folder objects that are contained within this folder
     # If this is empty, it means this Folder is a leaf
@@ -244,6 +269,11 @@ module Gliffy
     def default?
       @default
     end
+
+    def handle=(handle)
+      @handle = handle
+      @child_folders.each() { |child| child.handle=handle }
+    end
   end
 
   # A list of User objects
@@ -261,7 +291,7 @@ module Gliffy
   end
 
   # A user of Gliffy
-  class User
+  class User < ActiveGliffyObject
 
     # The user's username, which is their identifier within an account
     attr_reader :username

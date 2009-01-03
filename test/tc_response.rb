@@ -8,7 +8,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_empty
     xml = File.read("test/xml/empty.xml")
-    response = Response.parse(xml)
+    response = Response.from_xml(xml)
 
     assert_equal(true,response.success?)
 
@@ -16,7 +16,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_error
     xml = File.read("test/xml/error.xml")
-    error = Response.parse(xml)
+    error = Response.from_xml(xml)
 
     assert_equal(false,error.success?)
     assert_equal(404,error.http_status)
@@ -25,7 +25,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_users
     xml = File.read("test/xml/users.xml");
-    users = Response.parse(xml)
+    users = Response.from_xml(xml)
 
     assert_equal(true,users.success?)
 
@@ -35,7 +35,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_bad_account
     xml = File.read("test/xml/accounts_bad.xml")
     assert_raises(RuntimeError) do
-      response = Response.parse(xml)
+      response = Response.from_xml(xml)
     end
   end
 
@@ -66,7 +66,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_launch_link
     xml = File.read("test/xml/launch_link.xml")
-    link = Response.parse(xml)
+    link = Response.from_xml(xml)
     assert_equal(true,link.success?)
 
     assert_equal("Some Diagram Name & Stuff",link.diagram_name)
@@ -77,7 +77,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_diagrams
 
     xml = File.read("test/xml/diagrams.xml")
-    diagrams = Response.parse(xml)
+    diagrams = Response.from_xml(xml)
     assert_equal(true,diagrams.success?)
 
     assert_equal(3,diagrams.length)
@@ -119,7 +119,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_user_token
     xml = File.read("test/xml/user_token.xml")
-    user_token = Response.parse(xml)
+    user_token = Response.from_xml(xml)
 
     assert_equal(true,user_token.success?)
 
@@ -130,7 +130,7 @@ class TC_testResponse < Test::Unit::TestCase
   def test_folders
 
     xml = File.read("test/xml/folders.xml")
-    folders = Response.parse(xml)
+    folders = Response.from_xml(xml)
     assert_equal(true,folders.success?)
 
     assert_equal(1,folders.length)
@@ -182,7 +182,7 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_accounts
     xml = File.read("test/xml/accounts.xml")
-    accounts = Response.parse(xml)
+    accounts = Response.from_xml(xml)
     assert_equal(true,accounts.success?)
 
     assert_equal(2,accounts.length)

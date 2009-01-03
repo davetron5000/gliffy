@@ -1,19 +1,38 @@
 require 'rexml/document'
+require 'array_has_response'
+
 include REXML
 
 module Gliffy
 
-  # Encapsulates a response from Gliffy.  The element accessor provides
-  # access to the actual element in question.  The class method
-  # of element can provide you information as to what the response is
-  # (though it should be known from context).  Instances can
-  # be obtained via the parse method.
+  # Base class for Gliffy response.  This class is also the entry point
+  # for parsing Gliffy XML:
+  #    
+  #     xml = get_xml_from_gliffy
+  #     response = self.from_xml(xml)
+  #     # response is now a Response or subclass of response
+  #     if response.success?
+  #       if response.not_modified?
+  #         # use the item(s) from your local cache
+  #       else
+  #         # it should be what you expect, e.g. Diagram, array of Users, etc.
+  #       end
+  #     else
+  #       puts response.message # in this case it's an Error
+  #     end
+  #
+  #
   class Response
 
     # Creates a Response based on the XML passed in.
     # The xml can be anything passable to REXML::Document.new, such as
     # a Document, or a string containing XML
-    def self.parse(xml)
+    #
+    # This will return a Response, a subclass of Response, or an array of
+    # Response/subclass of Response objects.  In the case where an array is returned
+    # both success? and not_modified? may be called, so the idiom in the class Rdoc should
+    # be usable regardless of return value
+    def self.from_xml(xml)
       root = Document.new(xml).root
       not_modified = root.attributes['not-modified'] == "true"
       success = root.attributes['success'] == "true"
@@ -48,7 +67,6 @@ module Gliffy
 
     def initialize; end
 
-
     # Converts a dash-delimited string to a camel-cased classname
     def self.to_classname(name)
       classname = ""
@@ -57,48 +75,6 @@ module Gliffy
       end
       classname
     end
-  end
-
-  # Defines basic array operations needed by 
-  # the various container classes.
-  # To mix this in, define a member variable
-  # @list, that contains the items in the array.
-  module ContainerArray
-    def each
-      @list.each { |item| yield item }
-    end
-
-    def <<(element)
-      @list << element
-    end
-
-    def [](index)
-      @list[index]
-    end
-
-    def length
-      @list.length
-    end
-  end
-
-  # Represents a list of Account objects
-  class Accounts < Response
-
-    include Enumerable
-    include ContainerArray
-
-    def self.from_xml(element)
-      accounts = Accounts.new
-      element.each_element do |element|
-        accounts << Account.from_xml(element)
-      end
-      accounts
-    end
-
-    protected
-
-    def initialize; @list = Array.new; end
-
   end
 
   # Represents on account
@@ -134,6 +110,8 @@ module Gliffy
       Account.new(id,type,name,max_users,expiration_date,users)
     end
 
+    protected
+
     def initialize(id,type,name,max_users,expiration_date,users=nil)
       @id = id
       @type = type
@@ -145,27 +123,6 @@ module Gliffy
 
   end
 
-  # A list of Diagram objects
-  class Diagrams < Response
-
-    include Enumerable
-    include ContainerArray
-
-    def self.from_xml(element)
-      diagrams = Diagrams.new
-      if (element)
-        element.each_element do |element|
-          diagrams << Diagram.from_xml(element)
-        end
-      end
-      diagrams
-    end
-
-    protected
-
-    def initialize; @list = Array.new; end
-
-  end
 
   # A gliffy diagram (or, rather, the meta data about that diagram)
   class Diagram < Response
@@ -198,6 +155,18 @@ module Gliffy
       Diagram.new(id,name,owner_username,is_public,is_private,num_versions,create_date,mod_date,published_date)
     end
 
+    # True if this diagram is public
+    def is_public?
+      @is_public
+    end
+
+    # True if this diagram is private (and available only
+    # to the owner and account administrators)
+    def is_private?
+      @is_private
+    end
+
+    protected 
     def initialize(id,name,owner_username,is_public,is_private,num_versions,create_date,mod_date,published_date)
       @id = id
       @name = name
@@ -210,16 +179,6 @@ module Gliffy
       @published_date = published_date
     end
 
-    # True if this diagram is public
-    def is_public?
-      @is_public
-    end
-
-    # True if this diagram is private (and available only
-    # to the owner and account administrators)
-    def is_private?
-      @is_private
-    end
   end
 
   # A link to edit a specific gliffy diagram
@@ -263,30 +222,24 @@ module Gliffy
 
   end
 
-  # A list of folders.  Note that this only
-  # represents the top level access to the folders
-  # (see Folder below)
-  class Folders < Response
-
-    include Enumerable
-    include ContainerArray
-
+  class ArrayResponseParser
     def self.from_xml(element)
-      folders = Folders.new
+      single_classname = self.to_s.gsub(/s$/,'').gsub(/Gliffy::/,'')
+      klass = Gliffy.const_get(single_classname)
+      list = Array.new
       if (element)
         element.each_element do |element|
-          folders << Folder.from_xml(element)
+          list << klass.from_xml(element)
         end
       end
-      folders
+      list
     end
-
-    protected
-
-    def initialize; @list = Array.new; end
-
-
   end
+
+  class Folders < ArrayResponseParser; end
+  class Diagrams < ArrayResponseParser; end
+  class Accounts < ArrayResponseParser; end
+  class Users < ArrayResponseParser; end
 
   class Folder < Response
 
@@ -311,15 +264,6 @@ module Gliffy
       Folder.new(id,name,default,path,child_folders)
     end
 
-    def initialize(id,name,default,path,child_folders)
-      @id = id
-      @name = name
-      @default = default
-      @path = path
-      @child_folders = child_folders
-    end
-
-
     # Returns true if this folder is the default folder
     # used when an operation requiring a folder
     # doesn't specify one (such as when creating a new
@@ -332,27 +276,16 @@ module Gliffy
       @handle = handle
       @child_folders.each() { |child| child.handle=handle }
     end
-  end
 
-  # A list of User objects
-  class Users < Response
+    protected 
 
-    include Enumerable
-    include ContainerArray
-
-    def self.from_xml(element)
-      users = Users.new
-      if (element)
-        element.each_element do |element|
-          users << User.from_xml(element)
-        end
-      end
-      users
+    def initialize(id,name,default,path,child_folders)
+      @id = id
+      @name = name
+      @default = default
+      @path = path
+      @child_folders = child_folders
     end
-
-    protected
-
-    def initialize; @list = Array.new; end
   end
 
   # A user of Gliffy
@@ -377,16 +310,18 @@ module Gliffy
       User.new(id,is_admin,username,email)
     end
 
+    # Returns true if this user is an admin of the account in which they live
+    def is_admin?
+      @is_admin
+    end
+
+    protected
+
     def initialize(id,is_admin,username,email)
       @id = id
       @is_admin = is_admin
       @username = username
       @email = email
-    end
-
-    # Returns true if this user is an admin of the account in which they live
-    def is_admin?
-      @is_admin
     end
 
   end

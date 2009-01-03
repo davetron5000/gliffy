@@ -1,5 +1,6 @@
 require 'rake/clean'
 require 'rake/rdoctask'
+require 'rcov/rcovtask'
 #require 'rubygems'
 #require 'rake/gempackagetask'
 
@@ -17,6 +18,7 @@ end
 desc 'Runs tests'
 task :test do |t|
     $: << 'lib'
+    $: << 'ext'
     $: << 'test'
     require 'tc_response.rb'
     require 'tc_signing.rb'
@@ -31,11 +33,17 @@ task :clobber_coverage do
 end
 
 desc 'Measures test coverage'
-task :coverage => :clobber_coverage do
-    rcov = "rcov -Ilib"
-    system("#{rcov} test/tc_*.rb")
+task :coverage => :rcov do
     system("open coverage/index.html") if PLATFORM['darwin']
     rm output_yaml
 end
+
+Rcov::RcovTask.new do |t|
+  t.libs << 'lib'
+  t.libs << 'ext'
+  t.test_files = FileList['test/tc_*.rb']
+  # t.verbose = true     # uncomment to see the executed command
+end
+
 
 task :default => :test

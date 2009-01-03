@@ -94,7 +94,7 @@ module Gliffy
       request_url = create_url(url,params)
       @logger.debug("#{method.to_s.upcase} #{request_url}")
       xml = @rest_client.send(method,request_url,headers)
-      response = Response.parse(xml)
+      response = Response.from_xml(xml)
       return response
     end
 

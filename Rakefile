@@ -21,9 +21,9 @@ task :test do |t|
     require 'tc_response.rb'
     require 'tc_signing.rb'
     require 'tc_rest.rb'
-    Test::Unit::UI::Console::TestRunner.run(TC_testRest)
+#    Test::Unit::UI::Console::TestRunner.run(TC_testRest)
     Test::Unit::UI::Console::TestRunner.run(TC_testResponse)
-    Test::Unit::UI::Console::TestRunner.run(TC_testSigning)
+#    Test::Unit::UI::Console::TestRunner.run(TC_testSigning)
 end
 
 task :clobber_coverage do

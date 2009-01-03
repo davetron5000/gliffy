@@ -11,25 +11,23 @@ class TC_testResponse < Test::Unit::TestCase
     response = Response.parse(xml)
 
     assert_equal(true,response.success?)
-    assert_equal(nil,response.element)
 
   end
 
   def test_error
     xml = File.read("test/xml/error.xml")
-    response = Response.parse(xml)
+    error = Response.parse(xml)
 
-    assert_equal(false,response.success?)
-    assert_equal(404,response.element.http_status)
-    assert_equal("That diagram couldn't be found, yo.",response.element.message)
+    assert_equal(false,error.success?)
+    assert_equal(404,error.http_status)
+    assert_equal("That diagram couldn't be found, yo.",error.message)
   end
 
   def test_users
     xml = File.read("test/xml/users.xml");
-    response = Response.parse(xml)
+    users = Response.parse(xml)
 
-    assert_equal(true,response.success?)
-    users = response.element
+    assert_equal(true,users.success?)
 
     assert_users(users)
   end
@@ -68,21 +66,19 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_launch_link
     xml = File.read("test/xml/launch_link.xml")
-    response = Response.parse(xml)
-    assert_equal(true,response.success?)
+    link = Response.parse(xml)
+    assert_equal(true,link.success?)
 
-    assert_equal("Some Diagram Name & Stuff",response.element.diagram_name)
-    assert_equal("http://www.gliffy.com/rest/diagram_launch.jsp?id=56&foo=bar",response.element.url)
+    assert_equal("Some Diagram Name & Stuff",link.diagram_name)
+    assert_equal("http://www.gliffy.com/rest/diagram_launch.jsp?id=56&foo=bar",link.url)
 
   end
 
   def test_diagrams
 
     xml = File.read("test/xml/diagrams.xml")
-    response = Response.parse(xml)
-    assert_equal(true,response.success?)
-
-    diagrams = response.element
+    diagrams = Response.parse(xml)
+    assert_equal(true,diagrams.success?)
 
     assert_equal(3,diagrams.length)
 
@@ -123,22 +119,19 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_user_token
     xml = File.read("test/xml/user_token.xml")
-    response = Response.parse(xml)
+    user_token = Response.parse(xml)
 
-    assert_equal(true,response.success?)
-    token = response.element
+    assert_equal(true,user_token.success?)
 
-    assert_equal(Time.at(1276432200),token.expiration)
-    assert_equal('qwertyuiipasdfghjkl',token.token)
+    assert_equal(Time.at(1276432200),user_token.expiration)
+    assert_equal('qwertyuiipasdfghjkl',user_token.token)
   end
 
   def test_folders
 
     xml = File.read("test/xml/folders.xml")
-    response = Response.parse(xml)
-    assert_equal(true,response.success?)
-
-    folders = response.element
+    folders = Response.parse(xml)
+    assert_equal(true,folders.success?)
 
     assert_equal(1,folders.length)
 
@@ -189,10 +182,8 @@ class TC_testResponse < Test::Unit::TestCase
 
   def test_accounts
     xml = File.read("test/xml/accounts.xml")
-    response = Response.parse(xml)
-    assert_equal(true,response.success?)
-
-    accounts = response.element
+    accounts = Response.parse(xml)
+    assert_equal(true,accounts.success?)
 
     assert_equal(2,accounts.length)
 

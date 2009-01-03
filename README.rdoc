@@ -1,12 +1,2 @@
 <em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.</em>
 
-Basically, this will work like this:
-
-  handle = GliffyHandle.new(Rest.new(api_key,secret_key),account_name,username)
-  account = handle.account
-  my_application_session[:gliffy_account] = account
-
-  diagrams = account.all_diagrams
-  diagrams.each() do |diagram|
-    puts "<img src='#{diagram.image_url(:thumbnail)}'> - <a href='#{diagram.edit_url}'>Edit</a><br />"
-  end

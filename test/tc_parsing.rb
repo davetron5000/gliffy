@@ -9,7 +9,7 @@ require 'test/unit/ui/console/testrunner'
 
 include Gliffy
 
-class TC_testResponse < Test::Unit::TestCase
+class TC_testParsing < Test::Unit::TestCase
 
   def test_empty
     xml = File.read("test/xml/empty.xml")
@@ -131,11 +131,6 @@ class TC_testResponse < Test::Unit::TestCase
     assert_equal(Time.at(1276432200),user_token.expiration)
     assert_equal('qwertyuiipasdfghjkl',user_token.token)
     assert(!user_token.expired?)
-  end
-
-  def test_token_expired
-    token = UserToken.new(Time.now,'asdfasdfasdfasdf')
-    assert(token.expired?)
   end
 
   def test_folders

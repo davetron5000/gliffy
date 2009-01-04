@@ -65,12 +65,7 @@ module Gliffy
     def success=(s); @success = s; end
     def not_modified=(s); @not_modified = s; end
 
-    # Provides access to the rest implementation
-    def self.rest; @@rest; end
-
     protected
-
-    @@rest=Gliffy::Rest.new
 
     def initialize
       @success = true

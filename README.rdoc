@@ -4,20 +4,21 @@ The Gliffy PHP client (as it stands currently) was designed as more of a set of 
 
 A typical interaction might look like this:
 
-    def on_app_startup
-      @account = Account.find('my gliffy account name')
-    end
-
     def on_user_login
-      @me = @account.users['user']
+      @me = User.initiate_session('my username in gliffy')
+      # user is created if needed
     end
 
     def view_my_diagrams(folder=nil)
       if !folder
         @diagrams = @me.diagrams
       else
-        @diagrams = @me.folders[folder].diagrams
+        @diagrams = @me.folders.by_name(folder).diagrams
       end
+    end
+
+    def view_other_users
+      @other_users = @me.account.users
     end
 
 I'm not sure if this will totally work in a way that keeps Gliffy API calls to a minimum (e.g. the <tt>folders[folder].diagrams</tt> might be hard to do as just one call), but this is the basic idea.

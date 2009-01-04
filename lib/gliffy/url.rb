@@ -5,8 +5,12 @@ module Gliffy
   class SignedURL
 
     def initialize(api_key,secret_key,url_root,url)
-      @logger = Logger.new(Config.log_device)
-      @logger.level = Config.log_level
+      raise ArgumentError.new("api_key is required") if !api_key
+      raise ArgumentError.new("secret_key is required") if !secret_key
+      raise ArgumentError.new("url_root is required") if !url_root
+      raise ArgumentError.new("url is required") if !url_root
+      @logger = Logger.new(Config.config.log_device)
+      @logger.level = Config.config.log_level
       @params = Hash.new
       @params['apiKey'] = api_key
       @secret_key = secret_key

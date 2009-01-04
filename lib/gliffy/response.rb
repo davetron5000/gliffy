@@ -1,5 +1,6 @@
 require 'rexml/document'
 require 'array_has_response'
+require 'gliffy/rest'
 
 include REXML
 
@@ -65,7 +66,10 @@ module Gliffy
 
     protected
 
-    def initialize; end
+    @@rest = Gliffy::Rest.new
+
+    def initialize
+    end
 
     # Converts a dash-delimited string to a camel-cased classname
     def self.to_classname(name)
@@ -108,6 +112,11 @@ module Gliffy
       users = Users.from_xml(element.elements['users'])
 
       Account.new(id,type,name,max_users,expiration_date,users)
+    end
+
+    # Finds an account named account_name.  Will always return a Response instance.
+    def self.find(account_name)
+      @@rest.get("/accounts/#{account_name}")
     end
 
     protected
@@ -270,11 +279,6 @@ module Gliffy
     # diagram)
     def default?
       @default
-    end
-
-    def handle=(handle)
-      @handle = handle
-      @child_folders.each() { |child| child.handle=handle }
     end
 
     protected 

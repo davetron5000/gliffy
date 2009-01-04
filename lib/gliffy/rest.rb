@@ -4,7 +4,11 @@ require 'rubygems'
 require 'request_errors'
 require 'resource'
 require 'rest_client'
-require 'gliffy/response.rb'
+
+require 'gliffy/response'
+require 'gliffy/config'
+require 'gliffy/url'
+
 require 'logger'
 
 module Gliffy
@@ -30,9 +34,6 @@ module Gliffy
     # returning nil if none has been set
     attr_accessor :current_token
 
-    # refs to the RestClient implementation
-    attr_accessor :rest_client
-
     # Provides access to the logger
     # Do not set this to nil
     attr_accessor :logger
@@ -48,12 +49,15 @@ module Gliffy
       @secret_key = secret_key
       @gliffy_root = gliffy_root
       @current_token = nil
-      @rest_client = RestClient
-      @logger = Logger.new(STDERR)
-      @logger.level = Logger::DEBUG
+      self.rest_client=RestClient
+      @logger = Logger.new(Config.log_device)
+      @logger.level = Config.log_level
 
       @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{gliffy_root}")
     end
+
+    def rest_client=(client); @rest_client = client; end
+    def rest_client; @rest_client; end
 
     # Gets the resource without attempting to parse.  This is useful if the expected
     # representation type is not the Gliffy XML format
@@ -107,72 +111,11 @@ module Gliffy
 
 
     def create_url(url,params)
-      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url,@logger)
+      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url)
       url.params=params if params
       url['token'] = @current_token if @current_token
 
       url.full_url
     end
   end
-
-  # Handles signing and assembling the URL
-  class SignedURL
-
-    def initialize(api_key,secret_key,url_root,url,logger=nil)
-      @logger = logger
-      if (!@logger)
-        @logger = Logger.new(STDERR)
-        @logger.level = Logger::DEBUG
-      end
-      @params = Hash.new
-      @params['apiKey'] = api_key
-      @secret_key = secret_key
-      @url_root = url_root
-      @url = url
-    end
-
-    # Sets a request parameter
-    #
-    # [param] the name of the parameter, as a string
-    # [value] the value of the parameter, unencoded
-    #
-    def []=(param,value)
-      if (param == 'apiKey')
-        raise ArgumentError.new('You may not override the api_key in this way')
-      end
-      @params[param] = value
-    end
-
-    # Sets all request parameters to those in the hash.
-    def params=(params_hash)
-      api_key = @params['apiKey']
-      @params.replace(params_hash)
-      @params['apiKey'] = api_key
-    end
-
-    # Gets the full URL, signed and ready to be requested
-    def full_url
-      @logger.debug("Getting full_url of #{@url}")
-      to_sign = @url
-      url_params = Hash.new
-      @params.keys.sort.each do |key|
-        @logger.debug("Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}")
-        to_sign += key
-        to_sign += @params[key]
-        url_params[key.to_s] = @params[key]
-      end
-      to_sign += @secret_key
-      signature = Digest::MD5.hexdigest(to_sign)
-      url_params['signature'] = signature
-
-      url = @url_root + @url + '?'
-      url_params.keys.sort.each do |key|
-        val = CGI::escape(url_params[key])
-        url += "#{key}=#{val}&"
-      end
-      url.gsub!(/\&$/,'')
-      return url
-    end
-  end
-
 end

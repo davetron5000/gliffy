@@ -97,10 +97,6 @@ module Gliffy
     attr_reader :max_users
     # A Time representing the date on which this account expires
     attr_reader :expiration_date
-    # Returns a Users representing the users that
-    # were included.  If users were not included
-    # in the response, this will be an empty array
-    attr_reader :users
 
     def self.from_xml(element)
       id = element.attributes['id'].to_i
@@ -131,55 +127,42 @@ module Gliffy
       end
     end
 
-    # Re-fetches the users from the server
-    def users!
-      new_users = Response.from_xml(@@rest.get(create_url("users")))
-      if (new_users.success?)
-        @users=new_users
-      else
-        return new_users
-      end
-      @users
-    end
+    @@fake_methods = {
+      :users => true,
+      :diagrams => true,
+      :folders => true,
+      :users! => true,
+      :diagrams! => true,
+      :folders! => true,
+    }
 
-    # Returns the diagrams last retrieved by the server
-    def diagrams
-      if !@diagrams
-        diagrams!
+    # This handles the logic for accessing these six methods:
+    #
+    #   +users+ - returns account users as last fetched, fetching if needed
+    #   +users!+ - returns account users fetching always
+    #   +diagrams+ - returns account diagrams as last fetched, fetching if needed
+    #   +diagrams!+ - returns account diagrams fetching always
+    #   +folders+ - returns account folders as last fetched, fetching if needed
+    #   +folders!+ - returns account folders fetching always
+    #
+    def method_missing(symbol,*args)
+      if @@fake_methods[symbol]
+        name = symbol.to_s.gsub(/\!$/,'')
+        current_val = eval("@#{name}")
+        if symbol.to_s.match(/\!$/) || !current_val
+          new_val = Response.from_xml(@@rest.get(create_url(name)))
+          if (new_val.success?)
+            eval("@#{name} = new_val")
+          else
+            return new_val
+          end
+          eval("@#{name}")
+        else
+          current_val
+        end
       else
-        @diagrams
+        super.method_missing(symbol,*args)
       end
-    end
-
-    # Re-fetches the diagrams from the server
-    def diagrams!
-      new_diagrams = Response.from_xml(@@rest.get(create_url("diagrams")))
-      if (new_diagrams.success?)
-        @diagrams=new_diagrams
-      else
-        return new_diagrams
-      end
-      @diagrams
-    end
-
-    # Returns the folders last retrieved by the server
-    def folders
-      if !@folders
-        folders!
-      else
-        @folders
-      end
-    end
-
-    # Re-fetches the folders from the server
-    def folders!
-      new_folders = Response.from_xml(@@rest.get(create_url("folders")))
-      if (new_folders.success?)
-        @folders=new_folders
-      else
-        return new_folders
-      end
-      @folders
     end
 
     protected

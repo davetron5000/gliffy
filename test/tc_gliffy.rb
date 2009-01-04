@@ -64,6 +64,13 @@ class TC_testGliffy < Test::Unit::TestCase
   def test_account_diagrams
     account = Account.find(@account_name)
     assert_equal(4,account.diagrams!.length)
+    assert_equal(4,account.diagrams.length)
   end
+
+  def test_account_diagrams_auto_fetch
+    account = Account.find(@account_name)
+    assert_equal(4,account.diagrams.length)
+  end
+
 
 end

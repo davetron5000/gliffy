@@ -17,7 +17,7 @@ module Gliffy
     attr_accessor :api_key
     attr_accessor :secret_key
 
-    @@instance = Config.new
+    @@instance=nil
 
     def initialize
       @log_level = Logger::DEBUG
@@ -29,36 +29,9 @@ module Gliffy
     end
 
     def self.config=(config); @@instance = config; end
-    def self.config; @@instance; end
-
-    # Returns the log level for all logger
-    def self.log_level
-      @@instance.log_level
-    end
-
-    # Returns the "device" for logging, either a string (filename) or an IO instance
-    def self.log_device
-      @@instance.log_device
-    end
-
-    # Returns the root to the Gliffy API
-    def self.gliffy_root
-      @@instance.gliffy_root
-    end
-
-    # Returns the protocol to use, either 'http', or 'https'
-    def self.protocol
-      @@instance.protocol
-    end
-
-    # Returns your api key
-    def self.api_key
-      @@instance.api_key
-    end
-
-    # Returns your secret key
-    def self.secret_key
-      @@instance.secret_key
+    def self.config
+      @@instance = Config.new if !@@instance
+      @@instance
     end
   end
 end

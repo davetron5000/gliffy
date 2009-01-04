@@ -44,15 +44,12 @@ module Gliffy
     # Create an accessor to the Gliffy REST api
     #
     def initialize
-      @api_key = Config.api_key
-      @secret_key = Config.secret_key
-      @gliffy_root = Config.gliffy_root
       @current_token = nil
       self.rest_client=RestClient
-      @logger = Logger.new(Config.log_device)
-      @logger.level = Config.log_level
+      @logger = Logger.new(Config.config.log_device)
+      @logger.level = Config.config.log_level
 
-      @logger.debug("Creating #{self.class.to_s} with api_key of #{@api_key} against #{@gliffy_root}")
+      @logger.debug("Creating #{self.class.to_s} with api_key of #{Config.config.api_key} against #{Config.config.gliffy_root}")
     end
 
     # Returns the complete URL that would be requested for
@@ -97,7 +94,7 @@ module Gliffy
 
 
     def create_url(url,params)
-      url = SignedURL.new(@api_key,@secret_key,@gliffy_root,url)
+      url = SignedURL.new(Config.config.api_key,Config.config.secret_key,Config.config.gliffy_root,url)
       url.params=params if params
       url['token'] = @current_token if @current_token
 

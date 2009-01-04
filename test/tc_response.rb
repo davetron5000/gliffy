@@ -1,3 +1,4 @@
+require 'gliffy/config'
 require 'gliffy/response'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'

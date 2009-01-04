@@ -21,13 +21,11 @@ task :test do |t|
     $: << 'ext'
     $: << 'test'
     require 'gliffy/config'
-    class Gliffy::Config
-      def self.log_level; Logger::INFO; end
-    end
     require 'tc_response.rb'
     require 'tc_signing.rb'
     require 'tc_rest.rb'
     require 'tc_gliffy.rb'
+    Gliffy::Config.config.log_level = Logger::INFO
     Test::Unit::UI::Console::TestRunner.run(TC_testRest)
     Test::Unit::UI::Console::TestRunner.run(TC_testResponse)
     Test::Unit::UI::Console::TestRunner.run(TC_testSigning)

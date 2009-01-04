@@ -34,6 +34,7 @@ module Gliffy
     # both success? and not_modified? may be called, so the idiom in the class Rdoc should
     # be usable regardless of return value
     def self.from_xml(xml)
+      raise ArgumentError.new("xml may not be null to #{to_s}.from_xml") if !xml
       root = Document.new(xml).root
       not_modified = root.attributes['not-modified'] == "true"
       success = root.attributes['success'] == "true"
@@ -64,11 +65,16 @@ module Gliffy
     def success=(s); @success = s; end
     def not_modified=(s); @not_modified = s; end
 
+    # Provides access to the rest implementation
+    def self.rest; @@rest; end
+
     protected
 
-    @@rest = Gliffy::Rest.new
+    @@rest=Gliffy::Rest.new
 
     def initialize
+      @success = true
+      @not_modified = false
     end
 
     # Converts a dash-delimited string to a camel-cased classname
@@ -116,12 +122,19 @@ module Gliffy
 
     # Finds an account named account_name.  Will always return a Response instance.
     def self.find(account_name)
-      @@rest.get("/accounts/#{account_name}")
+      accounts = Response.from_xml(@@rest.get("/accounts/#{account_name}"))
+      if (accounts.success?)
+        accounts.each { |account| return account if account.name == account_name }
+        Error.new("No account named #{account_name}",404)
+      else
+        accounts
+      end
     end
 
     protected
 
     def initialize(id,type,name,max_users,expiration_date,users=nil)
+      super()
       @id = id
       @type = type
       @name = name
@@ -177,6 +190,7 @@ module Gliffy
 
     protected 
     def initialize(id,name,owner_username,is_public,is_private,num_versions,create_date,mod_date,published_date)
+      super()
       @id = id
       @name = name
       @owner_username = owner_username
@@ -207,6 +221,7 @@ module Gliffy
     protected
 
     def initialize(name,url)
+      super()
       @diagram_name = name
       @url = url
     end
@@ -225,6 +240,7 @@ module Gliffy
     protected
 
     def initialize(expiration,token)
+      super()
       @expiration = expiration
       @token = token
     end
@@ -284,6 +300,7 @@ module Gliffy
     protected 
 
     def initialize(id,name,default,path,child_folders)
+      super()
       @id = id
       @name = name
       @default = default
@@ -322,6 +339,7 @@ module Gliffy
     protected
 
     def initialize(id,is_admin,username,email)
+      super()
       @id = id
       @is_admin = is_admin
       @username = username
@@ -344,9 +362,8 @@ module Gliffy
       Error.new(message,http_status)
     end
 
-    protected
-
     def initialize(message,http_status)
+      super()
       @message = message
       @http_status = http_status
     end

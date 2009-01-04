@@ -3,29 +3,55 @@ require 'gliffy/response'
 require 'gliffy/rest'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
+require 'webrick'
 
 include Gliffy
+include WEBrick
 
 class TC_testGliffy < Test::Unit::TestCase
 
+  class MockRestClient
+
+    def initialize
+    end
+
+    def get(url,headers)
+      path = url.gsub(/\?.*$/,'')
+      File.read("#{path}/index.xml")
+    end
+
+    def put(url,headers)
+    end
+
+    def post(url,headers)
+    end
+
+    def delete(url,headers)
+    end
+  end
+
   def setup
+    Gliffy::Config.config.gliffy_root='test/test_doc_root'
+    Gliffy::Response.rest.rest_client=MockRestClient.new
   end
 
-  def test_noop
-  end
-
-  def not_ready_test_init
+  def test_init
 
     account_name = 'Naildrivin5'
     account = Account.find(account_name)
 
     assert_not_nil(account)
-    assert(account.success?,account.message)
+    if !account.success?
+      if account.respond_to? :message
+        assert(false,account.message)
+      else
+        assert(false,"Success FALSE, and returned object was a #{account.class.to_s}, which was not expected")
+      end
+    end
 
     assert_equal(account_name,account.name)
     assert_equal(100,account.max_users)
     assert_equal(:basic,account.type)
-    assert_equal(5,account.users.size)
   end
 
 end

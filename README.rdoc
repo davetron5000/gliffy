@@ -1,24 +1,9 @@
 <em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.</em>
 
-The Gliffy PHP client (as it stands currently) was designed as more of a set of global functions, all namespaced into a master "Gliffy" handle-type object.  This makes things pretty simple, from a PHP perspective, but isn't very object-oriented.  Since Ruby is not as procedural as PHP, my design approach here is to mimic the so called "active object" pattern as seen in ActiveRecord and ActiveResource.  It seems like I can't really use much of ActiveResource, so I'm going to roll my own means of doing this. 
+I was initially going to try to do a domain-object style API, but I don't think that's a) easy and b) terribly useful.
 
-A typical interaction might look like this:
+The main problem is that each call needs to have a user token as well as some account-specific stuff, so the entire entrance
+to the API needs to be on a "per-user-session" basis.  It is not clear to me how to accomplish that without some
+very strange global handles and singletons, which, ultimately, might lead to a very surprising API.
 
-    def on_user_login
-      @me = User.initiate_session('my username in gliffy')
-      # user is created if needed
-    end
 
-    def view_my_diagrams(folder=nil)
-      if !folder
-        @diagrams = @me.diagrams
-      else
-        @diagrams = @me.folders.by_name(folder).diagrams
-      end
-    end
-
-    def view_other_users
-      @other_users = @me.account.users
-    end
-
-I'm not sure if this will totally work in a way that keeps Gliffy API calls to a minimum (e.g. the <tt>folders[folder].diagrams</tt> might be hard to do as just one call), but this is the basic idea.

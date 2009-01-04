@@ -44,9 +44,6 @@ module Gliffy
     attr_reader :email
     attr_reader :id
 
-    # The UserToken currently assigned to this user (this won't necessarily have a value)
-    attr_accessor :token
-
     def self.from_xml(element)
       id = element.attributes['id'].to_i
       is_admin = false
@@ -62,54 +59,7 @@ module Gliffy
       @is_admin
     end
 
-    def self.initiate_session(username,rest=nil)
-      raise ArgumentError('username is required') if !username
-      logger = Logger.new(Config.config.log_device)
-      logger.level = Config.config.log_level
-      rest = Rest.new if !rest
-
-      account_name = Config.config.account_name
-      token = Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/token"))
-      if (token.success?)
-        rest.current_token = token.token
-        users = Response.from_xml(rest.get("/accounts/#{account_name}/users"))
-        if (users.success?)
-          users.each do |user|
-            if user.username == username
-              user.token = token
-              user.rest = rest
-              return user
-            end
-          end
-          logger.error('Got the list of users, but didn''t find the user in that list?!?!?')
-          Error.new("Although we got a token for #{username}, we couldn't find that user in the account's user list.  Something is very wrong",404);
-        else
-          logger.error('Problem getting user after successful retrieval of token');
-          user # this is an Error actually
-        end
-      else
-        logger.warn('Couldn''t get token');
-        token # this is an Error actually
-      end
-    end
-
-    def folders
-      refresh_token if token.expired?
-      Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/folders"))
-    end
-
     protected
-
-    def account_name
-      Config.config.account_name
-    end
-
-    def refresh_token
-      token = Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/token"))
-      if (token.success?)
-        rest.current_token = token.token
-      end
-    end
 
     def initialize(id,is_admin,username,email)
       super()

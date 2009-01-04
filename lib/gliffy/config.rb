@@ -20,12 +20,24 @@ module Gliffy
       STDERR
     end
 
+    # Returns the root to the Gliffy API
     def self.gliffy_root
       "#{protocol}://www.gliffy.com/gliffy/rest"
     end
 
+    # Returns the protocol to use, either 'http', or 'https'
     def self.protocol
       'http'
+    end
+
+    # Returns your api key
+    def self.api_key
+      'no api key specified'
+    end
+
+    # Returns your secret key
+    def self.secret_key
+      'no secret key specified'
     end
   end
 end

@@ -33,12 +33,20 @@ class TC_testRest < Test::Unit::TestCase
     def self.gliffy_root
       'http://www.google.com'
     end
+
+    def self.api_key
+      'abcdefghijklmnop'
+    end
+
+    def self.secret_key
+      'qwertyuiop'
+    end
   end
 
   def setup
-    @api_key = 'abcdefghijklmnop'
-    @secret = 'qwertyuiop'
-    @rest = Rest.new(@api_key,@secret)
+    @api_key = Gliffy::Config.api_key
+    @secret = Gliffy::Config.secret_key
+    @rest = Rest.new
     @root = Gliffy::Config.gliffy_root
     @simple_url = "/accounts/Naildrivin5"
     @params = {

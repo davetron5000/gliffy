@@ -1,5 +1,9 @@
 require 'gliffy/config'
 require 'gliffy/response'
+require 'gliffy/user'
+require 'gliffy/diagram'
+require 'gliffy/folder'
+require 'gliffy/account'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 

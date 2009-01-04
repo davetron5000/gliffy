@@ -1,34 +1,18 @@
 --- !ruby/object:Claret::Project 
 items: 
-- &id002 !ruby/object:Claret::Task 
-  contributes_to: 
-  - &id003 !ruby/object:Claret::Task 
-    contributes_to: 
-    - &id001 !ruby/object:Claret::Task 
-      contributes_to: 
-      - &id004 !ruby/object:Claret::Task 
-        contributes_to: []
+- !ruby/object:Claret::Task 
+  contributes_to: []
 
-        dependents: 
-        - *id001
-        id: 3
-        name: consider setting up integration tests against my basic account
-      dependents: 
-      - *id003
-      - *id002
-      id: 4
-      name: high level interface to rest calls
-    dependents: 
-    - *id002
-    id: 2
-    name: manual tests of post and delete
-  - *id001
   dependents: []
 
   id: 1
-  name: implement post and delete
-- *id003
-- *id004
-- *id001
-name: Ruby Gliffy
-next_id: 5
+  name: Figure out a good way to configuration
+- !ruby/object:Claret::Task 
+  contributes_to: []
+
+  dependents: []
+
+  id: 2
+  name: Set up a fake web server to test the rest client/parsing
+name: Gliffy Ruby API
+next_id: 3

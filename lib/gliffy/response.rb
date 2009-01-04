@@ -122,16 +122,51 @@ module Gliffy
 
     # Finds an account named account_name.  Will always return a Response instance.
     def self.find(account_name)
-      accounts = Response.from_xml(@@rest.get("/accounts/#{account_name}"))
+      accounts = Response.from_xml(@@rest.get("/accounts/#{account_name}",{'showUsers' => 'true'}))
       if (accounts.success?)
         accounts.each { |account| return account if account.name == account_name }
-        Error.new("No account named #{account_name}",404)
+        return Error.new("No account named #{account_name}",404)
       else
-        accounts
+        return accounts
       end
     end
 
+    # Re-fetches the users from the server
+    def users!
+      new_users = Response.from_xml(@@rest.get(create_url("users")))
+      if (new_users.success?)
+        @users=new_users
+      else
+        return new_users
+      end
+      @users
+    end
+
+    # Returns the diagrams last retrieved by the server
+    def diagrams
+      if !@diagrams
+        diagrams!
+      else
+        @diagrams
+      end
+    end
+
+    # Re-fetches the diagrams from the server
+    def diagrams!
+      new_diagrams = Response.from_xml(@@rest.get(create_url("diagrams")))
+      if (new_diagrams.success?)
+        @diagrams=new_diagrams
+      else
+        return new_diagrams
+      end
+      @diagrams
+    end
+
     protected
+
+    def create_url(url_fragment="")
+      "/accounts/#{name}/#{url_fragment}"
+    end
 
     def initialize(id,type,name,max_users,expiration_date,users=nil)
       super()

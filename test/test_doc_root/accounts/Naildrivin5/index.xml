@@ -5,6 +5,18 @@
       <name>Naildrivin5</name>
       <!-- June 13, 2010, 12:30:00 -->
       <expiration-date>1276432200000</expiration-date>
+      <users>
+        <user id="45" is-admin="true">
+          <username>davetron5000</username>
+          <email>davetron5000@blah.com</email>
+        </user>
+        <user id="446" is-admin="false">
+          <username>foobar</username>
+        </user>
+        <user id="333">
+          <email>blah.crud@something.info</email>
+        </user>
+      </users>
     </account>
   </accounts>
 </response>

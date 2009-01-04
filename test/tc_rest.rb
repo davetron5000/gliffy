@@ -21,15 +21,22 @@ class MockRestClient
 
 end
 
+class Gliffy::Rest
+  def rest_client=(client)
+    @rest_client=MockRestClient.new
+  end
+end
+
 class TC_testRest < Test::Unit::TestCase
+
 
   def setup
     @api_key = 'abcdefghijklmnop'
     @secret = 'qwertyuiop'
     @root = 'http://www.google.com'
     @rest = Rest.new(@api_key,@secret,@root)
-    @mock_rest_client = MockRestClient.new
-    @rest.rest_client = @mock_rest_client
+    #@mock_rest_client = MockRestClient.new
+    #@rest.rest_client = @mock_rest_client
     @simple_url = "/accounts/Naildrivin5"
     @params = {
       'foo' => 'bar',
@@ -103,13 +110,13 @@ class TC_testRest < Test::Unit::TestCase
 
   def do_asserts(method,headers,expected_url)
 
-    assert_equal(method,@mock_rest_client.method_requested)
-    assert_equal(expected_url,@mock_rest_client.url_requested)
-    assert_equal(headers.length,@mock_rest_client.headers_sent.length)
+    assert_equal(method,@rest.rest_client.method_requested)
+    assert_equal(expected_url,@rest.rest_client.url_requested)
+    assert_equal(headers.length,@rest.rest_client.headers_sent.length)
     headers.each_pair do |key,value|
-      assert_equal(value,@mock_rest_client.headers_sent[key])
+      assert_equal(value,@rest.rest_client.headers_sent[key])
     end
-    @mock_rest_client.headers_sent.each_pair do |key,value|
+    @rest.rest_client.headers_sent.each_pair do |key,value|
       assert_equal(value,headers[key])
     end
   end

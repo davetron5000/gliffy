@@ -72,5 +72,13 @@ class TC_testGliffy < Test::Unit::TestCase
     assert_equal(4,account.diagrams.length)
   end
 
+  def test_account_folders
+    account = Account.find(@account_name)
+    folders = account.folders
+    assert(1,folders.length)
+    assert(1,folders[0].child_folders.length)
+    assert(3,folders[0].child_folders[0].child_folders.length)
+  end
+
 
 end

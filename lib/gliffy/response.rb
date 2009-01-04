@@ -162,6 +162,26 @@ module Gliffy
       @diagrams
     end
 
+    # Returns the folders last retrieved by the server
+    def folders
+      if !@folders
+        folders!
+      else
+        @folders
+      end
+    end
+
+    # Re-fetches the folders from the server
+    def folders!
+      new_folders = Response.from_xml(@@rest.get(create_url("folders")))
+      if (new_folders.success?)
+        @folders=new_folders
+      else
+        return new_folders
+      end
+      @folders
+    end
+
     protected
 
     def create_url(url_fragment="")

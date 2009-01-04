@@ -44,18 +44,17 @@ module Gliffy
     #
     # [api_key] your Gliffy API key
     # [secret_key] the shared secret for signing requests
-    # [gliffy_root] root URL of the Gliffy API
     #
-    def initialize(api_key,secret_key,gliffy_root = 'http://www.gliffy.com/gliffy/rest')
+    def initialize(api_key,secret_key)
       @api_key = api_key
       @secret_key = secret_key
-      @gliffy_root = gliffy_root
+      @gliffy_root = Config.gliffy_root
       @current_token = nil
       self.rest_client=RestClient
       @logger = Logger.new(Config.log_device)
       @logger.level = Config.log_level
 
-      @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{gliffy_root}")
+      @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{@gliffy_root}")
     end
 
     # Gets the resource without attempting to parse.  This is useful if the expected

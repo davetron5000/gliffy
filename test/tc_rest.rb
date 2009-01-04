@@ -29,14 +29,17 @@ end
 
 class TC_testRest < Test::Unit::TestCase
 
+  class Gliffy::Config
+    def self.gliffy_root
+      'http://www.google.com'
+    end
+  end
 
   def setup
     @api_key = 'abcdefghijklmnop'
     @secret = 'qwertyuiop'
-    @root = 'http://www.google.com'
-    @rest = Rest.new(@api_key,@secret,@root)
-    #@mock_rest_client = MockRestClient.new
-    #@rest.rest_client = @mock_rest_client
+    @rest = Rest.new(@api_key,@secret)
+    @root = Gliffy::Config.gliffy_root
     @simple_url = "/accounts/Naildrivin5"
     @params = {
       'foo' => 'bar',

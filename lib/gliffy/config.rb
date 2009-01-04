@@ -19,6 +19,14 @@ module Gliffy
     def self.log_device
       STDERR
     end
+
+    def self.gliffy_root
+      "#{protocol}://www.gliffy.com/gliffy/rest"
+    end
+
+    def self.protocol
+      'http'
+    end
   end
 end
 

@@ -16,6 +16,10 @@ module Gliffy
       UserToken.new(expiration,token)
     end
 
+    def expired?
+      Time.now > expiration
+    end
+
     protected
 
     def initialize(expiration,token)
@@ -60,8 +64,8 @@ module Gliffy
 
     def self.initiate_session(username,rest=nil)
       raise ArgumentError('username is required') if !username
-      @logger = Logger.new(Config.config.log_device)
-      @logger.level = Config.config.log_level
+      logger = Logger.new(Config.config.log_device)
+      logger.level = Config.config.log_level
       rest = Rest.new if !rest
 
       account_name = Config.config.account_name
@@ -77,19 +81,35 @@ module Gliffy
               return user
             end
           end
-          @logger.error('Got the list of users, but didn''t find the user in that list?!?!?')
+          logger.error('Got the list of users, but didn''t find the user in that list?!?!?')
           Error.new("Although we got a token for #{username}, we couldn't find that user in the account's user list.  Something is very wrong",404);
         else
-          @logger.error('Problem getting user after successful retrieval of token');
+          logger.error('Problem getting user after successful retrieval of token');
           user # this is an Error actually
         end
       else
-        @logger.warn('Couldn''t get token');
+        logger.warn('Couldn''t get token');
         token # this is an Error actually
       end
     end
 
+    def folders
+      refresh_token if token.expired?
+      Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/folders"))
+    end
+
     protected
+
+    def account_name
+      Config.config.account_name
+    end
+
+    def refresh_token
+      token = Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/token"))
+      if (token.success?)
+        rest.current_token = token.token
+      end
+    end
 
     def initialize(id,is_admin,username,email)
       super()

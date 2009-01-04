@@ -29,21 +29,11 @@ end
 
 class TC_testRest < Test::Unit::TestCase
 
-  class Gliffy::Config
-    def self.gliffy_root
-      'http://www.google.com'
-    end
-
-    def self.api_key
-      'abcdefghijklmnop'
-    end
-
-    def self.secret_key
-      'qwertyuiop'
-    end
-  end
-
   def setup
+    Gliffy::Config.config.api_key = 'abcdefghijklmnop'
+    Gliffy::Config.config.secret_key = 'qwertyuiop'
+    Gliffy::Config.config.gliffy_root = 'http://www.google.com'
+
     @api_key = Gliffy::Config.api_key
     @secret = Gliffy::Config.secret_key
     @rest = Rest.new

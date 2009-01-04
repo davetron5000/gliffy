@@ -38,6 +38,8 @@ module Gliffy
     # Do not set this to nil
     attr_accessor :logger
 
+    attr_accessor :rest_client
+
     # Create an accessor to the Gliffy REST api
     #
     # [api_key] your Gliffy API key
@@ -55,9 +57,6 @@ module Gliffy
 
       @logger.debug("Creating #{self.class.to_s} with api_key of #{api_key} against #{gliffy_root}")
     end
-
-    def rest_client=(client); @rest_client = client; end
-    def rest_client; @rest_client; end
 
     # Gets the resource without attempting to parse.  This is useful if the expected
     # representation type is not the Gliffy XML format
@@ -91,7 +90,7 @@ module Gliffy
       end
     end
 
-    private
+    protected
 
     def make_rest_request(method,url,params,headers)
       headers = Hash.new if !headers

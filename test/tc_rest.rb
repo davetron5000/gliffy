@@ -81,11 +81,6 @@ class TC_testRest < Test::Unit::TestCase
   def test_post_with_params_and_headers; test(:post,@params,@headers); end
   def test_delete_with_params_and_headers; test(:delete,@params,@headers); end
 
-  def test_get_raw
-    xml = @rest.get_raw(@simple_url)
-    assert_equal(xml,MockRestClient::XML)
-  end
-
   def test_bad_method_call
     assert_raises(NoMethodError) do
       @rest.head(@simple_url)

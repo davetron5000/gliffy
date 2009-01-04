@@ -5,7 +5,6 @@ require 'request_errors'
 require 'resource'
 require 'rest_client'
 
-require 'gliffy/response'
 require 'gliffy/config'
 require 'gliffy/url'
 
@@ -54,14 +53,6 @@ module Gliffy
       @logger.debug("Creating #{self.class.to_s} with api_key of #{@api_key} against #{@gliffy_root}")
     end
 
-    # Gets the resource without attempting to parse.  This is useful if the expected
-    # representation type is not the Gliffy XML format
-    def get_raw(url,params=nil,headers={})
-      request_url = create_url(url,params)
-      @logger.debug("GET #{request_url}")
-      @rest_client.get(request_url,headers)
-    end
-
     # Returns the complete URL that would be requested for
     # the given URL and parameters
     #
@@ -92,9 +83,7 @@ module Gliffy
       headers = Hash.new if !headers
       request_url = create_url(url,params)
       @logger.debug("#{method.to_s.upcase} #{request_url}")
-      xml = @rest_client.send(method,request_url,headers)
-      response = Response.from_xml(xml)
-      return response
+      @rest_client.send(method,request_url,headers)
     end
 
     HTTP_METHODS = {

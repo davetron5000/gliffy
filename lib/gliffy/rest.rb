@@ -13,7 +13,7 @@ require 'logger'
 module Gliffy
 
   # Provides REST access to Gliffy, handling the signing of the requests
-  # and parsing of the results.  This class responds to the four primary HTTP methods:
+  # but not the parsing of the results.  This class responds to the four primary HTTP methods:
   #
   # * get
   # * put
@@ -25,7 +25,9 @@ module Gliffy
   # [params] - a hash of parameters to include in the request (these are specific to the request, not things like apiKey or token)
   # [headers] - any HTTP headers you want to set
   #
-  # params and headers are optional.
+  # params and headers are optional.  These methods return whatever Gliffy sent back.  The context
+  # of the request should be used to determine the type, however it should be relatively safe to call
+  # Response#success? on whatever is returned to determine if everythign was OK
   #
   class Rest
 

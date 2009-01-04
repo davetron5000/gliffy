@@ -16,6 +16,7 @@ module Gliffy
     attr_accessor :protocol
     attr_accessor :api_key
     attr_accessor :secret_key
+    attr_accessor :account_name
 
     @@instance=nil
 
@@ -26,6 +27,7 @@ module Gliffy
       @gliffy_root = "#{@protocol}://www.gliffy.com/gliffy/rest"
       @api_key = 'no api key specified'
       @secret_key = 'no secret key specified'
+      @account_name = 'no account name specified'
     end
 
     def self.config=(config); @@instance = config; end

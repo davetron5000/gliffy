@@ -65,6 +65,9 @@ module Gliffy
     def success=(s); @success = s; end
     def not_modified=(s); @not_modified = s; end
 
+    # Provides access to the rest implementation
+    attr_accessor :rest
+
     protected
 
     def initialize

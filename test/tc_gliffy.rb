@@ -34,6 +34,16 @@ class TC_testGliffy < Test::Unit::TestCase
     end
   end
 
-  def test_noop
+  def setup
+    @rest = Rest.new
+    @rest.rest_client = MockRestClient.new
+    Gliffy::Config.config.account_name='Naildrivin5'
+    Gliffy::Config.config.gliffy_root='test/test_doc_root'
+  end
+
+  def test_initiate
+    user = User.initiate_session('davetron5000',@rest)
+    assert(user.success?,user.respond_to?(:message) ? user.message : "Got a #{user.class.to_s} instead of a Gliffy::Response")
+    assert_equal('davetron5000',user.username)
   end
 end

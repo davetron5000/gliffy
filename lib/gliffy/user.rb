@@ -28,7 +28,7 @@ module Gliffy
 
   class Users < ArrayResponseParser; end
 
-  # A user of Gliffy
+  # A user of Gliffy and the main entry point to using the API (see #initiate_session)
   class User < Response
 
     # The user's username, which is their identifier within an account
@@ -39,6 +39,9 @@ module Gliffy
     # assigned by the system unless overridden by the API.
     attr_reader :email
     attr_reader :id
+
+    # The UserToken currently assigned to this user (this won't necessarily have a value)
+    attr_accessor :token
 
     def self.from_xml(element)
       id = element.attributes['id'].to_i
@@ -53,6 +56,37 @@ module Gliffy
     # Returns true if this user is an admin of the account in which they live
     def is_admin?
       @is_admin
+    end
+
+    def self.initiate_session(username,rest=nil)
+      raise ArgumentError('username is required') if !username
+      @logger = Logger.new(Config.config.log_device)
+      @logger.level = Config.config.log_level
+      rest = Rest.new if !rest
+
+      account_name = Config.config.account_name
+      token = Response.from_xml(rest.get("/accounts/#{account_name}/users/#{username}/token"))
+      if (token.success?)
+        rest.current_token = token.token
+        users = Response.from_xml(rest.get("/accounts/#{account_name}/users"))
+        if (users.success?)
+          users.each do |user|
+            if user.username == username
+              user.token = token
+              user.rest = rest
+              return user
+            end
+          end
+          @logger.error('Got the list of users, but didn''t find the user in that list?!?!?')
+          Error.new("Although we got a token for #{username}, we couldn't find that user in the account's user list.  Something is very wrong",404);
+        else
+          @logger.error('Problem getting user after successful retrieval of token');
+          user # this is an Error actually
+        end
+      else
+        @logger.warn('Couldn''t get token');
+        token # this is an Error actually
+      end
     end
 
     protected

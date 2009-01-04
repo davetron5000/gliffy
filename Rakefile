@@ -20,16 +20,18 @@ task :test do |t|
     $: << 'lib'
     $: << 'ext'
     $: << 'test'
+    require 'gliffy/config'
+    class Gliffy::Config
+      def self.log_level; Logger::INFO; end
+    end
     require 'tc_response.rb'
     require 'tc_signing.rb'
     require 'tc_rest.rb'
-    require 'gliffy/config'
-    class Gliffy::Config
-        def self.log_level; Logger::INFO; end
-    end
+    require 'tc_gliffy.rb'
     Test::Unit::UI::Console::TestRunner.run(TC_testRest)
     Test::Unit::UI::Console::TestRunner.run(TC_testResponse)
     Test::Unit::UI::Console::TestRunner.run(TC_testSigning)
+    Test::Unit::UI::Console::TestRunner.run(TC_testGliffy)
 end
 
 task :clobber_coverage do

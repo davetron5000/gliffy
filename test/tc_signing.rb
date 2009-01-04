@@ -1,4 +1,4 @@
-require 'gliffy/rest'
+require 'gliffy/url'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 

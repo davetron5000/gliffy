@@ -119,5 +119,9 @@ module Gliffy
       @http_status = http_status
     end
 
+    def to_s
+      "#{@http_status}: #{@message}"
+    end
+
   end
 end

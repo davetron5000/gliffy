@@ -96,7 +96,7 @@ module Gliffy
     def create_url(url,params)
       url = SignedURL.new(Config.config.api_key,Config.config.secret_key,Config.config.gliffy_root,url)
       url.params=params if params
-      url['token'] = @current_token if @current_token
+      url['token'] = @current_token.token if @current_token
 
       url.full_url
     end

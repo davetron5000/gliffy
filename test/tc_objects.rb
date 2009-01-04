@@ -9,4 +9,8 @@ class TC_testObjects < Test::Unit::TestCase
     assert(token.expired?)
   end
 
+  def test_error_to_s
+    assert_equal("404: blah",Error.new("blah",404).to_s)
+  end
+
 end

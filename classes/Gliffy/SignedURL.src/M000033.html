@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>full_url (Gliffy::SignedURL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_url</span>
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Getting full_url of #{@url}&quot;</span>)
+      <span class="ruby-identifier">to_sign</span> = <span class="ruby-ivar">@url</span>
+      <span class="ruby-identifier">url_params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-ivar">@params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}&quot;</span>)
+        <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">key</span>
+        <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">url_params</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">to_s</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@secret_key</span>
+      <span class="ruby-identifier">signature</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">to_sign</span>)
+      <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^0/</span>,<span class="ruby-value str">''</span>)
+      <span class="ruby-identifier">url_params</span>[<span class="ruby-value str">'signature'</span>] = <span class="ruby-identifier">signature</span>
+
+      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@url_root</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@url</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'?'</span>
+      <span class="ruby-identifier">url_params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">val</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">url_params</span>[<span class="ruby-identifier">key</span>])
+        <span class="ruby-identifier">url</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{key}=#{val}&amp;&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\&amp;$/</span>,<span class="ruby-value str">''</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

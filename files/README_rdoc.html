@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jan 04 22:47:37 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<em>The <a href="../classes/Gliffy.html">Gliffy</a> API is currently in
+private beta. This will be a Ruby implementation to access your <a
+href="../classes/Gliffy.html">Gliffy</a> account. In progress for the
+moment.</em>
+</p>
+<p>
+Main entry point is <a
+href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>. Here&#8216;s an
+example of getting the list of diagrams and then downloading the first one
+as a JPEG
+</p>
+<pre>
+    Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'
+    Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'
+    Gliffy::Config.config.account_name='Initech'
+
+    handle = Gliffy::Handle.new('lumberg@initech.com')
+
+    diagrams = handle.get_diagrams
+    diagram_name_safe = diagrams[0].name.gsub(/ /,'_')
+    handle.get_diagram_as_image(diagrams[0].id,:mime_type =&gt; :jpeg,:file=&gt;&quot;#{diagram_name_safe}.jpg&quot;)
+</pre>
+<p>
+The <a href="../classes/Gliffy/Handle.html">Gliffy::Handle</a> is a
+<b>user-session based connection</b> to <a
+href="../classes/Gliffy.html">Gliffy</a>. You shoudl therefore engineer
+your application to keep one of these per user who will access <a
+href="../classes/Gliffy.html">Gliffy</a> and <b>not</b> make a global
+instance.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

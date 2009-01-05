@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Gliffy::Rest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 46</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-ivar">@current_token</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rest_client</span>=<span class="ruby-constant">RestClient</span>
+      <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_device</span>)
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_level</span>
+
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Creating #{self.class.to_s} with api_key of #{Config.config.api_key} against #{Config.config.gliffy_root}&quot;</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

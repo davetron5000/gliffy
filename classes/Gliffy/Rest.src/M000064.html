@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>make_rest_request (Gliffy::Rest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 95</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_rest_request</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)
+      <span class="ruby-identifier">headers</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>
+      <span class="ruby-identifier">request_url</span> = <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>)
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;#{method.to_s.upcase} #{request_url}&quot;</span>)
+      <span class="ruby-ivar">@rest_client</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">request_url</span>,<span class="ruby-identifier">headers</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

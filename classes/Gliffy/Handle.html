@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Gliffy::Handle</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Gliffy::Handle</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/gliffy/gliffy_rb.html">
+                lib/gliffy/gliffy.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A &quot;handle&quot; to access <a href="../Gliffy.html">Gliffy</a> on a
+per-user-session basis Since most calls to gliffy require a user-token,
+this class encapsulates that token and the calls made under it.
+</p>
+<p>
+The methods here are designed to raise exceptions if there are problems
+from <a href="../Gliffy.html">Gliffy</a>. These problems usually indicate a
+programming error or a server-side problem with <a
+href="../Gliffy.html">Gliffy</a> and are generally unhandleable. However,
+if you wish to do something better than simply raise an exception you may
+override <a href="Handle.html#M000059">handle_error</a> to do something
+else
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000038">add_user</a>&nbsp;&nbsp;
+      <a href="#M000039">add_user_to_folder</a>&nbsp;&nbsp;
+      <a href="#M000040">create_diagram</a>&nbsp;&nbsp;
+      <a href="#M000041">create_folder</a>&nbsp;&nbsp;
+      <a href="#M000042">delete_diagram</a>&nbsp;&nbsp;
+      <a href="#M000043">delete_folder</a>&nbsp;&nbsp;
+      <a href="#M000044">delete_user</a>&nbsp;&nbsp;
+      <a href="#M000045">get_admins</a>&nbsp;&nbsp;
+      <a href="#M000046">get_diagram_as_image</a>&nbsp;&nbsp;
+      <a href="#M000047">get_diagram_as_url</a>&nbsp;&nbsp;
+      <a href="#M000048">get_diagram_meta_data</a>&nbsp;&nbsp;
+      <a href="#M000049">get_diagrams</a>&nbsp;&nbsp;
+      <a href="#M000050">get_edit_diagram_link</a>&nbsp;&nbsp;
+      <a href="#M000051">get_folders</a>&nbsp;&nbsp;
+      <a href="#M000052">get_user_folders</a>&nbsp;&nbsp;
+      <a href="#M000053">get_users</a>&nbsp;&nbsp;
+      <a href="#M000059">handle_error</a>&nbsp;&nbsp;
+      <a href="#M000054">has_token</a>&nbsp;&nbsp;
+      <a href="#M000055">move_diagram</a>&nbsp;&nbsp;
+      <a href="#M000037">new</a>&nbsp;&nbsp;
+      <a href="#M000056">remove_user_from_folder</a>&nbsp;&nbsp;
+      <a href="#M000058">update_token</a>&nbsp;&nbsp;
+      <a href="#M000057">update_user</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000037.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000037.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a <a href="Handle.html#M000037">new</a> handle to gliffy for the
+given user. Tokens will be requested as needed
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000038.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000038.html');return false;">
+          <span class="method-name">add_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds a <a href="Handle.html#M000037">new</a> user explicitly.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000039.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000039.html');return false;">
+          <span class="method-name">add_user_to_folder</span><span class="method-args">(username,folder_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Allows <tt>username</tt> to access <tt>folder_path</tt> and all its child
+folders
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000040.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000040.html');return false;">
+          <span class="method-name">create_diagram</span><span class="method-args">(diagram_name,template_diagram_id=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a <a href="Handle.html#M000037">new</a> blank diagram (or based on
+an existing one)
+</p>
+<dl>
+<dt><tt>diagram_name</tt></dt><dd>the name of the <a href="Handle.html#M000037">new</a> diagram
+
+</dd>
+<dt><tt>template_diagram_id</tt></dt><dd>the id of a diagram to use as a template. You must have access to this
+diagram
+
+</dd>
+</dl>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000041.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000041.html');return false;">
+          <span class="method-name">create_folder</span><span class="method-args">(folder_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a folder with the given name. The parent path should already exist
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000042.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000042.html');return false;">
+          <span class="method-name">delete_diagram</span><span class="method-args">(diagram_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+deletes the diagram with the given id. <b>This cannot be undone</b>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000043.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000043.html');return false;">
+          <span class="method-name">delete_folder</span><span class="method-args">(folder_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes a folder, moving all diagrams in it to the default folder. The
+folder must be empty <b>This cannot be undone</b>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000044.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000044.html');return false;">
+          <span class="method-name">delete_user</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes the user from this account. May not be the user who owns the token
+for this session (i.e. was passed to the constructor). <b>This cannot be
+undone</b>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000045.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000045.html');return false;">
+          <span class="method-name">get_admins</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of <a href="User.html">User</a> objects representing the
+admins of the account
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000046.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000046.html');return false;">
+          <span class="method-name">get_diagram_as_image</span><span class="method-args">(diagram_id,options={:mime_type =&gt; :jpeg})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the diagram as an image, possibly saving it to a file.
+</p>
+<dl>
+<dt><tt>diagram_id</tt></dt><dd>the id of the diagram to get
+
+</dd>
+<dt><tt>options</tt></dt><dd>a hash of options controlling the diagram and how it&#8216;s fetched
+
+<dl>
+<dt><tt>:size</tt></dt><dd>one of :thumbnail, :small, :medium, or :large (default is :large)
+
+</dd>
+<dt><tt>:file</tt></dt><dd>if present, the diagram is written to the named file
+
+</dd>
+<dt><tt>:mime_type</tt></dt><dd>the mime type to retrie. You can also use :jpeg, :png and :svg as shortcuts
+(default is :jpeg)
+
+</dd>
+<dt><tt>:version</tt></dt><dd>if present, the version number to retrieve (default is most recent)
+
+</dd>
+</dl>
+</dd>
+</dl>
+<p>
+returns the bytes of the diagram if file was nil, otherwise, returns true
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000047.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000047.html');return false;">
+          <span class="method-name">get_diagram_as_url</span><span class="method-args">(diagram_id,options={:mime_type =&gt; :jpeg})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns the URL that would get the diagram in question. Same parameters as
+<a href="Handle.html#M000046">get_diagram_as_image</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000048.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000048.html');return false;">
+          <span class="method-name">get_diagram_meta_data</span><span class="method-args">(diagram_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+GliffyDiagram getDiagramMetaData (integer $diagramId)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000049.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000049.html');return false;">
+          <span class="method-name">get_diagrams</span><span class="method-args">(folder_path=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets a list of diagrams, either for the given folder, or the entire account
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000050.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000050.html');return false;">
+          <span class="method-name">get_edit_diagram_link</span><span class="method-args">(diagram_id,return_url=nil,return_text=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the link that can be used <b>by this user while his token is valid</b>
+to edit the diagram.
+</p>
+<dl>
+<dt><tt>diagram_id</tt></dt><dd>the id of the diagram to edit
+
+</dd>
+<dt><tt>return_url</tt></dt><dd>if present represents the URL to return the user to after they have
+completed their editing. You should not urlencode this, it will be done for
+you
+
+</dd>
+<dt><tt>return_text</tt></dt><dd>the text that should be used in <a href="../Gliffy.html">Gliffy</a> to
+represent the &quot;return to the application&quot; button.
+
+</dd>
+</dl>
+<p>
+returns a <a href="LaunchLink.html">Gliffy::LaunchLink</a> that contains
+the complete URL to be used to edit the given diagram and behave as
+described. The GliffyLaunchLink also contains the diagram name, which can
+be used for linking. Note that the url is relative to the <a
+href="../Gliffy.html">Gliffy</a> website
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000051.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000051.html');return false;">
+          <span class="method-name">get_folders</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+array getFolders ()
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000052.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000052.html');return false;">
+          <span class="method-name">get_user_folders</span><span class="method-args">(username)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the folders that <tt>username</tt> has access to, in nested form
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000053.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000053.html');return false;">
+          <span class="method-name">get_users</span><span class="method-args">(folder_path=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the users in the given folder, or in the entire account
+</p>
+<dl>
+<dt><tt>folder_path</tt></dt><dd>if present, returns users with access to this folder
+
+</dd>
+</dl>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000059.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000059.html');return false;">
+          <span class="method-name">handle_error</span><span class="method-args">(error_response,action_cause=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Override this if you want error handling that doesn&#8216;t rasie an
+exception
+</p>
+<dl>
+<dt><tt>error_response</tt></dt><dd>an <a href="Error.html">Error</a> object that holds the error from <a
+href="../Gliffy.html">Gliffy</a>
+
+</dd>
+<dt><tt>action_cause</tt></dt><dd>a string describing the action being taken when the error ocurred
+
+</dd>
+</dl>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000054.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000054.html');return false;">
+          <span class="method-name">has_token</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns true if the user currently has a token
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000055.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000055.html');return false;">
+          <span class="method-name">move_diagram</span><span class="method-args">(diagram_id,folder_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+move diagram <tt>diagram_id</tt> to folder path <tt>folder_path</tt>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000056.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000056.html');return false;">
+          <span class="method-name">remove_user_from_folder</span><span class="method-args">(username,folder_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Revokes <tt>username</tt> access to <tt>folder_path</tt>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000058.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000058.html');return false;">
+          <span class="method-name">update_token</span><span class="method-args">(force=false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Updates the user&#8216;s token, if he needs it
+</p>
+<pre>
+  [+force+] if true, the token is updated regardless
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="Handle.src/M000057.html" target="Code" class="method-signature"
+            onclick="popupCode('Handle.src/M000057.html');return false;">
+          <span class="method-name">update_user</span><span class="method-args">(username,attributes)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Updates the user.
+</p>
+<dl>
+<dt><tt>username</tt></dt><dd>user to update
+
+</dd>
+<dt><tt>attributes</tt></dt><dd>has of attributes to change.
+
+<dl>
+<dt><tt>:email</tt></dt><dd>email address
+
+</dd>
+<dt><tt>:password</tt></dt><dd>password for logging into <a href="../Gliffy.html">Gliffy</a> Online
+
+</dd>
+<dt><tt>:admin</tt></dt><dd>true to make them an admin, false to revoke their admin-ness
+
+</dd>
+</dl>
+</dd>
+</dl>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -70,6 +70,9 @@ module Gliffy
       do_simple_rest(:delete,"diagrams/#{diagram_id}","Deleting diagram #{diagram_id}")
     end
 
+    # Deletes a folder, moving all diagrams in it to the default folder. 
+    # The folder must be empty
+    # <b>This cannot be undone</b>
     def delete_folder(folder_path)
       folder_path = Folder.encode_path_elements(folder_path)
       do_simple_rest(:delete,"folders/#{folder_path}","Deleting folder #{folder_path}")
@@ -157,10 +160,6 @@ module Gliffy
       do_simple_rest(:get,'folders','Getting folders for account')
     end
 
-    # array getUserDiagrams ([string $username = null])
-    def get_user_diagrams(username=nil)
-    end
-
     # Gets the folders that +username+ has access to, in nested form
     def get_user_folders(username)
       do_simple_rest(:get,"users/#{username}/folders","Getting folders for user #{username}")
@@ -201,9 +200,9 @@ module Gliffy
     #
     # [+username+] user to update
     # [+attributes+] has of attributes to change.
-    #                [<tt>:email</tt>] - email address
-    #                [<tt>:password</tt>] - password for logging into Gliffy Online
-    #                [<tt>:admin</tt>] - true to make them an admin, false to revoke their admin-ness
+    #                [<tt>:email</tt>] email address
+    #                [<tt>:password</tt>] password for logging into Gliffy Online
+    #                [<tt>:admin</tt>] true to make them an admin, false to revoke their admin-ness
     # 
     def update_user(username,attributes)
       params = Hash.new

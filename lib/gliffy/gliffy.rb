@@ -31,10 +31,14 @@ module Gliffy
 
     # Adds a new user explicitly.  
     def add_user(username)
-      do_simple_rest(:put,url("users/#{username}"),"Create user #{username}")
+      do_simple_rest(:put,"users/#{username}","Create user #{username}")
     end
 
-    def add_user_to_folder(folder_name,username)
+    # Allows +username+ to access +folder_path+ and all its child folders
+    def add_user_to_folder(username,folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      # DRY
+      do_simple_rest(:put,"folders/#{folder_path}/users/#{username}","Adding #{username} to #{folder_path}")
     end
 
     # Creates a new blank diagram (or based on an existing one)
@@ -145,6 +149,7 @@ module Gliffy
 
     # array getFolders ()
     def get_folders()
+      do_simple_rest(:get,'folders','Getting folders for account')
     end
 
     # array getUserDiagrams ([string $username = null])
@@ -155,8 +160,17 @@ module Gliffy
     def get_user_folders(username)
     end
 
-    # array getUsers ([string $folderName = null])
-    def get_users(folder_name=nil)
+    # Gets the users in the given folder, or in the entire account
+    #
+    # [+folder_path+] if present, returns users with access to this folder
+    def get_users(folder_path=nil)
+      url = ''
+      if (folder_path)
+        folder_path = Folder.encode_path_elements(folder_path)
+        url += "folders/#{folder_path}/"
+      end
+      url += 'users'
+      do_simple_rest(:get,url,"Getting users for " + (folder_path ? "folder #{folder_path}" : 'account'))
     end
 
     # returns true if the user currently has a token
@@ -170,8 +184,11 @@ module Gliffy
       do_simple_rest(:put,"folders/#{folder_path}/diagrams/#{diagram_id}","Moving #{diagram_id} to folder #{folder_path}")
     end
 
-    # void removeUserFromFolder (string $folderName, stinrg $username)
-    def remove_user_from_folder(folder_name,username)
+    # Revokes +username+ access to +folder_path+
+    def remove_user_from_folder(username,folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      # DRY
+      do_simple_rest(:delete,"folders/#{folder_path}/users/#{username}","Delete #{username} from folder #{folder_path}")
     end
 
     # void updateUser (string $username, [boolean $admin = null], [string $email = null], [string $password = null])

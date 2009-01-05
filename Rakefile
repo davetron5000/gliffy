@@ -1,6 +1,14 @@
 require 'rake/clean'
 require 'rake/rdoctask'
 require 'rcov/rcovtask'
+$: << '../grancher/lib'
+require 'grancher/task'
+
+Grancher::Task.new do |g|
+  g.branch = 'gh-pages'
+  g.push_to = 'origin'
+  g.directory = 'html'
+end
 #require 'rubygems'
 #require 'rake/gempackagetask'
 
@@ -51,3 +59,5 @@ end
 
 
 task :default => :test
+
+task :publish_rdoc => [:rdoc,:publish]

@@ -1,5 +1,5 @@
 require 'rake/clean'
-require 'rake/rdoctask'
+require 'hanna/rdoctask'
 require 'rcov/rcovtask'
 $: << '../grancher/lib'
 require 'grancher/task'
@@ -13,8 +13,9 @@ end
 #require 'rake/gempackagetask'
 
 Rake::RDocTask.new do |rd|
-    rd.main = "README.rdoc"
-    rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
+  rd.main = "README.rdoc"
+  rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
+  rd.title = 'Ruby Client for Gliffy'
 end
 
 #spec = eval(File.read('rgliffy.gemspec'))

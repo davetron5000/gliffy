@@ -15,3 +15,4 @@ Main entry point is Gliffy::Handle.  Here's an example of getting the list of di
 The Gliffy::Handle is a <b>user-session based connection</b> to Gliffy.  You shoudl therefore engineer your application to keep one of these per user who will access Gliffy and *not* make a global instance.
 
 RDoc is available a http://davetron5000.github.com/gliffy
+Source is available at http://github.com/davetron5000/gliffy/tree/master

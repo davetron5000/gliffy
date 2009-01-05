@@ -31,6 +31,7 @@ module Gliffy
 
     # Adds a new user explicitly.  
     def add_user(username)
+      # DRY
       do_simple_rest(:put,"users/#{username}","Create user #{username}")
     end
 
@@ -74,7 +75,11 @@ module Gliffy
       do_simple_rest(:delete,"folders/#{folder_path}","Deleting folder #{folder_path}")
     end
 
+    # Deletes the user from this account.  May not be the user who owns the token for this
+    # session (i.e. was passed to the constructor).  <b>This cannot be undone</b>.
     def delete_user(username)
+      # DRY
+      do_simple_rest(:delete,"users/#{username}","Delete user #{username}")
     end
 
     # Returns an array of User objects representing the admins of the account
@@ -156,8 +161,9 @@ module Gliffy
     def get_user_diagrams(username=nil)
     end
 
-    # array getUserFolders (string $username)
+    # Gets the folders that +username+ has access to, in nested form
     def get_user_folders(username)
+      do_simple_rest(:get,"users/#{username}/folders","Getting folders for user #{username}")
     end
 
     # Gets the users in the given folder, or in the entire account
@@ -191,8 +197,20 @@ module Gliffy
       do_simple_rest(:delete,"folders/#{folder_path}/users/#{username}","Delete #{username} from folder #{folder_path}")
     end
 
-    # void updateUser (string $username, [boolean $admin = null], [string $email = null], [string $password = null])
-    def update_user(username,admin=nil,email=nil,password=nil)
+    # Updates the user.
+    #
+    # [+username+] user to update
+    # [+attributes+] has of attributes to change.
+    #                [<tt>:email</tt>] - email address
+    #                [<tt>:password</tt>] - password for logging into Gliffy Online
+    #                [<tt>:admin</tt>] - true to make them an admin, false to revoke their admin-ness
+    # 
+    def update_user(username,attributes)
+      params = Hash.new
+      params['admin'] = attributes[:admin].to_s if attributes.has_key? :admin
+      params['email'] = attributes[:email] if attributes[:email]
+      params['password'] = attributes[:password] if attributes[:password]
+      do_simple_rest(:put,"users/#{username}","Updating #{username}",params)
     end
 
     # Updates the user's token, if he needs it

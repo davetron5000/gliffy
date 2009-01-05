@@ -1,9 +1,3 @@
 <em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.</em>
 
-I was initially going to try to do a domain-object style API, but I don't think that's a) easy and b) terribly useful.
-
-The main problem is that each call needs to have a user token as well as some account-specific stuff, so the entire entrance
-to the API needs to be on a "per-user-session" basis.  It is not clear to me how to accomplish that without some
-very strange global handles and singletons, which, ultimately, might lead to a very surprising API.
-
-
+Main entry point is Gliffy::Handle

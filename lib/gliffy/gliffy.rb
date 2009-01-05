@@ -12,8 +12,15 @@ module Gliffy
   # A "handle" to access Gliffy on a per-user-session basis
   # Since most calls to gliffy require a user-token, this class
   # encapsulates that token and the calls made under it.
+  #
+  # The methods here are designed to raise exceptions if there are problems from Gliffy.
+  # These problems usually indicate a programming error or a server-side problem with Gliffy and
+  # are generally unhandleable.  However, if you wish to do something better than simply raise an exception
+  # you may override handle_error to do something else
+  #
   class Handle
 
+    # Create a new handle to gliffy for the given user.  Tokens will be requested as needed
     def initialize(username)
       @username = username
       @rest = Rest.new
@@ -22,25 +29,19 @@ module Gliffy
       update_token(username)
     end
 
-    # boolean addUser (string $username)
+    # Adds a new user explicitly.  
     def add_user(username)
       do_simple_rest(:put,url("users/#{username}"),"Create user #{username}")
     end
 
-    def do_simple_rest(method,url_fragment,description,params=nil)
-      update_token
-      response = Response.from_xml(@rest.send(method,url(url_fragment),params))
-      if !response.success?
-        handle_error(response,description)
-      end
-      response
-    end
-
-    # void addUserToFolder (string $folderName, string $username)
     def add_user_to_folder(folder_name,username)
     end
 
-    # integer createDiagram (string $diagramName, [int $templateDiagramId = 0])
+    # Creates a new blank diagram (or based on an existing one)
+    #
+    # [+diagram_name+] the name of the new diagram
+    # [+template_diagram_id+] the id of a diagram to use as a template.  You must have access to this diagram
+    #
     def create_diagram(diagram_name,template_diagram_id=nil)
       params = Hash.new
       params['diagramName'] = diagram_name
@@ -57,32 +58,30 @@ module Gliffy
     def create_folder(folder_name)
     end
 
-    # void deleteDiagram (integer $diagramId)
+    # deletes the diagram with the given id.  <b>This cannot be undone</b>
     def delete_diagram(diagram_id)
       do_simple_rest(:delete,"diagrams/#{diagram_id}","Deleting diagram #{diagram_id}")
     end
 
-    # void deleteFolder (string $folderName)
     def delete_folder(folder_name)
     end
 
-    # void deleteUser (string $username)
     def delete_user(username)
     end
 
-    # array getAdmins ()
+    # Returns an array of User objects representing the admins of the account
     def get_admins
       do_simple_rest(:get,'admins','Getting admins for account')
     end
 
     # Gets the diagram as an image, possibly saving it to a file.
     #
-    #   [diagram_id] the id of the diagram to get
-    #   [options] a hash of options controlling the diagram and how it's fetched
-    #     [:size] one of :thumbnail, :small, :medium, or :large (default is :large)
-    #     [:file] if present, the diagram is written to the named file
-    #     [:mime_type] the mime type to retrie.  You can also use :jpeg, :png and :svg as shortcuts (default is :jpeg)
-    #     [:version] if present, the version number to retrieve (default is most recent)
+    # [+diagram_id+] the id of the diagram to get
+    # [+options+] a hash of options controlling the diagram and how it's fetched
+    #             [<tt>:size</tt>] one of :thumbnail, :small, :medium, or :large (default is :large)
+    #             [<tt>:file</tt>] if present, the diagram is written to the named file
+    #             [<tt>:mime_type</tt>] the mime type to retrie.  You can also use :jpeg, :png and :svg as shortcuts (default is :jpeg)
+    #             [<tt>:version</tt>] if present, the version number to retrieve (default is most recent)
     #
     # returns the bytes of the diagram if file was nil, otherwise, returns true
     #
@@ -104,33 +103,21 @@ module Gliffy
       end
     end
 
-    # string getDiagramAsURL (integer $diagramId, [string $mime_type = Gliffy::MIME_TYPE_JPEG], [string $size = null], [string $version = null], [boolean $force = false])
+    # returns the URL that would get the diagram in question.  Same parameters as get_diagram_as_image
     def get_diagram_as_url(diagram_id,options={:mime_type => :jpeg})
       params,headers = create_diagram_request_info(options)
       update_token
       @rest.create_url(url("diagrams/#{diagram_id}"),params)
     end
 
-    def create_diagram_request_info(options)
-      mime_type = options[:mime_type]
-      params = Hash.new
-      params['size'] = size_to_param(options[:size]) if options[:size]
-      params['version'] = options[:version] if options[:version]
-      headers = Hash.new
-      if mime_type.is_a? Symbol
-        headers['Accept'] = mime_type_to_header(mime_type)
-      else
-        headers['Accept'] = mime_type
-      end
-      [params,headers]
-    end
-
     # GliffyDiagram getDiagramMetaData (integer $diagramId)
     def get_diagram_meta_data(diagram_id)
     end
 
-    # array getDiagrams ([string $folderName = null])
-    def get_diagrams(folder_name=nil)
+    # Gets a list of diagrams, either for the given folder, or the entire account
+    def get_diagrams(folder_path=nil)
+      url = (folder_path ? "folders/#{folder_path}/" : "") + "diagrams"
+      do_simple_rest(:get,url,"Get all folders in " + (folder_path ? folder_path : "account"))
     end
 
     # GliffyLaunchLink getEditDiagramLink (integer $diagramId, [string $returnURL = null], [string $returnText = null])
@@ -153,13 +140,14 @@ module Gliffy
     def get_users(folder_name=nil)
     end
 
-    # void hasToken ()
+    # returns true if the user currently has a token
     def has_token()
       !@rest.current_token.nil?
     end
 
-    # void moveDiagram (integer $diagramId, string $folderName)
-    def move_diagram(diagram_id,folder_name)
+    # move diagram +diagram_id+ to folder path +folder_path+
+    def move_diagram(diagram_id,folder_path)
+      do_simple_rest(:put,"folders/#{folder_path}/diagrams/#{diagram_id}","Moving #{diagram_id} to folder #{folder_path}")
     end
 
     # void removeUserFromFolder (string $folderName, stinrg $username)
@@ -169,8 +157,6 @@ module Gliffy
     # void updateUser (string $username, [boolean $admin = null], [string $email = null], [string $password = null])
     def update_user(username,admin=nil,email=nil,password=nil)
     end
-
-
 
     # Updates the user's token, if he needs it
     #
@@ -193,14 +179,42 @@ module Gliffy
     end
 
     # Override this if you want error handling that doesn't rasie an exception
+    #
+    # [+error_response+] an Error object that holds the error from Gliffy
+    # [+action_cause+] a string describing the action being taken when the error ocurred
     def handle_error(error_response,action_cause=nil)
       msg = ""
-      msg += "While #{action_cause}" if action_cause
+      msg += "While #{action_cause}: " if action_cause
       msg += error_response.to_s
       raise msg
     end
 
     private
+
+    def create_diagram_request_info(options)
+      mime_type = options[:mime_type]
+      params = Hash.new
+      params['size'] = size_to_param(options[:size]) if options[:size]
+      params['version'] = options[:version] if options[:version]
+      headers = Hash.new
+      if mime_type.is_a? Symbol
+        headers['Accept'] = mime_type_to_header(mime_type)
+      else
+        headers['Accept'] = mime_type
+      end
+      [params,headers]
+    end
+
+
+    def do_simple_rest(method,url_fragment,description,params=nil)
+      update_token
+      response = Response.from_xml(@rest.send(method,url(url_fragment),params))
+      if !response.success?
+        handle_error(response,description)
+      end
+      response
+    end
+
 
     def url(fragment)
       "/accounts/#{Config.config.account_name}/#{fragment}"

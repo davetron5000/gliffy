@@ -50,6 +50,7 @@ module Gliffy
       end
       to_sign += @secret_key
       signature = Digest::MD5.hexdigest(to_sign)
+      signature.gsub!(/^0/,'')
       url_params['signature'] = signature
 
       url = @url_root + @url + '?'

@@ -112,6 +112,9 @@ module Gliffy
 
     # GliffyDiagram getDiagramMetaData (integer $diagramId)
     def get_diagram_meta_data(diagram_id)
+      params = {'diagramId' => diagram_id}
+      diagrams = do_simple_rest(:get,'diagrams',"Getting meta data for diagram #{diagram_id}",params)
+      diagrams[0]
     end
 
     # Gets a list of diagrams, either for the given folder, or the entire account
@@ -120,8 +123,19 @@ module Gliffy
       do_simple_rest(:get,url,"Get all folders in " + (folder_path ? folder_path : "account"))
     end
 
-    # GliffyLaunchLink getEditDiagramLink (integer $diagramId, [string $returnURL = null], [string $returnText = null])
-    def get_edit_diagram_link(diagram_id,return_URL=nil,return_text=nil)
+    # Gets the link that can be used <b>by this user while his token is valid</b> to edit the diagram.
+    #
+    # [+diagram_id+] the id of the diagram to edit
+    # [+return_url+] if present represents the URL to return the user to after they have completed their editing.  You should not urlencode this, it will be done for you
+    # [+return_text+] the text that should be used in Gliffy to represent the "return to the application" button.
+    #
+    # returns a Gliffy::LaunchLink that contains the complete URL to be used to edit the given diagram and behave as described.  The GliffyLaunchLink also contains the diagram name, which can be used for linking.  Note that the url is relative to the Gliffy website
+    def get_edit_diagram_link(diagram_id,return_url=nil,return_text=nil)
+      params = Hash.new
+      params['returnURL'] = return_url if return_url
+      params['returnText'] = return_text if return_text
+
+      do_simple_rest(:get,"diagrams/#{diagram_id}/launchLink","Getting launch link for diagram #{diagram_id}",params)
     end
 
     # array getFolders ()

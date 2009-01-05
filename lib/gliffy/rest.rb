@@ -76,6 +76,20 @@ module Gliffy
       end
     end
 
+    # Create the URL that would be needed to access the given resource with the given
+    # parameters
+    #
+    #   [+url+] url, relative to the gliffy root, to retrieve
+    #   [+params+] optional hash of parameters
+    #
+    def create_url(url,params=nil)
+      url = SignedURL.new(Config.config.api_key,Config.config.secret_key,Config.config.gliffy_root,url)
+      url.params=params if params
+      url['token'] = @current_token.token if @current_token
+
+      url.full_url
+    end
+
     protected
 
     def make_rest_request(method,url,params,headers)
@@ -92,13 +106,5 @@ module Gliffy
       :post => true,
     };
 
-
-    def create_url(url,params)
-      url = SignedURL.new(Config.config.api_key,Config.config.secret_key,Config.config.gliffy_root,url)
-      url.params=params if params
-      url['token'] = @current_token.token if @current_token
-
-      url.full_url
-    end
   end
 end

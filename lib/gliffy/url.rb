@@ -45,8 +45,8 @@ module Gliffy
       @params.keys.sort.each do |key|
         @logger.debug("Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}")
         to_sign += key
-        to_sign += @params[key]
-        url_params[key.to_s] = @params[key]
+        to_sign += @params[key].to_s
+        url_params[key.to_s] = @params[key].to_s
       end
       to_sign += @secret_key
       signature = Digest::MD5.hexdigest(to_sign)

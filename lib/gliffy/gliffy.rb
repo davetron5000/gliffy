@@ -78,18 +78,51 @@ module Gliffy
     # Gets the diagram as an image, possibly saving it to a file.
     #
     #   [diagram_id] the id of the diagram to get
-    #   [mime_type] the mime type, either :jpeg, :png, or an actual mime type string
-    #   [file] if non-nil the name of the file to write the diagram to.
-    #   [size] the size of the diagram.  Currently supports :thumbnail, :small, :medium, and :large.  This sizes are porportions based on the diagram's size.  This is ignored if the mime type doesn't support it (e.g. SVG).  Null indicates to use Gliffy's default.
-    #   [version] the version to get.  A value less than or equal to the "num versions" of the diagram will be valid.  This is one-based.  A value of nil means to get the most recent version
+    #   [options] a hash of options controlling the diagram and how it's fetched
+    #     [:size] one of :thumbnail, :small, :medium, or :large (default is :large)
+    #     [:file] if present, the diagram is written to the named file
+    #     [:mime_type] the mime type to retrie.  You can also use :jpeg, :png and :svg as shortcuts (default is :jpeg)
+    #     [:version] if present, the version number to retrieve (default is most recent)
     #
     # returns the bytes of the diagram if file was nil, otherwise, returns true
     #
-    def get_diagram_as_image(diagram_id,mime_type=:jpeg,file=nil,size=nil,version=nil)
+    def get_diagram_as_image(diagram_id,options={:mime_type => :jpeg})
+      params,headers = create_diagram_request_info(options)
+      update_token
+      bytes = @rest.get(url("diagrams/#{diagram_id}"),params,headers)
+      if bytes.respond_to?(:success?) && !bytes.success?
+        handle_error(bytes,"While getting bytes of diagram #{diagram_id}")
+      else
+        if options[:file]
+          fp = File.new(options[:file],'w')
+          fp.puts bytes
+          fp.close
+          true
+        else
+          bytes
+        end
+      end
     end
 
     # string getDiagramAsURL (integer $diagramId, [string $mime_type = Gliffy::MIME_TYPE_JPEG], [string $size = null], [string $version = null], [boolean $force = false])
-    def get_diagram_as_URL(diagram_id,mime_type=:jpeg,size=nil,version=nil,force=false)
+    def get_diagram_as_url(diagram_id,options={:mime_type => :jpeg})
+      params,headers = create_diagram_request_info(options)
+      update_token
+      @rest.create_url(url("diagrams/#{diagram_id}"),params)
+    end
+
+    def create_diagram_request_info(options)
+      mime_type = options[:mime_type]
+      params = Hash.new
+      params['size'] = size_to_param(options[:size]) if options[:size]
+      params['version'] = options[:version] if options[:version]
+      headers = Hash.new
+      if mime_type.is_a? Symbol
+        headers['Accept'] = mime_type_to_header(mime_type)
+      else
+        headers['Accept'] = mime_type
+      end
+      [params,headers]
     end
 
     # GliffyDiagram getDiagramMetaData (integer $diagramId)
@@ -167,10 +200,31 @@ module Gliffy
       raise msg
     end
 
-    protected
+    private
 
     def url(fragment)
       "/accounts/#{Config.config.account_name}/#{fragment}"
     end
+
+    def mime_type_to_header(mime_type_symbol)
+      case mime_type_symbol
+      when :jpeg: 'image/jpeg'
+      when :jpg: 'image/jpeg'
+      when :png: 'image/png'
+      when :svg: 'image/svg+xml'
+      else raise "#{mime_type_symbol} is not a known mime type"
+      end
+    end
+    def size_to_param(size)
+      return nil if !size
+      case size 
+      when :thumbnail: 'T'
+      when :small: 'S'
+      when :medium: 'M'
+      when :large: 'L'
+      else raise "#{size} is not a supported size"
+      end
+    end
+
   end
 end

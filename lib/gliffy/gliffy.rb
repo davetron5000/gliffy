@@ -54,8 +54,10 @@ module Gliffy
       end
     end
 
-    # void createFolder (string $folderName)
-    def create_folder(folder_name)
+    # Creates a folder with the given name.  The parent path should already exist
+    def create_folder(folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      do_simple_rest(:put,"folders/#{folder_path}","Creating folder #{folder_path}")
     end
 
     # deletes the diagram with the given id.  <b>This cannot be undone</b>
@@ -63,7 +65,9 @@ module Gliffy
       do_simple_rest(:delete,"diagrams/#{diagram_id}","Deleting diagram #{diagram_id}")
     end
 
-    def delete_folder(folder_name)
+    def delete_folder(folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      do_simple_rest(:delete,"folders/#{folder_path}","Deleting folder #{folder_path}")
     end
 
     def delete_user(username)
@@ -119,6 +123,7 @@ module Gliffy
 
     # Gets a list of diagrams, either for the given folder, or the entire account
     def get_diagrams(folder_path=nil)
+      folder_path = Folder.encode_path_elements(folder_path) if folder_path
       url = (folder_path ? "folders/#{folder_path}/" : "") + "diagrams"
       do_simple_rest(:get,url,"Get all folders in " + (folder_path ? folder_path : "account"))
     end
@@ -161,6 +166,7 @@ module Gliffy
 
     # move diagram +diagram_id+ to folder path +folder_path+
     def move_diagram(diagram_id,folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
       do_simple_rest(:put,"folders/#{folder_path}/diagrams/#{diagram_id}","Moving #{diagram_id} to folder #{folder_path}")
     end
 

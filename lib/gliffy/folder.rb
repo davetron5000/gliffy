@@ -39,6 +39,16 @@ module Gliffy
       @default
     end
 
+    # Encodes the elements of a folder path so it can safely go into a URL
+    def self.encode_path_elements(folder_path)
+      encoded = ''
+      folder_path.split(/\//).each do |part|
+        encoded += CGI::escape(part)
+        encoded += "/"
+      end
+      encoded.gsub(/\/$/,'')
+    end
+
     protected 
 
     def initialize(id,name,default,path,child_folders)

@@ -1,4 +1,4 @@
-require 'gliffy/user'
+require 'gliffy'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 

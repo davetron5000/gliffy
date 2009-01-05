@@ -1,657 +1,619 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <title>Class: Gliffy::Handle</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-  <script type="text/javascript">
-  // <![CDATA[
-
-  function popupCode( url ) {
-    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-  }
-
-  function toggleCode( id ) {
-    if ( document.getElementById )
-      elem = document.getElementById( id );
-    else if ( document.all )
-      elem = eval( "document.all." + id );
-    else
-      return false;
-
-    elemStyle = elem.style;
-    
-    if ( elemStyle.display != "block" ) {
-      elemStyle.display = "block"
-    } else {
-      elemStyle.display = "none"
-    }
-
-    return true;
-  }
-  
-  // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
-  // ]]>
-  </script>
-
-</head>
-<body>
-
-
-
-    <div id="classHeader">
-        <table class="header-table">
-        <tr class="top-aligned-row">
-          <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Gliffy::Handle</td>
-        </tr>
-        <tr class="top-aligned-row">
-            <td><strong>In:</strong></td>
-            <td>
-                <a href="../../files/lib/gliffy/gliffy_rb.html">
-                lib/gliffy/gliffy.rb
-                </a>
-        <br />
-            </td>
-        </tr>
-
-        <tr class="top-aligned-row">
-            <td><strong>Parent:</strong></td>
-            <td>
-                Object
-            </td>
-        </tr>
-        </table>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Class: Gliffy::Handle [Ruby Client for Gliffy]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          Gliffy::Handle
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/gliffy/gliffy_rb.html">lib/gliffy/gliffy.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            A &#8220;handle&#8221; to access <a href="../Gliffy.html">Gliffy</a> on a
+            per-user-session basis Since most calls to gliffy require a user-token,
+            this class encapsulates that token and the calls made under it.
+            </p>
+            <p>
+            The methods here are designed to raise exceptions if there are problems
+            from <a href="../Gliffy.html">Gliffy</a>. These problems usually indicate a
+            programming error or a server-side problem with <a
+            href="../Gliffy.html">Gliffy</a> and are generally unhandleable. However,
+            if you wish to do something better than simply raise an exception you may
+            override <a href="Handle.html#M000059">handle_error</a> to do something
+            else
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000037">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000038">add_user</a></li>
+              <li><a href="#M000039">add_user_to_folder</a></li>
+              <li><a href="#M000040">create_diagram</a></li>
+              <li><a href="#M000041">create_folder</a></li>
+              <li><a href="#M000042">delete_diagram</a></li>
+              <li><a href="#M000043">delete_folder</a></li>
+              <li><a href="#M000044">delete_user</a></li>
+              <li><a href="#M000045">get_admins</a></li>
+              <li><a href="#M000046">get_diagram_as_image</a></li>
+              <li><a href="#M000047">get_diagram_as_url</a></li>
+              <li><a href="#M000048">get_diagram_meta_data</a></li>
+              <li><a href="#M000049">get_diagrams</a></li>
+              <li><a href="#M000050">get_edit_diagram_link</a></li>
+              <li><a href="#M000051">get_folders</a></li>
+              <li><a href="#M000052">get_user_folders</a></li>
+              <li><a href="#M000053">get_users</a></li>
+              <li><a href="#M000059">handle_error</a></li>
+              <li><a href="#M000054">has_token</a></li>
+              <li><a href="#M000055">move_diagram</a></li>
+              <li><a href="#M000056">remove_user_from_folder</a></li>
+              <li><a href="#M000058">update_token</a></li>
+              <li><a href="#M000057">update_user</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000037'>
+                <a name='M000037'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create a new handle to gliffy for the given user. Tokens will be requested
+                  as needed
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000037-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000037-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 24</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-ivar">@username</span> = <span class="ruby-identifier">username</span>&#x000A;      <span class="ruby-ivar">@rest</span> = <span class="ruby-constant">Rest</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_device</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_level</span>&#x000A;      <span class="ruby-identifier">update_token</span>(<span class="ruby-identifier">username</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000038'>
+                <a name='M000038'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Adds a new user explicitly.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000038-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000038-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 33</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_user</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-comment cmt"># DRY</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:put</span>,<span class="ruby-node">&quot;users/#{username}&quot;</span>,<span class="ruby-node">&quot;Create user #{username}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000039'>
+                <a name='M000039'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>add_user_to_folder</span>
+                  <span class='arguments'>(username,folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Allows <tt>username</tt> to access <tt>folder_path</tt> and all its child
+                  folders
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000039-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000039-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 39</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_user_to_folder</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-comment cmt"># DRY</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:put</span>,<span class="ruby-node">&quot;folders/#{folder_path}/users/#{username}&quot;</span>,<span class="ruby-node">&quot;Adding #{username} to #{folder_path}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000040'>
+                <a name='M000040'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>create_diagram</span>
+                  <span class='arguments'>(diagram_name,template_diagram_id=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates a new blank diagram (or based on an existing one)
+                  </p>
+                  <dl>
+                  <dt><tt>diagram_name</tt></dt><dd>the name of the new diagram
+                  
+                  </dd>
+                  <dt><tt>template_diagram_id</tt></dt><dd>the id of a diagram to use as a template. You must have access to this
+                  diagram
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000040-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 50</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_diagram</span>(<span class="ruby-identifier">diagram_name</span>,<span class="ruby-identifier">template_diagram_id</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'diagramName'</span>] = <span class="ruby-identifier">diagram_name</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'templateDiagramId'</span>] = <span class="ruby-identifier">template_diagram_id</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">template_diagram_id</span>&#x000A;      <span class="ruby-identifier">diagrams</span> = <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:post</span>,<span class="ruby-value str">'diagrams'</span>,<span class="ruby-node">&quot;Creating diagram named #{diagram_name}&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">diagrams</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">diagrams</span>[<span class="ruby-value">0</span>]&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Got no diagrams, but creation was successful.&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000041'>
+                <a name='M000041'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>create_folder</span>
+                  <span class='arguments'>(folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Creates a folder with the given name. The parent path should already exist
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000041-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000041-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 63</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_folder</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:put</span>,<span class="ruby-node">&quot;folders/#{folder_path}&quot;</span>,<span class="ruby-node">&quot;Creating folder #{folder_path}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000042'>
+                <a name='M000042'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>delete_diagram</span>
+                  <span class='arguments'>(diagram_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  deletes the diagram with the given id. <b>This cannot be undone</b>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000042-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000042-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 69</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_diagram</span>(<span class="ruby-identifier">diagram_id</span>)&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;diagrams/#{diagram_id}&quot;</span>,<span class="ruby-node">&quot;Deleting diagram #{diagram_id}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000043'>
+                <a name='M000043'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>delete_folder</span>
+                  <span class='arguments'>(folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deletes a folder, moving all diagrams in it to the default folder. The
+                  folder must be empty <b>This cannot be undone</b>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000043-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000043-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 76</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_folder</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;folders/#{folder_path}&quot;</span>,<span class="ruby-node">&quot;Deleting folder #{folder_path}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000044'>
+                <a name='M000044'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>delete_user</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Deletes the user from this account. May not be the user who owns the token
+                  for this session (i.e. was passed to the constructor). <b>This cannot be
+                  undone</b>.
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000044-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000044-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 83</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_user</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-comment cmt"># DRY</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;users/#{username}&quot;</span>,<span class="ruby-node">&quot;Delete user #{username}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000045'>
+                <a name='M000045'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_admins</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns an array of <a href="User.html">User</a> objects representing the
+                  admins of the account
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000045-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000045-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 89</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_admins</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-value str">'admins'</span>,<span class="ruby-value str">'Getting admins for account'</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000046'>
+                <a name='M000046'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_diagram_as_image</span>
+                  <span class='arguments'>(diagram_id,options={:mime_type =&gt; :jpeg})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets the diagram as an image, possibly saving it to a file.
+                  </p>
+                  <dl>
+                  <dt><tt>diagram_id</tt></dt><dd>the id of the diagram to get
+                  
+                  </dd>
+                  <dt><tt>options</tt></dt><dd>a hash of options controlling the diagram and how it&#8217;s fetched
+                  
+                  <dl>
+                  <dt><tt>:size</tt></dt><dd>one of :thumbnail, :small, :medium, or :large (default is :large)
+                  
+                  </dd>
+                  <dt><tt>:file</tt></dt><dd>if present, the diagram is written to the named file
+                  
+                  </dd>
+                  <dt><tt>:mime_type</tt></dt><dd>the mime type to retrie. You can also use :jpeg, :png and :svg as shortcuts
+                  (default is :jpeg)
+                  
+                  </dd>
+                  <dt><tt>:version</tt></dt><dd>if present, the version number to retrieve (default is most recent)
+                  
+                  </dd>
+                  </dl>
+                  </dd>
+                  </dl>
+                  <p>
+                  returns the bytes of the diagram if file was nil, otherwise, returns true
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000046-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000046-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 104</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_diagram_as_image</span>(<span class="ruby-identifier">diagram_id</span>,<span class="ruby-identifier">options</span>={<span class="ruby-identifier">:mime_type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:jpeg</span>})&#x000A;      <span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span> = <span class="ruby-identifier">create_diagram_request_info</span>(<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-identifier">bytes</span> = <span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url</span>(<span class="ruby-node">&quot;diagrams/#{diagram_id}&quot;</span>),<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">bytes</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:success?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">bytes</span>.<span class="ruby-identifier">success?</span>&#x000A;        <span class="ruby-identifier">handle_error</span>(<span class="ruby-identifier">bytes</span>,<span class="ruby-node">&quot;While getting bytes of diagram #{diagram_id}&quot;</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:file</span>]&#x000A;          <span class="ruby-identifier">fp</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:file</span>],<span class="ruby-value str">'w'</span>)&#x000A;          <span class="ruby-identifier">fp</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">bytes</span>&#x000A;          <span class="ruby-identifier">fp</span>.<span class="ruby-identifier">close</span>&#x000A;          <span class="ruby-keyword kw">true</span>&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">bytes</span>&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000047'>
+                <a name='M000047'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_diagram_as_url</span>
+                  <span class='arguments'>(diagram_id,options={:mime_type =&gt; :jpeg})</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  returns the URL that would get the diagram in question. Same parameters as
+                  <a href="Handle.html#M000046">get_diagram_as_image</a>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000047-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000047-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 123</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_diagram_as_url</span>(<span class="ruby-identifier">diagram_id</span>,<span class="ruby-identifier">options</span>={<span class="ruby-identifier">:mime_type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:jpeg</span>})&#x000A;      <span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span> = <span class="ruby-identifier">create_diagram_request_info</span>(<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>(<span class="ruby-node">&quot;diagrams/#{diagram_id}&quot;</span>),<span class="ruby-identifier">params</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000048'>
+                <a name='M000048'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_diagram_meta_data</span>
+                  <span class='arguments'>(diagram_id)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  GliffyDiagram getDiagramMetaData (integer $diagramId)
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000048-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000048-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 130</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_diagram_meta_data</span>(<span class="ruby-identifier">diagram_id</span>)&#x000A;      <span class="ruby-identifier">params</span> = {<span class="ruby-value str">'diagramId'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">diagram_id</span>}&#x000A;      <span class="ruby-identifier">diagrams</span> = <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-value str">'diagrams'</span>,<span class="ruby-node">&quot;Getting meta data for diagram #{diagram_id}&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-identifier">diagrams</span>[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000049'>
+                <a name='M000049'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_diagrams</span>
+                  <span class='arguments'>(folder_path=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets a list of diagrams, either for the given folder, or the entire account
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000049-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000049-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 137</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_diagrams</span>(<span class="ruby-identifier">folder_path</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">folder_path</span>&#x000A;      <span class="ruby-identifier">url</span> = (<span class="ruby-identifier">folder_path</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;folders/#{folder_path}/&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;diagrams&quot;</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">url</span>,<span class="ruby-value str">&quot;Get all folders in &quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">folder_path</span> <span class="ruby-value">? </span><span class="ruby-identifier">folder_path</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;account&quot;</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000050'>
+                <a name='M000050'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_edit_diagram_link</span>
+                  <span class='arguments'>(diagram_id,return_url=nil,return_text=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets the link that can be used <b>by this user while his token is valid</b>
+                  to edit the diagram.
+                  </p>
+                  <dl>
+                  <dt><tt>diagram_id</tt></dt><dd>the id of the diagram to edit
+                  
+                  </dd>
+                  <dt><tt>return_url</tt></dt><dd>if present represents the URL to return the user to after they have
+                  completed their editing. You should not urlencode this, it will be done for
+                  you
+                  
+                  </dd>
+                  <dt><tt>return_text</tt></dt><dd>the text that should be used in <a href="../Gliffy.html">Gliffy</a> to
+                  represent the &#8220;return to the application&#8221; button.
+                  
+                  </dd>
+                  </dl>
+                  <p>
+                  returns a <a href="LaunchLink.html">Gliffy::LaunchLink</a> that contains
+                  the complete URL to be used to edit the given diagram and behave as
+                  described. The GliffyLaunchLink also contains the diagram name, which can
+                  be used for linking. Note that the url is relative to the <a
+                  href="../Gliffy.html">Gliffy</a> website
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000050-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000050-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 150</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_edit_diagram_link</span>(<span class="ruby-identifier">diagram_id</span>,<span class="ruby-identifier">return_url</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">return_text</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'returnURL'</span>] = <span class="ruby-identifier">return_url</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">return_url</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'returnText'</span>] = <span class="ruby-identifier">return_text</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">return_text</span>&#x000A;&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;diagrams/#{diagram_id}/launchLink&quot;</span>,<span class="ruby-node">&quot;Getting launch link for diagram #{diagram_id}&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000051'>
+                <a name='M000051'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_folders</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  array get<a href="Folders.html">Folders</a> ()
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000051-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000051-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 159</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_folders</span>()&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-value str">'folders'</span>,<span class="ruby-value str">'Getting folders for account'</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000052'>
+                <a name='M000052'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_user_folders</span>
+                  <span class='arguments'>(username)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets the folders that <tt>username</tt> has access to, in nested form
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000052-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000052-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 164</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_user_folders</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;users/#{username}/folders&quot;</span>,<span class="ruby-node">&quot;Getting folders for user #{username}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000053'>
+                <a name='M000053'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>get_users</span>
+                  <span class='arguments'>(folder_path=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Gets the users in the given folder, or in the entire account
+                  </p>
+                  <dl>
+                  <dt><tt>folder_path</tt></dt><dd>if present, returns users with access to this folder
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000053-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000053-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 171</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_users</span>(<span class="ruby-identifier">folder_path</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-value str">''</span>&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">folder_path</span>)&#x000A;        <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;        <span class="ruby-identifier">url</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;folders/#{folder_path}/&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">url</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'users'</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">url</span>,<span class="ruby-value str">&quot;Getting users for &quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">folder_path</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;folder #{folder_path}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'account'</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000059'>
+                <a name='M000059'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>handle_error</span>
+                  <span class='arguments'>(error_response,action_cause=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Override this if you want error handling that doesn&#8217;t rasie an
+                  exception
+                  </p>
+                  <dl>
+                  <dt><tt>error_response</tt></dt><dd>an <a href="Error.html">Error</a> object that holds the error from <a
+                  href="../Gliffy.html">Gliffy</a>
+                  
+                  </dd>
+                  <dt><tt>action_cause</tt></dt><dd>a string describing the action being taken when the error ocurred
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000059-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000059-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 239</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_error</span>(<span class="ruby-identifier">error_response</span>,<span class="ruby-identifier">action_cause</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">msg</span> = <span class="ruby-value str">&quot;&quot;</span>&#x000A;      <span class="ruby-identifier">msg</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;While #{action_cause}: &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">action_cause</span>&#x000A;      <span class="ruby-identifier">msg</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">error_response</span>.<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-identifier">msg</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000054'>
+                <a name='M000054'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>has_token</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  returns true if the user currently has a token
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000054-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000054-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 182</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_token</span>()&#x000A;      <span class="ruby-operator">!</span><span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span>.<span class="ruby-identifier">nil?</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000055'>
+                <a name='M000055'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>move_diagram</span>
+                  <span class='arguments'>(diagram_id,folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  move diagram <tt>diagram_id</tt> to folder path <tt>folder_path</tt>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000055-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000055-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 187</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_diagram</span>(<span class="ruby-identifier">diagram_id</span>,<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:put</span>,<span class="ruby-node">&quot;folders/#{folder_path}/diagrams/#{diagram_id}&quot;</span>,<span class="ruby-node">&quot;Moving #{diagram_id} to folder #{folder_path}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000056'>
+                <a name='M000056'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>remove_user_from_folder</span>
+                  <span class='arguments'>(username,folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Revokes <tt>username</tt> access to <tt>folder_path</tt>
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000056-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000056-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 193</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_user_from_folder</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">folder_path</span> = <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-comment cmt"># DRY</span>&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;folders/#{folder_path}/users/#{username}&quot;</span>,<span class="ruby-node">&quot;Delete #{username} from folder #{folder_path}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000058'>
+                <a name='M000058'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>update_token</span>
+                  <span class='arguments'>(force=false)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Updates the user&#8217;s token, if he needs it
+                  </p>
+                  <pre>[+force+] if true, the token is updated regardless</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000058-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000058-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 218</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_token</span>(<span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span>.<span class="ruby-identifier">expired?</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'Forcing a new token'</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'No current token'</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span>&#x000A;        <span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span> = <span class="ruby-keyword kw">nil</span>&#x000A;        <span class="ruby-identifier">token</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">url</span>(<span class="ruby-node">&quot;users/#{@username}/token&quot;</span>)))&#x000A;        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">token</span>.<span class="ruby-identifier">success?</span>)&#x000A;          <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;User #{@username} assigned token #{token.token} from Gliffy&quot;</span>)&#x000A;          <span class="ruby-ivar">@rest</span>.<span class="ruby-identifier">current_token</span> = <span class="ruby-identifier">token</span>&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">handle_error</span>(<span class="ruby-identifier">token</span>)&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'Not getting a new token'</span>);&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000057'>
+                <a name='M000057'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>update_user</span>
+                  <span class='arguments'>(username,attributes)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Updates the user.
+                  </p>
+                  <dl>
+                  <dt><tt>username</tt></dt><dd>user to update
+                  
+                  </dd>
+                  <dt><tt>attributes</tt></dt><dd>has of attributes to change.
+                  
+                  <dl>
+                  <dt><tt>:email</tt></dt><dd>email address
+                  
+                  </dd>
+                  <dt><tt>:password</tt></dt><dd>password for logging into <a href="../Gliffy.html">Gliffy</a> Online
+                  
+                  </dd>
+                  <dt><tt>:admin</tt></dt><dd>true to make them an admin, false to revoke their admin-ness
+                  
+                  </dd>
+                  </dl>
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000057-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000057-source'><span class="ruby-comment cmt"># File lib/gliffy/gliffy.rb, line 207</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_user</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">attributes</span>)&#x000A;      <span class="ruby-identifier">params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'admin'</span>] = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:admin</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">:admin</span>&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'email'</span>] = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:email</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:email</span>]&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-value str">'password'</span>] = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:password</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:password</span>]&#x000A;      <span class="ruby-identifier">do_simple_rest</span>(<span class="ruby-identifier">:put</span>,<span class="ruby-node">&quot;users/#{username}&quot;</span>,<span class="ruby-node">&quot;Updating #{username}&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
     </div>
-  <!-- banner header -->
-
-  <div id="bodyContent">
-
-
-
-  <div id="contextContent">
-
-    <div id="description">
-      <p>
-A &quot;handle&quot; to access <a href="../Gliffy.html">Gliffy</a> on a
-per-user-session basis Since most calls to gliffy require a user-token,
-this class encapsulates that token and the calls made under it.
-</p>
-<p>
-The methods here are designed to raise exceptions if there are problems
-from <a href="../Gliffy.html">Gliffy</a>. These problems usually indicate a
-programming error or a server-side problem with <a
-href="../Gliffy.html">Gliffy</a> and are generally unhandleable. However,
-if you wish to do something better than simply raise an exception you may
-override <a href="Handle.html#M000059">handle_error</a> to do something
-else
-</p>
-
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
     </div>
-
-
-   </div>
-
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000038">add_user</a>&nbsp;&nbsp;
-      <a href="#M000039">add_user_to_folder</a>&nbsp;&nbsp;
-      <a href="#M000040">create_diagram</a>&nbsp;&nbsp;
-      <a href="#M000041">create_folder</a>&nbsp;&nbsp;
-      <a href="#M000042">delete_diagram</a>&nbsp;&nbsp;
-      <a href="#M000043">delete_folder</a>&nbsp;&nbsp;
-      <a href="#M000044">delete_user</a>&nbsp;&nbsp;
-      <a href="#M000045">get_admins</a>&nbsp;&nbsp;
-      <a href="#M000046">get_diagram_as_image</a>&nbsp;&nbsp;
-      <a href="#M000047">get_diagram_as_url</a>&nbsp;&nbsp;
-      <a href="#M000048">get_diagram_meta_data</a>&nbsp;&nbsp;
-      <a href="#M000049">get_diagrams</a>&nbsp;&nbsp;
-      <a href="#M000050">get_edit_diagram_link</a>&nbsp;&nbsp;
-      <a href="#M000051">get_folders</a>&nbsp;&nbsp;
-      <a href="#M000052">get_user_folders</a>&nbsp;&nbsp;
-      <a href="#M000053">get_users</a>&nbsp;&nbsp;
-      <a href="#M000059">handle_error</a>&nbsp;&nbsp;
-      <a href="#M000054">has_token</a>&nbsp;&nbsp;
-      <a href="#M000055">move_diagram</a>&nbsp;&nbsp;
-      <a href="#M000037">new</a>&nbsp;&nbsp;
-      <a href="#M000056">remove_user_from_folder</a>&nbsp;&nbsp;
-      <a href="#M000058">update_token</a>&nbsp;&nbsp;
-      <a href="#M000057">update_user</a>&nbsp;&nbsp;
-      </div>
-    </div>
-
-  </div>
-
-
-    <!-- if includes -->
-
-    <div id="section">
-
-
-
-
-
-      
-
-
-    <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000037" class="method-detail">
-        <a name="M000037"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000037.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000037.html');return false;">
-          <span class="method-name">new</span><span class="method-args">(username)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Create a <a href="Handle.html#M000037">new</a> handle to gliffy for the
-given user. Tokens will be requested as needed
-</p>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000038" class="method-detail">
-        <a name="M000038"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000038.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000038.html');return false;">
-          <span class="method-name">add_user</span><span class="method-args">(username)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Adds a <a href="Handle.html#M000037">new</a> user explicitly.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000039" class="method-detail">
-        <a name="M000039"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000039.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000039.html');return false;">
-          <span class="method-name">add_user_to_folder</span><span class="method-args">(username,folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Allows <tt>username</tt> to access <tt>folder_path</tt> and all its child
-folders
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000040" class="method-detail">
-        <a name="M000040"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000040.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000040.html');return false;">
-          <span class="method-name">create_diagram</span><span class="method-args">(diagram_name,template_diagram_id=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Creates a <a href="Handle.html#M000037">new</a> blank diagram (or based on
-an existing one)
-</p>
-<dl>
-<dt><tt>diagram_name</tt></dt><dd>the name of the <a href="Handle.html#M000037">new</a> diagram
-
-</dd>
-<dt><tt>template_diagram_id</tt></dt><dd>the id of a diagram to use as a template. You must have access to this
-diagram
-
-</dd>
-</dl>
-        </div>
-      </div>
-
-      <div id="method-M000041" class="method-detail">
-        <a name="M000041"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000041.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000041.html');return false;">
-          <span class="method-name">create_folder</span><span class="method-args">(folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Creates a folder with the given name. The parent path should already exist
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000042" class="method-detail">
-        <a name="M000042"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000042.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000042.html');return false;">
-          <span class="method-name">delete_diagram</span><span class="method-args">(diagram_id)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-deletes the diagram with the given id. <b>This cannot be undone</b>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000043" class="method-detail">
-        <a name="M000043"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000043.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000043.html');return false;">
-          <span class="method-name">delete_folder</span><span class="method-args">(folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Deletes a folder, moving all diagrams in it to the default folder. The
-folder must be empty <b>This cannot be undone</b>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000044" class="method-detail">
-        <a name="M000044"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000044.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000044.html');return false;">
-          <span class="method-name">delete_user</span><span class="method-args">(username)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Deletes the user from this account. May not be the user who owns the token
-for this session (i.e. was passed to the constructor). <b>This cannot be
-undone</b>.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000045" class="method-detail">
-        <a name="M000045"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000045.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000045.html');return false;">
-          <span class="method-name">get_admins</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Returns an array of <a href="User.html">User</a> objects representing the
-admins of the account
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000046" class="method-detail">
-        <a name="M000046"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000046.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000046.html');return false;">
-          <span class="method-name">get_diagram_as_image</span><span class="method-args">(diagram_id,options={:mime_type =&gt; :jpeg})</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Gets the diagram as an image, possibly saving it to a file.
-</p>
-<dl>
-<dt><tt>diagram_id</tt></dt><dd>the id of the diagram to get
-
-</dd>
-<dt><tt>options</tt></dt><dd>a hash of options controlling the diagram and how it&#8216;s fetched
-
-<dl>
-<dt><tt>:size</tt></dt><dd>one of :thumbnail, :small, :medium, or :large (default is :large)
-
-</dd>
-<dt><tt>:file</tt></dt><dd>if present, the diagram is written to the named file
-
-</dd>
-<dt><tt>:mime_type</tt></dt><dd>the mime type to retrie. You can also use :jpeg, :png and :svg as shortcuts
-(default is :jpeg)
-
-</dd>
-<dt><tt>:version</tt></dt><dd>if present, the version number to retrieve (default is most recent)
-
-</dd>
-</dl>
-</dd>
-</dl>
-<p>
-returns the bytes of the diagram if file was nil, otherwise, returns true
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000047" class="method-detail">
-        <a name="M000047"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000047.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000047.html');return false;">
-          <span class="method-name">get_diagram_as_url</span><span class="method-args">(diagram_id,options={:mime_type =&gt; :jpeg})</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-returns the URL that would get the diagram in question. Same parameters as
-<a href="Handle.html#M000046">get_diagram_as_image</a>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000048" class="method-detail">
-        <a name="M000048"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000048.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000048.html');return false;">
-          <span class="method-name">get_diagram_meta_data</span><span class="method-args">(diagram_id)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-GliffyDiagram getDiagramMetaData (integer $diagramId)
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000049" class="method-detail">
-        <a name="M000049"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000049.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000049.html');return false;">
-          <span class="method-name">get_diagrams</span><span class="method-args">(folder_path=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Gets a list of diagrams, either for the given folder, or the entire account
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000050" class="method-detail">
-        <a name="M000050"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000050.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000050.html');return false;">
-          <span class="method-name">get_edit_diagram_link</span><span class="method-args">(diagram_id,return_url=nil,return_text=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Gets the link that can be used <b>by this user while his token is valid</b>
-to edit the diagram.
-</p>
-<dl>
-<dt><tt>diagram_id</tt></dt><dd>the id of the diagram to edit
-
-</dd>
-<dt><tt>return_url</tt></dt><dd>if present represents the URL to return the user to after they have
-completed their editing. You should not urlencode this, it will be done for
-you
-
-</dd>
-<dt><tt>return_text</tt></dt><dd>the text that should be used in <a href="../Gliffy.html">Gliffy</a> to
-represent the &quot;return to the application&quot; button.
-
-</dd>
-</dl>
-<p>
-returns a <a href="LaunchLink.html">Gliffy::LaunchLink</a> that contains
-the complete URL to be used to edit the given diagram and behave as
-described. The GliffyLaunchLink also contains the diagram name, which can
-be used for linking. Note that the url is relative to the <a
-href="../Gliffy.html">Gliffy</a> website
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000051.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000051.html');return false;">
-          <span class="method-name">get_folders</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-array getFolders ()
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000052.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000052.html');return false;">
-          <span class="method-name">get_user_folders</span><span class="method-args">(username)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Gets the folders that <tt>username</tt> has access to, in nested form
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000053.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000053.html');return false;">
-          <span class="method-name">get_users</span><span class="method-args">(folder_path=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Gets the users in the given folder, or in the entire account
-</p>
-<dl>
-<dt><tt>folder_path</tt></dt><dd>if present, returns users with access to this folder
-
-</dd>
-</dl>
-        </div>
-      </div>
-
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000059.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000059.html');return false;">
-          <span class="method-name">handle_error</span><span class="method-args">(error_response,action_cause=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Override this if you want error handling that doesn&#8216;t rasie an
-exception
-</p>
-<dl>
-<dt><tt>error_response</tt></dt><dd>an <a href="Error.html">Error</a> object that holds the error from <a
-href="../Gliffy.html">Gliffy</a>
-
-</dd>
-<dt><tt>action_cause</tt></dt><dd>a string describing the action being taken when the error ocurred
-
-</dd>
-</dl>
-        </div>
-      </div>
-
-      <div id="method-M000054" class="method-detail">
-        <a name="M000054"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000054.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000054.html');return false;">
-          <span class="method-name">has_token</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-returns true if the user currently has a token
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000055" class="method-detail">
-        <a name="M000055"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000055.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000055.html');return false;">
-          <span class="method-name">move_diagram</span><span class="method-args">(diagram_id,folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-move diagram <tt>diagram_id</tt> to folder path <tt>folder_path</tt>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000056" class="method-detail">
-        <a name="M000056"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000056.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000056.html');return false;">
-          <span class="method-name">remove_user_from_folder</span><span class="method-args">(username,folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Revokes <tt>username</tt> access to <tt>folder_path</tt>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000058.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000058.html');return false;">
-          <span class="method-name">update_token</span><span class="method-args">(force=false)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Updates the user&#8216;s token, if he needs it
-</p>
-<pre>
-  [+force+] if true, the token is updated regardless
-</pre>
-        </div>
-      </div>
-
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
-
-        <div class="method-heading">
-          <a href="Handle.src/M000057.html" target="Code" class="method-signature"
-            onclick="popupCode('Handle.src/M000057.html');return false;">
-          <span class="method-name">update_user</span><span class="method-args">(username,attributes)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Updates the user.
-</p>
-<dl>
-<dt><tt>username</tt></dt><dd>user to update
-
-</dd>
-<dt><tt>attributes</tt></dt><dd>has of attributes to change.
-
-<dl>
-<dt><tt>:email</tt></dt><dd>email address
-
-</dd>
-<dt><tt>:password</tt></dt><dd>password for logging into <a href="../Gliffy.html">Gliffy</a> Online
-
-</dd>
-<dt><tt>:admin</tt></dt><dd>true to make them an admin, false to revoke their admin-ness
-
-</dd>
-</dl>
-</dd>
-</dl>
-        </div>
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-<div id="validator-badges">
-  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-</div>
-
-</body>
+  </body>
 </html>

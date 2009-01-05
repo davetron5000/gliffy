@@ -1,230 +1,170 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <title>Class: Gliffy::Folder</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-  <script type="text/javascript">
-  // <![CDATA[
-
-  function popupCode( url ) {
-    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-  }
-
-  function toggleCode( id ) {
-    if ( document.getElementById )
-      elem = document.getElementById( id );
-    else if ( document.all )
-      elem = eval( "document.all." + id );
-    else
-      return false;
-
-    elemStyle = elem.style;
-    
-    if ( elemStyle.display != "block" ) {
-      elemStyle.display = "block"
-    } else {
-      elemStyle.display = "none"
-    }
-
-    return true;
-  }
-  
-  // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
-  // ]]>
-  </script>
-
-</head>
-<body>
-
-
-
-    <div id="classHeader">
-        <table class="header-table">
-        <tr class="top-aligned-row">
-          <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Gliffy::Folder</td>
-        </tr>
-        <tr class="top-aligned-row">
-            <td><strong>In:</strong></td>
-            <td>
-                <a href="../../files/lib/gliffy/folder_rb.html">
-                lib/gliffy/folder.rb
-                </a>
-        <br />
-            </td>
-        </tr>
-
-        <tr class="top-aligned-row">
-            <td><strong>Parent:</strong></td>
-            <td>
-                <a href="Response.html">
-                Response
-               </a>
-            </td>
-        </tr>
-        </table>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Class: Gliffy::Folder [Ruby Client for Gliffy]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          Gliffy::Folder
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/gliffy/folder_rb.html">lib/gliffy/folder.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong><a href="Response.html">Gliffy::Response</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000015">encode_path_elements</a></li>
+              <li><a href="#M000013">from_xml</a></li>
+              <li><a href="#M000016">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000014">default?</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>child_folders</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      An array of <a href="Folder.html">Folder</a> objects that are contained
+                      within this folder If this is empty, it means this <a
+                      href="Folder.html">Folder</a> is a leaf
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>id</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>name</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>path</td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      The full path to this folder within the account&#8217;s folder hierarchy
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000015'>
+                <a name='M000015'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>encode_path_elements</span>
+                  <span class='arguments'>(folder_path)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Encodes the elements of a folder path so it can safely go into a URL
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 43</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">encoded</span> = <span class="ruby-value str">''</span>&#x000A;      <span class="ruby-identifier">folder_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\//</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">part</span>)&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;/&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">encoded</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/$/</span>,<span class="ruby-value str">''</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-class method' id='method-M000013'>
+                <a name='M000013'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>from_xml</span>
+                  <span class='arguments'>(element)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 22</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">default</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-default'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'name'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">path</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'path'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">child_folders</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">element</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">child_folders</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;folder&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-class method' id='method-M000016'>
+                <a name='M000016'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(id,name,default,path,child_folders)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 54</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@default</span> = <span class="ruby-identifier">default</span>&#x000A;      <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>&#x000A;      <span class="ruby-ivar">@child_folders</span> = <span class="ruby-identifier">child_folders</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000014'>
+                <a name='M000014'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>default?</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Returns true if this folder is the default folder used when an operation
+                  requiring a folder doesn&#8217;t specify one (such as when creating a new
+                  diagram)
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 38</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default?</span>&#x000A;      <span class="ruby-ivar">@default</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
     </div>
-  <!-- banner header -->
-
-  <div id="bodyContent">
-
-
-
-  <div id="contextContent">
-
-
-
-   </div>
-
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000014">default?</a>&nbsp;&nbsp;
-      <a href="#M000015">encode_path_elements</a>&nbsp;&nbsp;
-      <a href="#M000013">from_xml</a>&nbsp;&nbsp;
-      <a href="#M000016">new</a>&nbsp;&nbsp;
-      </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
     </div>
-
-  </div>
-
-
-    <!-- if includes -->
-
-    <div id="section">
-
-
-
-
-
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">child_folders</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc">
-An array of <a href="Folder.html">Folder</a> objects that are contained
-within this folder If this is empty, it means this <a
-href="Folder.html">Folder</a> is a leaf
-
-</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">id</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">name</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">path</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc">
-The full path to this folder within the account&#8216;s folder hierarchy
-
-</td>
-        </tr>
-        </table>
-      </div>
-    </div>
-      
-
-
-    <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
-
-        <div class="method-heading">
-          <a href="Folder.src/M000015.html" target="Code" class="method-signature"
-            onclick="popupCode('Folder.src/M000015.html');return false;">
-          <span class="method-name">encode_path_elements</span><span class="method-args">(folder_path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Encodes the elements of a folder path so it can safely go into a URL
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
-
-        <div class="method-heading">
-          <a href="Folder.src/M000013.html" target="Code" class="method-signature"
-            onclick="popupCode('Folder.src/M000013.html');return false;">
-          <span class="method-name">from_xml</span><span class="method-args">(element)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000016" class="method-detail">
-        <a name="M000016"></a>
-
-        <div class="method-heading">
-          <a href="Folder.src/M000016.html" target="Code" class="method-signature"
-            onclick="popupCode('Folder.src/M000016.html');return false;">
-          <span class="method-name">new</span><span class="method-args">(id,name,default,path,child_folders)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
-
-        <div class="method-heading">
-          <a href="Folder.src/M000014.html" target="Code" class="method-signature"
-            onclick="popupCode('Folder.src/M000014.html');return false;">
-          <span class="method-name">default?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Returns true if this folder is the default folder used when an operation
-requiring a folder doesn&#8216;t specify one (such as when creating a <a
-href="Folder.html#M000016">new</a> diagram)
-</p>
-        </div>
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-<div id="validator-badges">
-  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-</div>
-
-</body>
+  </body>
 </html>

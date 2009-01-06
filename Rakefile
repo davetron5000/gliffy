@@ -1,6 +1,8 @@
 require 'rake/clean'
 require 'hanna/rdoctask'
 require 'rcov/rcovtask'
+require 'rubygems'
+require 'rake/gempackagetask'
 $: << '../grancher/lib'
 require 'grancher/task'
 
@@ -9,8 +11,6 @@ Grancher::Task.new do |g|
   g.push_to = 'origin'
   g.directory 'html'
 end
-#require 'rubygems'
-#require 'rake/gempackagetask'
 
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
@@ -18,11 +18,11 @@ Rake::RDocTask.new do |rd|
   rd.title = 'Ruby Client for Gliffy'
 end
 
-#spec = eval(File.read('rgliffy.gemspec'))
+spec = eval(File.read('gliffy.gemspec'))
  
-#Rake::GemPackageTask.new(spec) do |pkg|
-#    pkg.need_tar = true
-#end
+Rake::GemPackageTask.new(spec) do |pkg|
+    pkg.need_tar = true
+end
 
 desc 'Runs tests'
 task :test do |t|

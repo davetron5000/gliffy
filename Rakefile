@@ -58,16 +58,6 @@ Rcov::RcovTask.new do |t|
   # t.verbose = true     # uncomment to see the executed command
 end
 
-task :prep_rdoc do |t|
-  fp = File.open('README.rdoc','a')
-  fp.puts("\nVersion: #{spec.version}")
-  fp.close()
-end
-
-task :cleanup_prep do |t|
-  system 'git checkout README.rdoc'
-end
-
 task :default => :test
 
-task :publish_rdoc => [:prep_rdoc,:rdoc,:publish,:cleanup_prep]
+task :publish_rdoc => [:rdoc,:publish]

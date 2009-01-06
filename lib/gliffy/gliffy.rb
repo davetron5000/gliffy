@@ -29,17 +29,30 @@ module Gliffy
       update_token(username)
     end
 
+    # Run an arbitrary rest call against gliffy, parsing the result
+    def rest_free(method,url,params={},headers={})
+      Response.from_xml(do_simple_rest(method,url,"rest_free",params,headers))
+    end
+
     # Adds a new user explicitly.  
     def add_user(username)
-      # DRY
-      do_simple_rest(:put,"users/#{username}","Create user #{username}")
+      do_user(:put,username)
+    end
+
+    # Deletes the user from this account.  May not be the user who owns the token for this
+    # session (i.e. was passed to the constructor).  <b>This cannot be undone</b>.
+    def delete_user(username)
+      do_user(:delete,username)
     end
 
     # Allows +username+ to access +folder_path+ and all its child folders
     def add_user_to_folder(username,folder_path)
-      folder_path = Folder.encode_path_elements(folder_path)
-      # DRY
-      do_simple_rest(:put,"folders/#{folder_path}/users/#{username}","Adding #{username} to #{folder_path}")
+      do_user_folder(:put,username,folder_path)
+    end
+
+    # Revokes +username+ access to +folder_path+
+    def remove_user_from_folder(username,folder_path)
+      do_user_folder(:delete,username,folder_path)
     end
 
     # Creates a new blank diagram (or based on an existing one)
@@ -61,13 +74,12 @@ module Gliffy
 
     # Creates a folder with the given name.  The parent path should already exist
     def create_folder(folder_path)
-      folder_path = Folder.encode_path_elements(folder_path)
-      do_simple_rest(:put,"folders/#{folder_path}","Creating folder #{folder_path}")
+      do_folder(:put,folder_path)
     end
 
     # deletes the diagram with the given id.  <b>This cannot be undone</b>
     def delete_diagram(diagram_id)
-      do_simple_rest(:delete,"diagrams/#{diagram_id}","Deleting diagram #{diagram_id}")
+      do_folder(:delete,folder_path)
     end
 
     # Deletes a folder, moving all diagrams in it to the default folder. 
@@ -76,13 +88,6 @@ module Gliffy
     def delete_folder(folder_path)
       folder_path = Folder.encode_path_elements(folder_path)
       do_simple_rest(:delete,"folders/#{folder_path}","Deleting folder #{folder_path}")
-    end
-
-    # Deletes the user from this account.  May not be the user who owns the token for this
-    # session (i.e. was passed to the constructor).  <b>This cannot be undone</b>.
-    def delete_user(username)
-      # DRY
-      do_simple_rest(:delete,"users/#{username}","Delete user #{username}")
     end
 
     # Returns an array of User objects representing the admins of the account
@@ -189,13 +194,6 @@ module Gliffy
       do_simple_rest(:put,"folders/#{folder_path}/diagrams/#{diagram_id}","Moving #{diagram_id} to folder #{folder_path}")
     end
 
-    # Revokes +username+ access to +folder_path+
-    def remove_user_from_folder(username,folder_path)
-      folder_path = Folder.encode_path_elements(folder_path)
-      # DRY
-      do_simple_rest(:delete,"folders/#{folder_path}/users/#{username}","Delete #{username} from folder #{folder_path}")
-    end
-
     # Updates the user.
     #
     # [+username+] user to update
@@ -228,7 +226,7 @@ module Gliffy
           handle_error(token)
         end
       else
-        @logger.debug('Not getting a new token');
+        @logger.debug('Not getting a new token')
       end
     end
 
@@ -245,6 +243,20 @@ module Gliffy
 
     private
 
+    def do_user(method,username)
+      do_simple_rest(method,"users/#{username}","#{rest_to_text(method)} user #{username}")
+    end
+
+    def do_folder(method,folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      do_simple_rest(method,"folders/#{folder_path}","#{rest_to_text(method)} folder #{folder_path}")
+    end
+
+    def do_user_folder(method,username,folder_path)
+      folder_path = Folder.encode_path_elements(folder_path)
+      do_simple_rest(method,"folders/#{folder_path}/users/#{username}","#{rest_to_text(method)} #{username} to #{folder_path}")
+    end
+
     def create_diagram_request_info(options)
       mime_type = options[:mime_type]
       params = Hash.new
@@ -259,16 +271,14 @@ module Gliffy
       [params,headers]
     end
 
-
-    def do_simple_rest(method,url_fragment,description,params=nil)
+    def do_simple_rest(method,url_fragment,description,params=nil,headers={})
       update_token
-      response = Response.from_xml(@rest.send(method,url(url_fragment),params))
+      response = Response.from_xml(@rest.send(method,url(url_fragment),params,headers))
       if !response.success?
         handle_error(response,description)
       end
       response
     end
-
 
     def url(fragment)
       "/accounts/#{Config.config.account_name}/#{fragment}"
@@ -293,6 +303,18 @@ module Gliffy
       else raise "#{size} is not a supported size"
       end
     end
+
+    def rest_to_text(method)
+      case method
+      when :put : 'Creating'
+      when :delete : 'Deleting'
+      when :post : 'Updating'
+      when :get : 'Getting'
+      else
+        raise "Unknown method #{method.to_s}"
+      end
+    end
+
 
   end
 end

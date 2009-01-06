@@ -50,13 +50,13 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000001">from_xml</a></li>
-              <li><a href="#M000004">new</a></li>
+              <li><a href="#M000003">from_xml</a></li>
+              <li><a href="#M000006">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000003">is_private?</a></li>
-              <li><a href="#M000002">is_public?</a></li>
+              <li><a href="#M000005">is_private?</a></li>
+              <li><a href="#M000004">is_public?</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -117,35 +117,35 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000001'>
-                <a name='M000001'>      </a>
+              <div class='public-class method' id='method-M000003'>
+                <a name='M000003'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(element)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 25</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">num_versions</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'num-versions'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">is_private</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-private'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">is_public</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-public'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;&#x000A;      <span class="ruby-identifier">create_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'create-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">mod_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'mod-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">published_date</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'published-date'</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'published-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'name'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">owner_username</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'owner'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'owner'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;&#x000A;      <span class="ruby-constant">Diagram</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">owner_username</span>,<span class="ruby-identifier">is_public</span>,<span class="ruby-identifier">is_private</span>,<span class="ruby-identifier">num_versions</span>,<span class="ruby-identifier">create_date</span>,<span class="ruby-identifier">mod_date</span>,<span class="ruby-identifier">published_date</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 25</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">num_versions</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'num-versions'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">is_private</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-private'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">is_public</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-public'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;&#x000A;      <span class="ruby-identifier">create_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'create-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">mod_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'mod-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">published_date</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'published-date'</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'published-date'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'name'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">owner_username</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'owner'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'owner'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;&#x000A;      <span class="ruby-constant">Diagram</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">owner_username</span>,<span class="ruby-identifier">is_public</span>,<span class="ruby-identifier">is_private</span>,<span class="ruby-identifier">num_versions</span>,<span class="ruby-identifier">create_date</span>,<span class="ruby-identifier">mod_date</span>,<span class="ruby-identifier">published_date</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000004'>
-                <a name='M000004'>      </a>
+              <div class='public-class method' id='method-M000006'>
+                <a name='M000006'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(id,name,owner_username,is_public,is_private,num_versions,create_date,mod_date,published_date)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 52</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">owner_username</span>,<span class="ruby-identifier">is_public</span>,<span class="ruby-identifier">is_private</span>,<span class="ruby-identifier">num_versions</span>,<span class="ruby-identifier">create_date</span>,<span class="ruby-identifier">mod_date</span>,<span class="ruby-identifier">published_date</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@owner_username</span> = <span class="ruby-identifier">owner_username</span>&#x000A;      <span class="ruby-ivar">@is_public</span> = <span class="ruby-identifier">is_public</span>&#x000A;      <span class="ruby-ivar">@is_private</span> = <span class="ruby-identifier">is_private</span>&#x000A;      <span class="ruby-ivar">@num_versions</span> = <span class="ruby-identifier">num_versions</span>&#x000A;      <span class="ruby-ivar">@create_date</span> = <span class="ruby-identifier">create_date</span>&#x000A;      <span class="ruby-ivar">@mod_date</span> = <span class="ruby-identifier">mod_date</span>&#x000A;      <span class="ruby-ivar">@published_date</span> = <span class="ruby-identifier">published_date</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 52</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">owner_username</span>,<span class="ruby-identifier">is_public</span>,<span class="ruby-identifier">is_private</span>,<span class="ruby-identifier">num_versions</span>,<span class="ruby-identifier">create_date</span>,<span class="ruby-identifier">mod_date</span>,<span class="ruby-identifier">published_date</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@owner_username</span> = <span class="ruby-identifier">owner_username</span>&#x000A;      <span class="ruby-ivar">@is_public</span> = <span class="ruby-identifier">is_public</span>&#x000A;      <span class="ruby-ivar">@is_private</span> = <span class="ruby-identifier">is_private</span>&#x000A;      <span class="ruby-ivar">@num_versions</span> = <span class="ruby-identifier">num_versions</span>&#x000A;      <span class="ruby-ivar">@create_date</span> = <span class="ruby-identifier">create_date</span>&#x000A;      <span class="ruby-ivar">@mod_date</span> = <span class="ruby-identifier">mod_date</span>&#x000A;      <span class="ruby-ivar">@published_date</span> = <span class="ruby-identifier">published_date</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000003'>
-                <a name='M000003'>      </a>
+              <div class='public-instance method' id='method-M000005'>
+                <a name='M000005'>      </a>
                 <div class='synopsis'>
                   <span class='name'>is_private?</span>
                   <span class='arguments'>()</span>
@@ -157,14 +157,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 47</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_private?</span>&#x000A;      <span class="ruby-ivar">@is_private</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 47</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_private?</span>&#x000A;      <span class="ruby-ivar">@is_private</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000002'>
-                <a name='M000002'>      </a>
+              <div class='public-instance method' id='method-M000004'>
+                <a name='M000004'>      </a>
                 <div class='synopsis'>
                   <span class='name'>is_public?</span>
                   <span class='arguments'>()</span>
@@ -175,10 +175,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_public?</span>&#x000A;      <span class="ruby-ivar">@is_public</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_public?</span>&#x000A;      <span class="ruby-ivar">@is_public</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

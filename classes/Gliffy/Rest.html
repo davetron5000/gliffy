@@ -80,7 +80,7 @@
             params and headers are optional. These methods return whatever <a
             href="../Gliffy.html">Gliffy</a> sent back. The context of the request
             should be used to determine the type, however it should be relatively safe
-            to call <a href="Response.html#M000021">Response#success?</a> on whatever
+            to call <a href="Response.html#M000024">Response#success?</a> on whatever
             is returned to determine if everythign was OK
             </p>
           </div>
@@ -88,17 +88,17 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000060">new</a></li>
+              <li><a href="#M000064">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000063">create_url</a></li>
-              <li><a href="#M000061">get_url</a></li>
-              <li><a href="#M000062">method_missing</a></li>
+              <li><a href="#M000067">create_url</a></li>
+              <li><a href="#M000065">get_url</a></li>
+              <li><a href="#M000066">method_missing</a></li>
             </ol>
             <h3>protected instance</h3>
             <ol>
-              <li><a href="#M000064">make_rest_request</a></li>
+              <li><a href="#M000068">make_rest_request</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -144,8 +144,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000060'>
-                <a name='M000060'>      </a>
+              <div class='public-class method' id='method-M000064'>
+                <a name='M000064'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>()</span>
@@ -156,15 +156,15 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000060-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000064-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000060-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@current_token</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rest_client</span>=<span class="ruby-constant">RestClient</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_device</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_level</span>&#x000A;&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Creating #{self.class.to_s} with api_key of #{Config.config.api_key} against #{Config.config.gliffy_root}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000064-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@current_token</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rest_client</span>=<span class="ruby-constant">RestClient</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_device</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_level</span>&#x000A;&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Creating #{self.class.to_s} with api_key of #{Config.config.api_key} against #{Config.config.gliffy_root}&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000063'>
-                <a name='M000063'>      </a>
+              <div class='public-instance method' id='method-M000067'>
+                <a name='M000067'>      </a>
                 <div class='synopsis'>
                   <span class='name'>create_url</span>
                   <span class='arguments'>(url,params=nil)</span>
@@ -177,14 +177,14 @@
                   <pre>[+url+] url, relative to the gliffy root, to retrieve&#x000A;[+params+] optional hash of parameters</pre>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000063-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000067-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000063-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 85</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-constant">SignedURL</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">api_key</span>,<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secret_key</span>,<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">gliffy_root</span>,<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">params</span>=<span class="ruby-identifier">params</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>&#x000A;      <span class="ruby-identifier">url</span>[<span class="ruby-value str">'token'</span>] = <span class="ruby-ivar">@current_token</span>.<span class="ruby-identifier">token</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_token</span>&#x000A;&#x000A;      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">full_url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000067-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 85</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-constant">SignedURL</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">api_key</span>,<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secret_key</span>,<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">gliffy_root</span>,<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">params</span>=<span class="ruby-identifier">params</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>&#x000A;      <span class="ruby-identifier">url</span>[<span class="ruby-value str">'token'</span>] = <span class="ruby-ivar">@current_token</span>.<span class="ruby-identifier">token</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_token</span>&#x000A;&#x000A;      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">full_url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000061'>
-                <a name='M000061'>      </a>
+              <div class='public-instance method' id='method-M000065'>
+                <a name='M000065'>      </a>
                 <div class='synopsis'>
                   <span class='name'>get_url</span>
                   <span class='arguments'>(url,params=nil)</span>
@@ -204,14 +204,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000061-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000065-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000061-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 61</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000065-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 61</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000062'>
-                <a name='M000062'>      </a>
+              <div class='public-instance method' id='method-M000066'>
+                <a name='M000066'>      </a>
                 <div class='synopsis'>
                   <span class='name'>method_missing</span>
                   <span class='arguments'>(symbol,*args)</span>
@@ -222,24 +222,24 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000062-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000066-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000062-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 66</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">HTTP_METHODS</span>[<span class="ruby-identifier">symbol</span>]  <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)&#x000A;        <span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span> = <span class="ruby-identifier">args</span>&#x000A;        <span class="ruby-identifier">make_rest_request</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">HTTP_METHODS</span>[<span class="ruby-identifier">symbol</span>])&#x000A;          <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Wrong number of arguments for method #{symbol.to_s}&quot;</span>) &#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-keyword kw">super</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000066-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 66</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">HTTP_METHODS</span>[<span class="ruby-identifier">symbol</span>]  <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)&#x000A;        <span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span> = <span class="ruby-identifier">args</span>&#x000A;        <span class="ruby-identifier">make_rest_request</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">HTTP_METHODS</span>[<span class="ruby-identifier">symbol</span>])&#x000A;          <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Wrong number of arguments for method #{symbol.to_s}&quot;</span>) &#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-keyword kw">super</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Protected instance methods</h2>
-              <div class='protected-instance method' id='method-M000064'>
-                <a name='M000064'>      </a>
+              <div class='protected-instance method' id='method-M000068'>
+                <a name='M000068'>      </a>
                 <div class='synopsis'>
                   <span class='name'>make_rest_request</span>
                   <span class='arguments'>(method,url,params,headers)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000064-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000068-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000064-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 95</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_rest_request</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)&#x000A;      <span class="ruby-identifier">headers</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>&#x000A;      <span class="ruby-identifier">request_url</span> = <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;#{method.to_s.upcase} #{request_url}&quot;</span>)&#x000A;      <span class="ruby-ivar">@rest_client</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">request_url</span>,<span class="ruby-identifier">headers</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000068-source'><span class="ruby-comment cmt"># File lib/gliffy/rest.rb, line 95</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_rest_request</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">headers</span>)&#x000A;      <span class="ruby-identifier">headers</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>&#x000A;      <span class="ruby-identifier">request_url</span> = <span class="ruby-identifier">create_url</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;#{method.to_s.upcase} #{request_url}&quot;</span>)&#x000A;      <span class="ruby-ivar">@rest_client</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">request_url</span>,<span class="ruby-identifier">headers</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

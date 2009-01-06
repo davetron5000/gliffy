@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sun Jan 04 23:03:30 -0500 2009</span>
+          <span class='datetime'>Mon Jan 05 20:47:28 -0500 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -45,9 +45,10 @@
             </p>
             <p>
             Main entry point is <a
-            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>. Here&#8217;s an
-            example of getting the list of diagrams and then downloading the first one
-            as a JPEG
+            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, though you should
+            look at <a href="../classes/Gliffy/Config.html">Gliffy::Config</a> for
+            configuration options. Here&#8217;s an example of getting the list of
+            diagrams and then downloading the first one as a JPEG
             </p>
             <pre>Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'&#x000A;Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'&#x000A;Gliffy::Config.config.account_name='Initech'&#x000A;&#x000A;handle = Gliffy::Handle.new('lumberg@initech.com')&#x000A;&#x000A;diagrams = handle.get_diagrams&#x000A;diagram_name_safe = diagrams[0].name.gsub(/ /,'_')&#x000A;handle.get_diagram_as_image(diagrams[0].id,:mime_type =&gt; :jpeg,:file=&gt;&quot;#{diagram_name_safe}.jpg&quot;)</pre>
             <p>

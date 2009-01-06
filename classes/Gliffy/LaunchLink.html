@@ -50,8 +50,8 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000005">from_xml</a></li>
-              <li><a href="#M000006">new</a></li>
+              <li><a href="#M000007">from_xml</a></li>
+              <li><a href="#M000008">new</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -78,30 +78,30 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000005'>
-                <a name='M000005'>      </a>
+              <div class='public-class method' id='method-M000007'>
+                <a name='M000007'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(element)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 75</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">diagram_name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'diagram-name'</span>]&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-constant">LaunchLink</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">diagram_name</span>,<span class="ruby-identifier">url</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 75</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">diagram_name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'diagram-name'</span>]&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-constant">LaunchLink</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">diagram_name</span>,<span class="ruby-identifier">url</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000006'>
-                <a name='M000006'>      </a>
+              <div class='public-class method' id='method-M000008'>
+                <a name='M000008'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(name,url)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 83</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@diagram_name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@url</span> = <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/gliffy/diagram.rb, line 83</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@diagram_name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@url</span> = <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

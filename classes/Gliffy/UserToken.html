@@ -50,12 +50,12 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000010">from_xml</a></li>
-              <li><a href="#M000012">new</a></li>
+              <li><a href="#M000013">from_xml</a></li>
+              <li><a href="#M000015">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000011">expired?</a></li>
+              <li><a href="#M000014">expired?</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -78,44 +78,44 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000010'>
-                <a name='M000010'>      </a>
+              <div class='public-class method' id='method-M000013'>
+                <a name='M000013'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(element)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 13</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">expiration</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'expiration'</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">token</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-constant">UserToken</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">expiration</span>,<span class="ruby-identifier">token</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 13</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">expiration</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'expiration'</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)&#x000A;      <span class="ruby-identifier">token</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-constant">UserToken</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">expiration</span>,<span class="ruby-identifier">token</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000012'>
-                <a name='M000012'>      </a>
+              <div class='public-class method' id='method-M000015'>
+                <a name='M000015'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(expiration,token)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 25</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">expiration</span>,<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@expiration</span> = <span class="ruby-identifier">expiration</span>&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 25</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">expiration</span>,<span class="ruby-identifier">token</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@expiration</span> = <span class="ruby-identifier">expiration</span>&#x000A;      <span class="ruby-ivar">@token</span> = <span class="ruby-identifier">token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000011'>
-                <a name='M000011'>      </a>
+              <div class='public-instance method' id='method-M000014'>
+                <a name='M000014'>      </a>
                 <div class='synopsis'>
                   <span class='name'>expired?</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 19</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">expired?</span>&#x000A;      <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">expiration</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 19</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">expired?</span>&#x000A;      <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">expiration</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

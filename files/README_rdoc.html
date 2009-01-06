@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Jan 05 20:47:28 -0500 2009</span>
+          <span class='datetime'>Mon Jan 05 21:44:13 -0500 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -50,7 +50,7 @@
             configuration options. Here&#8217;s an example of getting the list of
             diagrams and then downloading the first one as a JPEG
             </p>
-            <pre>Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'&#x000A;Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'&#x000A;Gliffy::Config.config.account_name='Initech'&#x000A;&#x000A;handle = Gliffy::Handle.new('lumberg@initech.com')&#x000A;&#x000A;diagrams = handle.get_diagrams&#x000A;diagram_name_safe = diagrams[0].name.gsub(/ /,'_')&#x000A;handle.get_diagram_as_image(diagrams[0].id,:mime_type =&gt; :jpeg,:file=&gt;&quot;#{diagram_name_safe}.jpg&quot;)</pre>
+            <pre>require 'gliffy'&#x000A;&#x000A;Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'&#x000A;Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'&#x000A;Gliffy::Config.config.account_name='Initech'&#x000A;&#x000A;handle = Gliffy::Handle.new('lumberg@initech.com')&#x000A;&#x000A;diagrams = handle.get_diagrams&#x000A;diagram_name_safe = diagrams[0].name.gsub(/ /,'_')&#x000A;handle.get_diagram_as_image(diagrams[0].id,:mime_type =&gt; :jpeg,:file=&gt;&quot;#{diagram_name_safe}.jpg&quot;)</pre>
             <p>
             The <a href="../classes/Gliffy/Handle.html">Gliffy::Handle</a> is a
             <b>user-session based connection</b> to <a
@@ -59,11 +59,18 @@
             href="../classes/Gliffy.html">Gliffy</a> and <b>not</b> make a global
             instance.
             </p>
-            <p>
-            RDoc is available a <a
+            <ul>
+            <li>RDoc is available a <a
             href="http://davetron5000.github.com/gliffy">davetron5000.github.com/gliffy</a>
-            Source is available at <a
+            
+            </li>
+            <li>Source is available at <a
             href="http://github.com/davetron5000/gliffy/tree/master">github.com/davetron5000/gliffy/tree/master</a>
+            
+            </li>
+            </ul>
+            <p>
+            Version: 0.1.0
             </p>
           </div>
           <div id='section'>

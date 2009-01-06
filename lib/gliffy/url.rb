@@ -49,8 +49,10 @@ module Gliffy
         url_params[key.to_s] = @params[key].to_s
       end
       to_sign += @secret_key
+      @logger.debug("Signing '#{to_sign}'")
       signature = Digest::MD5.hexdigest(to_sign)
-      signature.gsub!(/^0/,'')
+      signature.gsub!(/^0/,'') while (signature =~ /^0/)
+      @logger.debug("signature == '#{signature}'")
       url_params['signature'] = signature
 
       url = @url_root + @url + '?'

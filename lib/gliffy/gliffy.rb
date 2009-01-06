@@ -29,7 +29,17 @@ module Gliffy
       update_token(username)
     end
 
-    # Run an arbitrary rest call against gliffy, parsing the result
+    # Run an arbitrary rest call against gliffy, parsing the result.  This allows you
+    # essentially direct access to the underlying Gliffy::Rest, without having to worry about
+    # setting it up.
+    #
+    # [+method+] a rest method, :get, :put, :post, :delete
+    # [+url+] url to request, relative to Gliffy::Config#gliffy_root
+    # [+params+] hash of parameters
+    # [+headers+] hash of HTTP headers
+    #
+    # This will return a Gliffy::Response *if* the method you called returned XML.
+    # If that is not what you want, you should use Gliffy::Rest.
     def rest_free(method,url,params={},headers={})
       Response.from_xml(do_simple_rest(method,url,"rest_free",params,headers))
     end

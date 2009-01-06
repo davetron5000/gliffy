@@ -26,7 +26,7 @@ class TC_testRest < Test::Unit::TestCase
   def setup
     Gliffy::Config.config.api_key = 'abcdefghijklmnop'
     Gliffy::Config.config.secret_key = 'qwertyuiop'
-    Gliffy::Config.config.gliffy_root = 'http://www.google.com'
+    Gliffy::Config.config.gliffy_web_root = 'www.google.com'
 
     @api_key = Gliffy::Config.config.api_key
     @secret = Gliffy::Config.config.secret_key

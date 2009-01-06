@@ -1,6 +1,6 @@
 <em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.</em>
 
-Main entry point is Gliffy::Handle.  Here's an example of getting the list of diagrams and then downloading the first one as a JPEG
+Main entry point is Gliffy::Handle, though you should look at Gliffy::Config for configuration options.  Here's an example of getting the list of diagrams and then downloading the first one as a JPEG
 
     Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'
     Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'

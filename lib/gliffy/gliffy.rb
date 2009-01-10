@@ -125,7 +125,6 @@ module Gliffy
       update_token
       extension = extension_for(options[:mime_type])
       extension = ''
-      puts headers['Accept']
       bytes = @rest.get(url("diagrams/#{diagram_id}#{extension}"),params,headers)
       response = nil
       begin
@@ -220,9 +219,9 @@ module Gliffy
       do_simple_rest(:get,url,"Getting users for " + (folder_path ? "folder #{folder_path}" : 'account'))
     end
 
-    # returns true if the user currently has a token
-    def has_token()
-      !@rest.current_token.nil?
+    # returns the user token if it exists
+    def current_token()
+      @rest.current_token
     end
 
     # move diagram +diagram_id+ to folder path +folder_path+

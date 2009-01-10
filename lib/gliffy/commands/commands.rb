@@ -1,8 +1,28 @@
 desc 'List all diagrams in the account'
-usage 
+usage <<eos
+[-p] [-l]
+
+  -l - show all information
+eos
 command :list, :aliases => [:ls] do |gliffy,args|
   diagrams = gliffy.get_diagrams
-  diagrams.sort.each { |diagram| printf "#%7d %s\n",diagram.id,diagram.name }
+  options = parse_options(args)
+  if options['l']
+    max = diagrams.inject(0) { |max,diagram| diagram.name.length > max ? diagram.name.length : max }
+    diagrams.sort.each do |diagram|
+      printf "%8d %s %-#{max}s %-3d %s  %s %s\n",
+        diagram.id,
+        diagram.is_public? ? "P" : "-",
+        diagram.name,
+        diagram.num_versions,
+        format_date(diagram.create_date),
+        format_date(diagram.mod_date),
+        diagram.owner_username
+    end
+  else
+    printf_string = "%d %s\n"
+    diagrams.sort.each { |diagram| printf printf_string,diagram.id,diagram.name }
+  end
 end
 
 desc 'Delete a diagram'
@@ -12,7 +32,11 @@ command :delete, :aliases => [:del,:rm] do |gliffy,args|
 end
 
 desc 'Get the URL for an image'
-usage '[-o] diagram_id'
+usage <<eos
+[-o] diagram_id
+
+  -o - open diagram's URL with configured :open_url command
+eos
 command :url do |gliffy,args|
   open = args[0] == '-o'
   args.shift if open
@@ -30,11 +54,31 @@ command :url do |gliffy,args|
 end
 
 desc 'Download a diagram as an image to a file'
-usage 'diagram_id [filename]'
+usage <<eos 
+[-v version_num] [-f filename] [-t image_type] diagram_id
+
+   image_type can be :jpeg, :png, :svg, or :xml
+eos
 command :get do |gliffy,args|
-  filename = "#{args[0]}.jpg"
-  filename = args[1] if args[1]
-  gliffy.get_diagram_as_image(args[0],:mime_type => :jpeg, :file => filename)
+
+  options = parse_options(args)
+  diagram_id = args.shift
+
+  version_number = options['v'].to_i if options['v']
+  filename = options['f'] if options['f']
+  type = options['t'].to_sym if options['t']
+  type = :jpeg if !type
+  if !filename
+    if version_number
+      filename = "#{diagram_id}_v#{version_number}.#{type.to_s}"
+    else
+      filename = "#{diagram_id}.#{type.to_s}"
+    end
+  end
+
+  get_options = { :mime_type => type, :file => filename }
+  get_options[:version] = version_number if version_number
+  gliffy.get_diagram_as_image(diagram_id,get_options)
   puts filename
 end
 
@@ -52,7 +96,11 @@ command :edit do |gliffy,args|
 end
 
 desc 'Create a new diagram'
-usage '[-e] diagram_name'
+usage <<eos
+[-e] diagram_name
+
+  -e edit the diagram after creating it
+eos
 command :new do |gliffy,args|
   edit = args[0] == '-e'
   args.shift if edit

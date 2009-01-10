@@ -48,8 +48,11 @@ module Gliffy
       if (@offline)
         @block.call(args)
       else
-        handle = Gliffy::Handle.new(CLIConfig.instance.config[:username])
+        previous_token = CLIConfig.instance.config[:current_token]
+        handle = Gliffy::Handle.new(CLIConfig.instance.config[:username],previous_token)
         @block.call(handle,args)
+        CLIConfig.instance.config[:current_token] = handle.current_token
+        CLIConfig.instance.save
       end
     end
 
@@ -62,7 +65,13 @@ module Gliffy
         command = argv.shift
       end 
       Gliffy::Config.config.log_level = Logger::DEBUG if globals['-v']
-      Gliffy::Command.commands[command.to_sym].run argv
+      cmd = Gliffy::Command.commands[command.to_sym]
+      if cmd
+        cmd.run argv
+      else
+        puts "Unknown command #{command}"
+        Gliffy::Command.commands[:help].run []
+      end
     end
   end
 
@@ -208,12 +217,38 @@ module Gliffy
     @next_desc = nil
   end
 
+  def parse_options(args)
+    options = Hash.new
+    return options if !args
+    i = 0
+    while i < args.length
+      inc = 2
+      if args[i] =~ /^-/
+        arg = args[i].gsub(/^-/,'')
+        if !args[i+1] || (args[i+1] =~ /^-/)
+          inc = 1
+          options[arg] = true
+        else
+          options[arg] = args[i+1]
+        end
+      else
+        break
+      end
+      i += inc
+    end
+    i.times { args.shift }
+    options
+  end
+
+  def format_date(date)
+    date.strftime('%m/%d/%y %H:%M')
+  end
+
 end
 
 include Gliffy
 require 'gliffy/commands/commands'
-config = CLIConfig.config
-if !config.load
+if !CLIConfig.instance.load
   exit -1
 end
 

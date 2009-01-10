@@ -20,8 +20,6 @@ module Gliffy
       Time.now > expiration
     end
 
-    protected
-
     def initialize(expiration,token)
       super()
       @expiration = expiration

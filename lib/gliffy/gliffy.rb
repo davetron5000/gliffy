@@ -89,7 +89,7 @@ module Gliffy
 
     # deletes the diagram with the given id.  <b>This cannot be undone</b>
     def delete_diagram(diagram_id)
-      do_folder(:delete,folder_path)
+      do_simple_rest(:delete,"diagrams/#{diagram_id}","Deleting diagram #{diagram_id}")
     end
 
     # Deletes a folder, moving all diagrams in it to the default folder. 

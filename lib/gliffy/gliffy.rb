@@ -187,8 +187,8 @@ module Gliffy
     # returns a Gliffy::LaunchLink that contains the complete URL to be used to edit the given diagram and behave as described.  The GliffyLaunchLink also contains the diagram name, which can be used for linking.  Note that the url is relative to the Gliffy website
     def get_edit_diagram_link(diagram_id,return_url=nil,return_text=nil)
       params = Hash.new
-      params['returnURL'] = return_url if return_url
-      params['returnText'] = return_text if return_text
+      params['returnURL'] = CGI::escape(return_url) if return_url
+      params['returnText'] = CGI::escape(return_text) if return_text
 
       do_simple_rest(:get,"diagrams/#{diagram_id}/launchLink","Getting launch link for diagram #{diagram_id}",params)
     end

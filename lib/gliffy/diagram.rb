@@ -48,6 +48,11 @@ module Gliffy
       @is_private
     end
 
+    # sorts by diagram name
+    def <=>(other_diagram)
+      name <=> other_diagram.name
+    end
+
     protected 
     def initialize(id,name,owner_username,is_public,is_private,num_versions,create_date,mod_date,published_date)
       super()

@@ -34,6 +34,9 @@
             <a href="../files/lib/gliffy/account_rb.html">lib/gliffy/account.rb</a>
           </li>
           <li class='other'>
+            <a href="../files/lib/gliffy/cli_rb.html">lib/gliffy/cli.rb</a>
+          </li>
+          <li class='other'>
             <a href="../files/lib/gliffy/config_rb.html">lib/gliffy/config.rb</a>
           </li>
           <li class='other'>
@@ -64,12 +67,26 @@
       </div>
       <div id='content'>
         <div id='text'>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000004">command</a></li>
+              <li><a href="#M000001">desc</a></li>
+              <li><a href="#M000006">format_date</a></li>
+              <li><a href="#M000002">offline</a></li>
+              <li><a href="#M000005">parse_options</a></li>
+              <li><a href="#M000003">usage</a></li>
+            </ol>
+          </div>
           <div id='section'>
             <div id='class-list'>
               <h2>Classes and Modules</h2>
               Class <a href="Gliffy/Account.html" class="link">Gliffy::Account</a><br />
               Class <a href="Gliffy/Accounts.html" class="link">Gliffy::Accounts</a><br />
               Class <a href="Gliffy/ArrayResponseParser.html" class="link">Gliffy::ArrayResponseParser</a><br />
+              Class <a href="Gliffy/CLIConfig.html" class="link">Gliffy::CLIConfig</a><br />
+              Class <a href="Gliffy/Command.html" class="link">Gliffy::Command</a><br />
               Class <a href="Gliffy/Config.html" class="link">Gliffy::Config</a><br />
               Class <a href="Gliffy/Diagram.html" class="link">Gliffy::Diagram</a><br />
               Class <a href="Gliffy/Diagrams.html" class="link">Gliffy::Diagrams</a><br />
@@ -84,6 +101,110 @@
               Class <a href="Gliffy/User.html" class="link">Gliffy::User</a><br />
               Class <a href="Gliffy/UserToken.html" class="link">Gliffy::UserToken</a><br />
               Class <a href="Gliffy/Users.html" class="link">Gliffy::Users</a><br />
+            </div>
+            <div id='methods'>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000004'>
+                <a name='M000004'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>command</span>
+                  <span class='arguments'>(name,options={},&amp;block)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  defines a command. The only options supported is &#8220;:aliases&#8221;
+                  which is an array of aliases for the command
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 212</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">command</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;    <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">Command</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>,<span class="ruby-ivar">@next_desc</span>,<span class="ruby-ivar">@next_offline</span>,<span class="ruby-ivar">@next_usage</span>,<span class="ruby-identifier">block</span>)&#x000A;    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:aliases</span>]&#x000A;      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:aliases</span>].<span class="ruby-identifier">each</span>() <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">a</span>] = <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">name</span>]&#x000A;        <span class="ruby-constant">Command</span>.<span class="ruby-identifier">aliases</span>[<span class="ruby-identifier">a</span>] = <span class="ruby-keyword kw">true</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-ivar">@next_usage</span> = <span class="ruby-keyword kw">nil</span>&#x000A;    <span class="ruby-ivar">@next_offline</span> = <span class="ruby-keyword kw">false</span>&#x000A;    <span class="ruby-ivar">@next_desc</span> = <span class="ruby-keyword kw">nil</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000001'>
+                <a name='M000001'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>desc</span>
+                  <span class='arguments'>(description)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  For defining commands, this specifies the description of the next command
+                  defined
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 196</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">desc</span>(<span class="ruby-identifier">description</span>)&#x000A;    <span class="ruby-ivar">@next_desc</span> = <span class="ruby-identifier">description</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000006'>
+                <a name='M000006'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>format_date</span>
+                  <span class='arguments'>(date)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 248</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_date</span>(<span class="ruby-identifier">date</span>)&#x000A;    <span class="ruby-identifier">date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%m/%d/%y %H:%M'</span>)&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000002'>
+                <a name='M000002'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>offline</span>
+                  <span class='arguments'>(bool)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  For defining commands, this specifies if the next defined command is
+                  &#8220;offline&#8220;
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 201</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">offline</span>(<span class="ruby-identifier">bool</span>)&#x000A;    <span class="ruby-ivar">@next_offline</span> = <span class="ruby-identifier">bool</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000005'>
+                <a name='M000005'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>parse_options</span>
+                  <span class='arguments'>(args)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 225</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_options</span>(<span class="ruby-identifier">args</span>)&#x000A;    <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">options</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>&#x000A;    <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>&#x000A;    <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span>&#x000A;      <span class="ruby-identifier">inc</span> = <span class="ruby-value">2</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^-/</span>&#x000A;        <span class="ruby-identifier">arg</span> = <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^-/</span>,<span class="ruby-value str">''</span>)&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^-/</span>)&#x000A;          <span class="ruby-identifier">inc</span> = <span class="ruby-value">1</span>&#x000A;          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">arg</span>] = <span class="ruby-keyword kw">true</span>&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">arg</span>] = <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">break</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">inc</span>&#x000A;    <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span> }&#x000A;    <span class="ruby-identifier">options</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000003'>
+                <a name='M000003'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>usage</span>
+                  <span class='arguments'>(usage='')</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  For defining commands, specifies the usage statement of the next command
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 206</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usage</span>(<span class="ruby-identifier">usage</span>=<span class="ruby-value str">''</span>)&#x000A;    <span class="ruby-ivar">@next_usage</span> = <span class="ruby-identifier">usage</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -51,12 +51,12 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000020">from_xml</a></li>
-              <li><a href="#M000022">new</a></li>
+              <li><a href="#M000030">from_xml</a></li>
+              <li><a href="#M000032">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000021">is_admin?</a></li>
+              <li><a href="#M000031">is_admin?</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -93,35 +93,35 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000020'>
-                <a name='M000020'>      </a>
+              <div class='public-class method' id='method-M000030'>
+                <a name='M000030'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(element)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 47</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">is_admin</span> = <span class="ruby-keyword kw">false</span>&#x000A;      <span class="ruby-identifier">is_admin</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-admin'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-admin'</span>] &#x000A;      <span class="ruby-identifier">username</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'username'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'username'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-identifier">email</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'email'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'email'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;&#x000A;      <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">is_admin</span>,<span class="ruby-identifier">username</span>,<span class="ruby-identifier">email</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000030-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 45</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">is_admin</span> = <span class="ruby-keyword kw">false</span>&#x000A;      <span class="ruby-identifier">is_admin</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-admin'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-admin'</span>] &#x000A;      <span class="ruby-identifier">username</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'username'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'username'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-identifier">email</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'email'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'email'</span>].<span class="ruby-identifier">text</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>&#x000A;&#x000A;      <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">is_admin</span>,<span class="ruby-identifier">username</span>,<span class="ruby-identifier">email</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000022'>
-                <a name='M000022'>      </a>
+              <div class='public-class method' id='method-M000032'>
+                <a name='M000032'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(id,is_admin,username,email)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000032-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 64</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">is_admin</span>,<span class="ruby-identifier">username</span>,<span class="ruby-identifier">email</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@is_admin</span> = <span class="ruby-identifier">is_admin</span>&#x000A;      <span class="ruby-ivar">@username</span> = <span class="ruby-identifier">username</span>&#x000A;      <span class="ruby-ivar">@email</span> = <span class="ruby-identifier">email</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000032-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 62</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">is_admin</span>,<span class="ruby-identifier">username</span>,<span class="ruby-identifier">email</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@is_admin</span> = <span class="ruby-identifier">is_admin</span>&#x000A;      <span class="ruby-ivar">@username</span> = <span class="ruby-identifier">username</span>&#x000A;      <span class="ruby-ivar">@email</span> = <span class="ruby-identifier">email</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000021'>
-                <a name='M000021'>      </a>
+              <div class='public-instance method' id='method-M000031'>
+                <a name='M000031'>      </a>
                 <div class='synopsis'>
                   <span class='name'>is_admin?</span>
                   <span class='arguments'>()</span>
@@ -132,10 +132,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 58</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_admin?</span>&#x000A;      <span class="ruby-ivar">@is_admin</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/gliffy/user.rb, line 56</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_admin?</span>&#x000A;      <span class="ruby-ivar">@is_admin</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

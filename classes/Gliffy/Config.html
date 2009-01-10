@@ -60,13 +60,13 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000012">config</a></li>
-              <li><a href="#M000011">config=</a></li>
-              <li><a href="#M000009">new</a></li>
+              <li><a href="#M000018">config</a></li>
+              <li><a href="#M000017">config=</a></li>
+              <li><a href="#M000015">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000010">gliffy_root</a></li>
+              <li><a href="#M000016">gliffy_root</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -91,20 +91,21 @@
                     </td>
                   </tr>
                   <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>gliffy_app_root</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      The gliffy app root, which is pretty much <a
+                      href="http://www.gliffy.com/gliffy">www.gliffy.com/gliffy</a> unless you
+                      know a secret
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
                     <td class='context-item-name'>gliffy_rest_context</td>
                     <td class='context-item-value'>[RW]</td>
                     <td class='context-item-desc'>
                       
-                      The url relative to gliffy_web_root of where the API is accessed
-                    </td>
-                  </tr>
-                  <tr class='top-aligned-row context-row'>
-                    <td class='context-item-name'>gliffy_web_root</td>
-                    <td class='context-item-value'>[RW]</td>
-                    <td class='context-item-desc'>
-                      
-                      The gliffy web root, which is pretty much <a
-                      href="http://www.gliffy.com">www.gliffy.com</a> unless you know a secret
+                      The url relative to gliffy_app_root of where the API is accessed
                     </td>
                   </tr>
                   <tr class='top-aligned-row context-row'>
@@ -145,48 +146,48 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000012'>
-                <a name='M000012'>      </a>
+              <div class='public-class method' id='method-M000018'>
+                <a name='M000018'>      </a>
                 <div class='synopsis'>
                   <span class='name'>config</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 49</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>&#x000A;      <span class="ruby-ivar">@@instance</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@instance</span>&#x000A;      <span class="ruby-ivar">@@instance</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 49</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config</span>&#x000A;      <span class="ruby-ivar">@@instance</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@instance</span>&#x000A;      <span class="ruby-ivar">@@instance</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000011'>
-                <a name='M000011'>      </a>
+              <div class='public-class method' id='method-M000017'>
+                <a name='M000017'>      </a>
                 <div class='synopsis'>
                   <span class='name'>config=</span>
                   <span class='arguments'>(config)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 48</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config=</span>(<span class="ruby-identifier">config</span>); <span class="ruby-ivar">@@instance</span> = <span class="ruby-identifier">config</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 48</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config=</span>(<span class="ruby-identifier">config</span>); <span class="ruby-ivar">@@instance</span> = <span class="ruby-identifier">config</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000009'>
-                <a name='M000009'>      </a>
+              <div class='public-class method' id='method-M000015'>
+                <a name='M000015'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 31</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@log_level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span>&#x000A;      <span class="ruby-ivar">@log_device</span> = <span class="ruby-constant">STDERR</span>&#x000A;      <span class="ruby-ivar">@protocol</span> = <span class="ruby-value str">'http'</span>&#x000A;      <span class="ruby-ivar">@gliffy_web_root</span> = <span class="ruby-value str">'www.gliffy.com'</span>;&#x000A;      <span class="ruby-ivar">@gliffy_rest_context</span> = <span class="ruby-value str">'gliffy/rest'</span>&#x000A;      <span class="ruby-ivar">@api_key</span> = <span class="ruby-value str">'no api key specified'</span>&#x000A;      <span class="ruby-ivar">@secret_key</span> = <span class="ruby-value str">'no secret key specified'</span>&#x000A;      <span class="ruby-ivar">@account_name</span> = <span class="ruby-value str">'no account name specified'</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 31</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@log_level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span>&#x000A;      <span class="ruby-ivar">@log_device</span> = <span class="ruby-constant">STDERR</span>&#x000A;      <span class="ruby-ivar">@protocol</span> = <span class="ruby-value str">'http'</span>&#x000A;      <span class="ruby-ivar">@gliffy_app_root</span> = <span class="ruby-value str">'www.gliffy.com/gliffy'</span>;&#x000A;      <span class="ruby-ivar">@gliffy_rest_context</span> = <span class="ruby-value str">'rest'</span>&#x000A;      <span class="ruby-ivar">@api_key</span> = <span class="ruby-value str">'no api key specified'</span>&#x000A;      <span class="ruby-ivar">@secret_key</span> = <span class="ruby-value str">'no secret key specified'</span>&#x000A;      <span class="ruby-ivar">@account_name</span> = <span class="ruby-value str">'no account name specified'</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000010'>
-                <a name='M000010'>      </a>
+              <div class='public-instance method' id='method-M000016'>
+                <a name='M000016'>      </a>
                 <div class='synopsis'>
                   <span class='name'>gliffy_root</span>
                   <span class='arguments'>()</span>
@@ -194,15 +195,15 @@
                 <div class='description'>
                   <p>
                   Returns the entire URL to the gliffy api root. This uses protocol,
-                  gliffy_web_root and gliffy_rest_context, so you should not really override
+                  gliffy_app_root and gliffy_rest_context, so you should not really override
                   this
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 44</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gliffy_root</span>&#x000A;      <span class="ruby-node">&quot;#{protocol}://#{gliffy_web_root}/#{gliffy_rest_context}&quot;</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/gliffy/config.rb, line 44</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gliffy_root</span>&#x000A;      <span class="ruby-node">&quot;#{protocol}://#{gliffy_app_root}/#{gliffy_rest_context}&quot;</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

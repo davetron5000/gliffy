@@ -45,13 +45,13 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000018">encode_path_elements</a></li>
-              <li><a href="#M000016">from_xml</a></li>
-              <li><a href="#M000019">new</a></li>
+              <li><a href="#M000028">encode_path_elements</a></li>
+              <li><a href="#M000026">from_xml</a></li>
+              <li><a href="#M000029">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000017">default?</a></li>
+              <li><a href="#M000027">default?</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -92,8 +92,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000018'>
-                <a name='M000018'>      </a>
+              <div class='public-class method' id='method-M000028'>
+                <a name='M000028'>      </a>
                 <div class='synopsis'>
                   <span class='name'>encode_path_elements</span>
                   <span class='arguments'>(folder_path)</span>
@@ -104,41 +104,41 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 43</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">encoded</span> = <span class="ruby-value str">''</span>&#x000A;      <span class="ruby-identifier">folder_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\//</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">part</span>)&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;/&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">encoded</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/$/</span>,<span class="ruby-value str">''</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000028-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 43</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">encode_path_elements</span>(<span class="ruby-identifier">folder_path</span>)&#x000A;      <span class="ruby-identifier">encoded</span> = <span class="ruby-value str">''</span>&#x000A;      <span class="ruby-identifier">folder_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\//</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">part</span>)&#x000A;        <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;/&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">encoded</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/$/</span>,<span class="ruby-value str">''</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000016'>
-                <a name='M000016'>      </a>
+              <div class='public-class method' id='method-M000026'>
+                <a name='M000026'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(element)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 22</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">default</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-default'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'name'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">path</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'path'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">child_folders</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">element</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">child_folders</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;folder&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000026-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 22</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>)&#x000A;      <span class="ruby-identifier">id</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">to_i</span>&#x000A;      <span class="ruby-identifier">default</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'is-default'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'name'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">path</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'path'</span>].<span class="ruby-identifier">text</span>&#x000A;      <span class="ruby-identifier">child_folders</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-identifier">element</span>.<span class="ruby-identifier">each_element</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">child_folders</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">element</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;folder&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-constant">Folder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000019'>
-                <a name='M000019'>      </a>
+              <div class='public-class method' id='method-M000029'>
+                <a name='M000029'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(id,name,default,path,child_folders)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 54</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@default</span> = <span class="ruby-identifier">default</span>&#x000A;      <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>&#x000A;      <span class="ruby-ivar">@child_folders</span> = <span class="ruby-identifier">child_folders</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 54</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id</span>,<span class="ruby-identifier">name</span>,<span class="ruby-identifier">default</span>,<span class="ruby-identifier">path</span>,<span class="ruby-identifier">child_folders</span>)&#x000A;      <span class="ruby-keyword kw">super</span>()&#x000A;      <span class="ruby-ivar">@id</span> = <span class="ruby-identifier">id</span>&#x000A;      <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>&#x000A;      <span class="ruby-ivar">@default</span> = <span class="ruby-identifier">default</span>&#x000A;      <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>&#x000A;      <span class="ruby-ivar">@child_folders</span> = <span class="ruby-identifier">child_folders</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000017'>
-                <a name='M000017'>      </a>
+              <div class='public-instance method' id='method-M000027'>
+                <a name='M000027'>      </a>
                 <div class='synopsis'>
                   <span class='name'>default?</span>
                   <span class='arguments'>()</span>
@@ -151,10 +151,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 38</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default?</span>&#x000A;      <span class="ruby-ivar">@default</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000027-source'><span class="ruby-comment cmt"># File lib/gliffy/folder.rb, line 38</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default?</span>&#x000A;      <span class="ruby-ivar">@default</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

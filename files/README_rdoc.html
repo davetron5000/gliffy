@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Jan 05 21:44:13 -0500 2009</span>
+          <span class='datetime'>Sat Jan 10 15:09:15 -0500 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -40,9 +40,15 @@
             <p>
             <em>The <a href="../classes/Gliffy.html">Gliffy</a> API is currently in
             private beta. This will be a Ruby implementation to access your <a
-            href="../classes/Gliffy.html">Gliffy</a> account. In progress for the
-            moment.</em>
+            href="../classes/Gliffy.html">Gliffy</a> account.</em>
             </p>
+            <p>
+            This consists of a Ruby client for <a
+            href="../classes/Gliffy.html">Gliffy</a> as well as a simple command line
+            tool to access your <a href="../classes/Gliffy.html">Gliffy</a> account
+            using that client.
+            </p>
+            <h2>Client Library</h2>
             <p>
             Main entry point is <a
             href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, though you should
@@ -69,8 +75,82 @@
             
             </li>
             </ul>
+            <h2>Command Line Client</h2>
             <p>
-            Version: 0.1.0
+            <tt>gliffy</tt> <tt>help</tt> shows a list of commands. Currently, there
+            are:
+            </p>
+            <dl>
+            <dt><tt>delete</tt></dt><dd>Delete a diagram (also: del,rm)
+            
+            </dd>
+            <dt><tt>edit</tt></dt><dd>Edit a diagram
+            
+            </dd>
+            <dt><tt>get</tt></dt><dd>Download a diagram as an image to a file
+            
+            </dd>
+            <dt><tt>help</tt></dt><dd>Show commands
+            
+            </dd>
+            <dt><tt>list</tt></dt><dd>List all diagrams in the account (also: ls)
+            
+            </dd>
+            <dt><tt>new</tt></dt><dd>Create a new diagram
+            
+            </dd>
+            <dt><tt>url</tt></dt><dd>Get the URL for an image
+            
+            </dd>
+            </dl>
+            <h3>Configuration</h3>
+            <p>
+            The first time you run the client, it will create a base configuration in
+            your home directory called <tt>.gliffyrc</tt>, and will ask you to provide
+            it with four pieces of information:
+            </p>
+            <dl>
+            <dt>API Key</dt><dd>This is the API Key given to you by <a
+            href="../classes/Gliffy.html">Gliffy</a>
+            
+            </dd>
+            <dt>Secret Key</dt><dd>This is the Secret Key given to you by <a
+            href="../classes/Gliffy.html">Gliffy</a>. <b>Do not check this value into
+            source control</b>
+            
+            </dd>
+            <dt>Account Name</dt><dd>Your account&#8217;s name. This should&#8217;ve been provided with your API
+            Key
+            
+            </dd>
+            <dt>Username</dt><dd>The username to work under. The command line client only allows single-user
+            access to your <a href="../classes/Gliffy.html">Gliffy</a> account. If you
+            just signed up for <a href="../classes/Gliffy.html">Gliffy</a>, this is
+            probably the email address you used to sign up
+            
+            </dd>
+            </dl>
+            <p>
+            If you are not on OS X, you will want to configure two other options, and
+            you can do this by editing your <tt>.gliffyrc</tt> directly:
+            </p>
+            <dl>
+            <dt><tt>open_image</tt></dt><dd>Configures the command for opening an image from the command line. This
+            should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will
+            be replaced with the name of the image file to open.
+            
+            </dd>
+            <dt><tt>open_url</tt></dt><dd>Configures the command for opening an url from the command line. This
+            should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will
+            be replaced with the name of the url to open.
+            
+            </dd>
+            </dl>
+            <p>
+            The other options are all documented in <a
+            href="../classes/Gliffy/Config.html">Gliffy::Config</a>. Note that your
+            most previously received user token is stored here as well, to keep from
+            getting it every time the client is run.
             </p>
           </div>
           <div id='section'>

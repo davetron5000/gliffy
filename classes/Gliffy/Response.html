@@ -52,19 +52,19 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000023">from_xml</a></li>
-              <li><a href="#M000028">new</a></li>
+              <li><a href="#M000038">from_xml</a></li>
+              <li><a href="#M000043">new</a></li>
             </ol>
             <h3>protected class</h3>
             <ol>
-              <li><a href="#M000029">to_classname</a></li>
+              <li><a href="#M000044">to_classname</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000027">not_modified=</a></li>
-              <li><a href="#M000025">not_modified?</a></li>
-              <li><a href="#M000026">success=</a></li>
-              <li><a href="#M000024">success?</a></li>
+              <li><a href="#M000042">not_modified=</a></li>
+              <li><a href="#M000040">not_modified?</a></li>
+              <li><a href="#M000041">success=</a></li>
+              <li><a href="#M000039">success?</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -85,8 +85,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000023'>
-                <a name='M000023'>      </a>
+              <div class='public-class method' id='method-M000038'>
+                <a name='M000038'>      </a>
                 <div class='synopsis'>
                   <span class='name'>from_xml</span>
                   <span class='arguments'>(xml)</span>
@@ -106,28 +106,28 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000038-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">xml</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;xml may not be null to #{to_s}.from_xml&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">xml</span>&#x000A;      <span class="ruby-identifier">root</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml</span>).<span class="ruby-identifier">root</span>&#x000A;      <span class="ruby-identifier">not_modified</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'not-modified'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">success</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'success'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">klassname</span> = <span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">name</span>)&#x000A;        <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Gliffy</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">klassname</span>)&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value">1</span>])&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">success</span> = <span class="ruby-identifier">success</span>&#x000A;      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">not_modified</span> = <span class="ruby-identifier">not_modified</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000038-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 36</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">xml</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;xml may not be null to #{to_s}.from_xml&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">xml</span>&#x000A;      <span class="ruby-identifier">root</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xml</span>).<span class="ruby-identifier">root</span>&#x000A;      <span class="ruby-identifier">not_modified</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'not-modified'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;      <span class="ruby-identifier">success</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'success'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">empty?</span>&#x000A;        <span class="ruby-identifier">klassname</span> = <span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">name</span>)&#x000A;        <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Gliffy</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">klassname</span>)&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value">1</span>])&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">success</span> = <span class="ruby-identifier">success</span>&#x000A;      <span class="ruby-identifier">response</span>.<span class="ruby-identifier">not_modified</span> = <span class="ruby-identifier">not_modified</span>&#x000A;&#x000A;      <span class="ruby-identifier">response</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-class method' id='method-M000028'>
-                <a name='M000028'>      </a>
+              <div class='public-class method' id='method-M000043'>
+                <a name='M000043'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>()</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000043-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000028-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 73</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@success</span> = <span class="ruby-keyword kw">true</span>&#x000A;      <span class="ruby-ivar">@not_modified</span> = <span class="ruby-keyword kw">false</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000043-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 73</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>&#x000A;      <span class="ruby-ivar">@success</span> = <span class="ruby-keyword kw">true</span>&#x000A;      <span class="ruby-ivar">@not_modified</span> = <span class="ruby-keyword kw">false</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Protected class methods</h2>
-              <div class='protected-class method' id='method-M000029'>
-                <a name='M000029'>      </a>
+              <div class='protected-class method' id='method-M000044'>
+                <a name='M000044'>      </a>
                 <div class='synopsis'>
                   <span class='name'>to_classname</span>
                   <span class='arguments'>(name)</span>
@@ -138,28 +138,28 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000044-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 79</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">name</span>)&#x000A;      <span class="ruby-identifier">classname</span> = <span class="ruby-value str">&quot;&quot;</span>&#x000A;      <span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/-/</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">classname</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">part</span>.<span class="ruby-identifier">capitalize</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">classname</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000044-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 79</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">name</span>)&#x000A;      <span class="ruby-identifier">classname</span> = <span class="ruby-value str">&quot;&quot;</span>&#x000A;      <span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/-/</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">classname</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">part</span>.<span class="ruby-identifier">capitalize</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">classname</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000027'>
-                <a name='M000027'>      </a>
+              <div class='public-instance method' id='method-M000042'>
+                <a name='M000042'>      </a>
                 <div class='synopsis'>
                   <span class='name'>not_modified=</span>
                   <span class='arguments'>(s)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000042-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000027-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 66</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_modified=</span>(<span class="ruby-identifier">s</span>); <span class="ruby-ivar">@not_modified</span> = <span class="ruby-identifier">s</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000042-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 66</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_modified=</span>(<span class="ruby-identifier">s</span>); <span class="ruby-ivar">@not_modified</span> = <span class="ruby-identifier">s</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000025'>
-                <a name='M000025'>      </a>
+              <div class='public-instance method' id='method-M000040'>
+                <a name='M000040'>      </a>
                 <div class='synopsis'>
                   <span class='name'>not_modified?</span>
                   <span class='arguments'>()</span>
@@ -171,27 +171,27 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000025-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 63</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_modified?</span>; <span class="ruby-ivar">@not_modified</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000040-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 63</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_modified?</span>; <span class="ruby-ivar">@not_modified</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000026'>
-                <a name='M000026'>      </a>
+              <div class='public-instance method' id='method-M000041'>
+                <a name='M000041'>      </a>
                 <div class='synopsis'>
                   <span class='name'>success=</span>
                   <span class='arguments'>(s)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000041-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000026-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success=</span>(<span class="ruby-identifier">s</span>); <span class="ruby-ivar">@success</span> = <span class="ruby-identifier">s</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000041-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success=</span>(<span class="ruby-identifier">s</span>); <span class="ruby-ivar">@success</span> = <span class="ruby-identifier">s</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000024'>
-                <a name='M000024'>      </a>
+              <div class='public-instance method' id='method-M000039'>
+                <a name='M000039'>      </a>
                 <div class='synopsis'>
                   <span class='name'>success?</span>
                   <span class='arguments'>()</span>
@@ -204,10 +204,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000039-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 59</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success?</span>; <span class="ruby-ivar">@success</span>; <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000039-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 59</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">success?</span>; <span class="ruby-ivar">@success</span>; <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

@@ -4331,74 +4331,90 @@
         
         Element.addMethods();
         var search_index = [
-          { method: '[]=', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000034"><span class="method_name">[]=</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
-          { method: 'add_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000042"><span class="method_name">add_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'add_user_to_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000044"><span class="method_name">add_user_to_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'config', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000012"><span class="method_name">config</span> <span class="module_name">(Gliffy::Config)</span></a>' },
-          { method: 'config=', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000011"><span class="method_name">config=</span> <span class="module_name">(Gliffy::Config)</span></a>' },
-          { method: 'create_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000046"><span class="method_name">create_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'create_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000047"><span class="method_name">create_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'create_url', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000067"><span class="method_name">create_url</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
-          { method: 'default?', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000017"><span class="method_name">default?</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
-          { method: 'delete_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000048"><span class="method_name">delete_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'delete_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000049"><span class="method_name">delete_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'delete_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000043"><span class="method_name">delete_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'die_if', module: 'bin/real_gliffy.rb', html: '<a href="files/bin/real_gliffy_rb.html#M000001"><span class="method_name">die_if</span> <span class="module_name">(bin/real_gliffy.rb)</span></a>' },
-          { method: 'encode_path_elements', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000018"><span class="method_name">encode_path_elements</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
-          { method: 'expired?', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000014"><span class="method_name">expired?</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000016"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000013"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::launchlink', html: '<a href="classes/Gliffy/LaunchLink.html#M000007"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::LaunchLink)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::arrayresponseparser', html: '<a href="classes/Gliffy/ArrayResponseParser.html#M000032"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::ArrayResponseParser)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000020"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::User)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000003"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000037"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Error)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000023"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'from_xml', module: 'gliffy::account', html: '<a href="classes/Gliffy/Account.html#M000030"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Account)</span></a>' },
-          { method: 'full_url', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000036"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
-          { method: 'get_admins', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000050"><span class="method_name">get_admins</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_diagram_as_image', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000051"><span class="method_name">get_diagram_as_image</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_diagram_as_url', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000052"><span class="method_name">get_diagram_as_url</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_diagram_meta_data', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000053"><span class="method_name">get_diagram_meta_data</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_diagrams', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000054"><span class="method_name">get_diagrams</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_edit_diagram_link', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000055"><span class="method_name">get_edit_diagram_link</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_folders', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000056"><span class="method_name">get_folders</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_url', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000065"><span class="method_name">get_url</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
-          { method: 'get_user_folders', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000057"><span class="method_name">get_user_folders</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'get_users', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000058"><span class="method_name">get_users</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'gliffy_root', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000010"><span class="method_name">gliffy_root</span> <span class="module_name">(Gliffy::Config)</span></a>' },
-          { method: 'handle_error', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000063"><span class="method_name">handle_error</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'has_token', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000059"><span class="method_name">has_token</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'is_admin?', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000021"><span class="method_name">is_admin?</span> <span class="module_name">(Gliffy::User)</span></a>' },
-          { method: 'is_private?', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000005"><span class="method_name">is_private?</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
-          { method: 'is_public?', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000004"><span class="method_name">is_public?</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
-          { method: 'make_rest_request', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000068"><span class="method_name">make_rest_request</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
-          { method: 'method_missing', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000066"><span class="method_name">method_missing</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
-          { method: 'move_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000060"><span class="method_name">move_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'new', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000064"><span class="method_name">new</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
-          { method: 'new', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000015"><span class="method_name">new</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
-          { method: 'new', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000040"><span class="method_name">new</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'new', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000009"><span class="method_name">new</span> <span class="module_name">(Gliffy::Config)</span></a>' },
-          { method: 'new', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000038"><span class="method_name">new</span> <span class="module_name">(Gliffy::Error)</span></a>' },
-          { method: 'new', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000006"><span class="method_name">new</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
-          { method: 'new', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000033"><span class="method_name">new</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
-          { method: 'new', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000019"><span class="method_name">new</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
-          { method: 'new', module: 'gliffy::account', html: '<a href="classes/Gliffy/Account.html#M000031"><span class="method_name">new</span> <span class="module_name">(Gliffy::Account)</span></a>' },
-          { method: 'new', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000028"><span class="method_name">new</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'new', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000022"><span class="method_name">new</span> <span class="module_name">(Gliffy::User)</span></a>' },
-          { method: 'new', module: 'gliffy::launchlink', html: '<a href="classes/Gliffy/LaunchLink.html#M000008"><span class="method_name">new</span> <span class="module_name">(Gliffy::LaunchLink)</span></a>' },
-          { method: 'not_modified=', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000027"><span class="method_name">not_modified=</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'not_modified?', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000025"><span class="method_name">not_modified?</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'output_folders', module: 'bin/real_gliffy.rb', html: '<a href="files/bin/real_gliffy_rb.html#M000002"><span class="method_name">output_folders</span> <span class="module_name">(bin/real_gliffy.rb)</span></a>' },
-          { method: 'params=', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000035"><span class="method_name">params=</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
-          { method: 'remove_user_from_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000045"><span class="method_name">remove_user_from_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'rest_free', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000041"><span class="method_name">rest_free</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'success=', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000026"><span class="method_name">success=</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'success?', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000024"><span class="method_name">success?</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'to_classname', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000029"><span class="method_name">to_classname</span> <span class="module_name">(Gliffy::Response)</span></a>' },
-          { method: 'to_s', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000039"><span class="method_name">to_s</span> <span class="module_name">(Gliffy::Error)</span></a>' },
-          { method: 'update_token', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000062"><span class="method_name">update_token</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
-          { method: 'update_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000061"><span class="method_name">update_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: '<=>', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000010"><span class="method_name">&lt;=&gt;</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
+          { method: '[]=', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000049"><span class="method_name">[]=</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
+          { method: 'add_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000057"><span class="method_name">add_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'add_user_to_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000059"><span class="method_name">add_user_to_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'aliases', module: 'gliffy::command', html: '<a href="classes/Gliffy/Command.html#M000034"><span class="method_name">aliases</span> <span class="module_name">(Gliffy::Command)</span></a>' },
+          { method: 'command', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000004"><span class="method_name">command</span> <span class="module_name">(Gliffy)</span></a>' },
+          { method: 'commands', module: 'gliffy::command', html: '<a href="classes/Gliffy/Command.html#M000033"><span class="method_name">commands</span> <span class="module_name">(Gliffy::Command)</span></a>' },
+          { method: 'config', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000018"><span class="method_name">config</span> <span class="module_name">(Gliffy::Config)</span></a>' },
+          { method: 'config=', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000017"><span class="method_name">config=</span> <span class="module_name">(Gliffy::Config)</span></a>' },
+          { method: 'create_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000061"><span class="method_name">create_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'create_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000062"><span class="method_name">create_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'create_url', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000083"><span class="method_name">create_url</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
+          { method: 'current_token', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000075"><span class="method_name">current_token</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'default?', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000027"><span class="method_name">default?</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
+          { method: 'delete_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000063"><span class="method_name">delete_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'delete_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000064"><span class="method_name">delete_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'delete_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000058"><span class="method_name">delete_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'desc', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000001"><span class="method_name">desc</span> <span class="module_name">(Gliffy)</span></a>' },
+          { method: 'encode_path_elements', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000028"><span class="method_name">encode_path_elements</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
+          { method: 'execute', module: 'gliffy::command', html: '<a href="classes/Gliffy/Command.html#M000037"><span class="method_name">execute</span> <span class="module_name">(Gliffy::Command)</span></a>' },
+          { method: 'expired?', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000024"><span class="method_name">expired?</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
+          { method: 'extension_for', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000068"><span class="method_name">extension_for</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'format_date', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000006"><span class="method_name">format_date</span> <span class="module_name">(Gliffy)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::account', html: '<a href="classes/Gliffy/Account.html#M000045"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Account)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000023"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000038"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000007"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::arrayresponseparser', html: '<a href="classes/Gliffy/ArrayResponseParser.html#M000047"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::ArrayResponseParser)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::launchlink', html: '<a href="classes/Gliffy/LaunchLink.html#M000012"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::LaunchLink)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000030"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::User)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000052"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Error)</span></a>' },
+          { method: 'from_xml', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000026"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
+          { method: 'full_url', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000051"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
+          { method: 'full_url', module: 'gliffy::launchlink', html: '<a href="classes/Gliffy/LaunchLink.html#M000013"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::LaunchLink)</span></a>' },
+          { method: 'get_admins', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000065"><span class="method_name">get_admins</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_diagram_as_image', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000066"><span class="method_name">get_diagram_as_image</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_diagram_as_url', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000067"><span class="method_name">get_diagram_as_url</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_diagram_meta_data', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000069"><span class="method_name">get_diagram_meta_data</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_diagrams', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000070"><span class="method_name">get_diagrams</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_edit_diagram_link', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000071"><span class="method_name">get_edit_diagram_link</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_folders', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000072"><span class="method_name">get_folders</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_url', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000081"><span class="method_name">get_url</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
+          { method: 'get_user_folders', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000073"><span class="method_name">get_user_folders</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'get_users', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000074"><span class="method_name">get_users</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'gliffy_root', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000016"><span class="method_name">gliffy_root</span> <span class="module_name">(Gliffy::Config)</span></a>' },
+          { method: 'handle_error', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000079"><span class="method_name">handle_error</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'instance', module: 'gliffy::cliconfig', html: '<a href="classes/Gliffy/CLIConfig.html#M000019"><span class="method_name">instance</span> <span class="module_name">(Gliffy::CLIConfig)</span></a>' },
+          { method: 'is_admin?', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000031"><span class="method_name">is_admin?</span> <span class="module_name">(Gliffy::User)</span></a>' },
+          { method: 'is_private?', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000009"><span class="method_name">is_private?</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
+          { method: 'is_public?', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000008"><span class="method_name">is_public?</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
+          { method: 'load', module: 'gliffy::cliconfig', html: '<a href="classes/Gliffy/CLIConfig.html#M000020"><span class="method_name">load</span> <span class="module_name">(Gliffy::CLIConfig)</span></a>' },
+          { method: 'make_rest_request', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000084"><span class="method_name">make_rest_request</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
+          { method: 'method_missing', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000082"><span class="method_name">method_missing</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
+          { method: 'move_diagram', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000076"><span class="method_name">move_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'new', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000053"><span class="method_name">new</span> <span class="module_name">(Gliffy::Error)</span></a>' },
+          { method: 'new', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000043"><span class="method_name">new</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'new', module: 'gliffy::rest', html: '<a href="classes/Gliffy/Rest.html#M000080"><span class="method_name">new</span> <span class="module_name">(Gliffy::Rest)</span></a>' },
+          { method: 'new', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000048"><span class="method_name">new</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
+          { method: 'new', module: 'gliffy::account', html: '<a href="classes/Gliffy/Account.html#M000046"><span class="method_name">new</span> <span class="module_name">(Gliffy::Account)</span></a>' },
+          { method: 'new', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000055"><span class="method_name">new</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'new', module: 'gliffy::diagram', html: '<a href="classes/Gliffy/Diagram.html#M000011"><span class="method_name">new</span> <span class="module_name">(Gliffy::Diagram)</span></a>' },
+          { method: 'new', module: 'gliffy::launchlink', html: '<a href="classes/Gliffy/LaunchLink.html#M000014"><span class="method_name">new</span> <span class="module_name">(Gliffy::LaunchLink)</span></a>' },
+          { method: 'new', module: 'gliffy::config', html: '<a href="classes/Gliffy/Config.html#M000015"><span class="method_name">new</span> <span class="module_name">(Gliffy::Config)</span></a>' },
+          { method: 'new', module: 'gliffy::cliconfig', html: '<a href="classes/Gliffy/CLIConfig.html#M000022"><span class="method_name">new</span> <span class="module_name">(Gliffy::CLIConfig)</span></a>' },
+          { method: 'new', module: 'gliffy::usertoken', html: '<a href="classes/Gliffy/UserToken.html#M000025"><span class="method_name">new</span> <span class="module_name">(Gliffy::UserToken)</span></a>' },
+          { method: 'new', module: 'gliffy::user', html: '<a href="classes/Gliffy/User.html#M000032"><span class="method_name">new</span> <span class="module_name">(Gliffy::User)</span></a>' },
+          { method: 'new', module: 'gliffy::command', html: '<a href="classes/Gliffy/Command.html#M000035"><span class="method_name">new</span> <span class="module_name">(Gliffy::Command)</span></a>' },
+          { method: 'new', module: 'gliffy::folder', html: '<a href="classes/Gliffy/Folder.html#M000029"><span class="method_name">new</span> <span class="module_name">(Gliffy::Folder)</span></a>' },
+          { method: 'not_modified=', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000042"><span class="method_name">not_modified=</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'not_modified?', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000040"><span class="method_name">not_modified?</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'offline', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000002"><span class="method_name">offline</span> <span class="module_name">(Gliffy)</span></a>' },
+          { method: 'params=', module: 'gliffy::signedurl', html: '<a href="classes/Gliffy/SignedURL.html#M000050"><span class="method_name">params=</span> <span class="module_name">(Gliffy::SignedURL)</span></a>' },
+          { method: 'parse_options', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000005"><span class="method_name">parse_options</span> <span class="module_name">(Gliffy)</span></a>' },
+          { method: 'remove_user_from_folder', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000060"><span class="method_name">remove_user_from_folder</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'rest_free', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000056"><span class="method_name">rest_free</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'run', module: 'gliffy::command', html: '<a href="classes/Gliffy/Command.html#M000036"><span class="method_name">run</span> <span class="module_name">(Gliffy::Command)</span></a>' },
+          { method: 'save', module: 'gliffy::cliconfig', html: '<a href="classes/Gliffy/CLIConfig.html#M000021"><span class="method_name">save</span> <span class="module_name">(Gliffy::CLIConfig)</span></a>' },
+          { method: 'success=', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000041"><span class="method_name">success=</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'success?', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000039"><span class="method_name">success?</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'to_classname', module: 'gliffy::response', html: '<a href="classes/Gliffy/Response.html#M000044"><span class="method_name">to_classname</span> <span class="module_name">(Gliffy::Response)</span></a>' },
+          { method: 'to_s', module: 'gliffy::error', html: '<a href="classes/Gliffy/Error.html#M000054"><span class="method_name">to_s</span> <span class="module_name">(Gliffy::Error)</span></a>' },
+          { method: 'update_token', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000078"><span class="method_name">update_token</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'update_user', module: 'gliffy::handle', html: '<a href="classes/Gliffy/Handle.html#M000077"><span class="method_name">update_user</span> <span class="module_name">(Gliffy::Handle)</span></a>' },
+          { method: 'usage', module: 'gliffy', html: '<a href="classes/Gliffy.html#M000003"><span class="method_name">usage</span> <span class="module_name">(Gliffy)</span></a>' },
         ]
         $(document).observe('dom:loaded', function() {
         	// Setup search-during-typing.
@@ -4461,74 +4477,90 @@
       </form>
       <ol class='methods' id='search-results' style='display: none'></ol>
       <ol class='methods' id='index-entries'>
-        <li><a href="classes/Gliffy/SignedURL.html#M000034"><span class="method_name">[]=</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000042"><span class="method_name">add_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000044"><span class="method_name">add_user_to_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Config.html#M000012"><span class="method_name">config</span> <span class="module_name">(Gliffy::Config)</span></a></li>
-        <li><a href="classes/Gliffy/Config.html#M000011"><span class="method_name">config=</span> <span class="module_name">(Gliffy::Config)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000046"><span class="method_name">create_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000047"><span class="method_name">create_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Rest.html#M000067"><span class="method_name">create_url</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
-        <li><a href="classes/Gliffy/Folder.html#M000017"><span class="method_name">default?</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000048"><span class="method_name">delete_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000049"><span class="method_name">delete_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000043"><span class="method_name">delete_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="files/bin/real_gliffy_rb.html#M000001"><span class="method_name">die_if</span> <span class="module_name">(bin/real_gliffy.rb)</span></a></li>
-        <li><a href="classes/Gliffy/Folder.html#M000018"><span class="method_name">encode_path_elements</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
-        <li><a href="classes/Gliffy/UserToken.html#M000014"><span class="method_name">expired?</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
-        <li><a href="classes/Gliffy/Folder.html#M000016"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
-        <li><a href="classes/Gliffy/UserToken.html#M000013"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
-        <li><a href="classes/Gliffy/LaunchLink.html#M000007"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::LaunchLink)</span></a></li>
-        <li><a href="classes/Gliffy/ArrayResponseParser.html#M000032"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::ArrayResponseParser)</span></a></li>
-        <li><a href="classes/Gliffy/User.html#M000020"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::User)</span></a></li>
-        <li><a href="classes/Gliffy/Diagram.html#M000003"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
-        <li><a href="classes/Gliffy/Error.html#M000037"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Error)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000023"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/Account.html#M000030"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Account)</span></a></li>
-        <li><a href="classes/Gliffy/SignedURL.html#M000036"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000050"><span class="method_name">get_admins</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000051"><span class="method_name">get_diagram_as_image</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000052"><span class="method_name">get_diagram_as_url</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000053"><span class="method_name">get_diagram_meta_data</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000054"><span class="method_name">get_diagrams</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000055"><span class="method_name">get_edit_diagram_link</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000056"><span class="method_name">get_folders</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Rest.html#M000065"><span class="method_name">get_url</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000057"><span class="method_name">get_user_folders</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000058"><span class="method_name">get_users</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Config.html#M000010"><span class="method_name">gliffy_root</span> <span class="module_name">(Gliffy::Config)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000063"><span class="method_name">handle_error</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000059"><span class="method_name">has_token</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/User.html#M000021"><span class="method_name">is_admin?</span> <span class="module_name">(Gliffy::User)</span></a></li>
-        <li><a href="classes/Gliffy/Diagram.html#M000005"><span class="method_name">is_private?</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
-        <li><a href="classes/Gliffy/Diagram.html#M000004"><span class="method_name">is_public?</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
-        <li><a href="classes/Gliffy/Rest.html#M000068"><span class="method_name">make_rest_request</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
-        <li><a href="classes/Gliffy/Rest.html#M000066"><span class="method_name">method_missing</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000060"><span class="method_name">move_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Rest.html#M000064"><span class="method_name">new</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
-        <li><a href="classes/Gliffy/UserToken.html#M000015"><span class="method_name">new</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000040"><span class="method_name">new</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Config.html#M000009"><span class="method_name">new</span> <span class="module_name">(Gliffy::Config)</span></a></li>
-        <li><a href="classes/Gliffy/Error.html#M000038"><span class="method_name">new</span> <span class="module_name">(Gliffy::Error)</span></a></li>
-        <li><a href="classes/Gliffy/Diagram.html#M000006"><span class="method_name">new</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
-        <li><a href="classes/Gliffy/SignedURL.html#M000033"><span class="method_name">new</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
-        <li><a href="classes/Gliffy/Folder.html#M000019"><span class="method_name">new</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
-        <li><a href="classes/Gliffy/Account.html#M000031"><span class="method_name">new</span> <span class="module_name">(Gliffy::Account)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000028"><span class="method_name">new</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/User.html#M000022"><span class="method_name">new</span> <span class="module_name">(Gliffy::User)</span></a></li>
-        <li><a href="classes/Gliffy/LaunchLink.html#M000008"><span class="method_name">new</span> <span class="module_name">(Gliffy::LaunchLink)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000027"><span class="method_name">not_modified=</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000025"><span class="method_name">not_modified?</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="files/bin/real_gliffy_rb.html#M000002"><span class="method_name">output_folders</span> <span class="module_name">(bin/real_gliffy.rb)</span></a></li>
-        <li><a href="classes/Gliffy/SignedURL.html#M000035"><span class="method_name">params=</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000045"><span class="method_name">remove_user_from_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000041"><span class="method_name">rest_free</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000026"><span class="method_name">success=</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000024"><span class="method_name">success?</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/Response.html#M000029"><span class="method_name">to_classname</span> <span class="module_name">(Gliffy::Response)</span></a></li>
-        <li><a href="classes/Gliffy/Error.html#M000039"><span class="method_name">to_s</span> <span class="module_name">(Gliffy::Error)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000062"><span class="method_name">update_token</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
-        <li><a href="classes/Gliffy/Handle.html#M000061"><span class="method_name">update_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Diagram.html#M000010"><span class="method_name">&lt;=&gt;</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
+        <li><a href="classes/Gliffy/SignedURL.html#M000049"><span class="method_name">[]=</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000057"><span class="method_name">add_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000059"><span class="method_name">add_user_to_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Command.html#M000034"><span class="method_name">aliases</span> <span class="module_name">(Gliffy::Command)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000004"><span class="method_name">command</span> <span class="module_name">(Gliffy)</span></a></li>
+        <li><a href="classes/Gliffy/Command.html#M000033"><span class="method_name">commands</span> <span class="module_name">(Gliffy::Command)</span></a></li>
+        <li><a href="classes/Gliffy/Config.html#M000018"><span class="method_name">config</span> <span class="module_name">(Gliffy::Config)</span></a></li>
+        <li><a href="classes/Gliffy/Config.html#M000017"><span class="method_name">config=</span> <span class="module_name">(Gliffy::Config)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000061"><span class="method_name">create_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000062"><span class="method_name">create_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Rest.html#M000083"><span class="method_name">create_url</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000075"><span class="method_name">current_token</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Folder.html#M000027"><span class="method_name">default?</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000063"><span class="method_name">delete_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000064"><span class="method_name">delete_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000058"><span class="method_name">delete_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000001"><span class="method_name">desc</span> <span class="module_name">(Gliffy)</span></a></li>
+        <li><a href="classes/Gliffy/Folder.html#M000028"><span class="method_name">encode_path_elements</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
+        <li><a href="classes/Gliffy/Command.html#M000037"><span class="method_name">execute</span> <span class="module_name">(Gliffy::Command)</span></a></li>
+        <li><a href="classes/Gliffy/UserToken.html#M000024"><span class="method_name">expired?</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000068"><span class="method_name">extension_for</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000006"><span class="method_name">format_date</span> <span class="module_name">(Gliffy)</span></a></li>
+        <li><a href="classes/Gliffy/Account.html#M000045"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Account)</span></a></li>
+        <li><a href="classes/Gliffy/UserToken.html#M000023"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000038"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Diagram.html#M000007"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
+        <li><a href="classes/Gliffy/ArrayResponseParser.html#M000047"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::ArrayResponseParser)</span></a></li>
+        <li><a href="classes/Gliffy/LaunchLink.html#M000012"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::LaunchLink)</span></a></li>
+        <li><a href="classes/Gliffy/User.html#M000030"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::User)</span></a></li>
+        <li><a href="classes/Gliffy/Error.html#M000052"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Error)</span></a></li>
+        <li><a href="classes/Gliffy/Folder.html#M000026"><span class="method_name">from_xml</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
+        <li><a href="classes/Gliffy/SignedURL.html#M000051"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
+        <li><a href="classes/Gliffy/LaunchLink.html#M000013"><span class="method_name">full_url</span> <span class="module_name">(Gliffy::LaunchLink)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000065"><span class="method_name">get_admins</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000066"><span class="method_name">get_diagram_as_image</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000067"><span class="method_name">get_diagram_as_url</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000069"><span class="method_name">get_diagram_meta_data</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000070"><span class="method_name">get_diagrams</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000071"><span class="method_name">get_edit_diagram_link</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000072"><span class="method_name">get_folders</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Rest.html#M000081"><span class="method_name">get_url</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000073"><span class="method_name">get_user_folders</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000074"><span class="method_name">get_users</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Config.html#M000016"><span class="method_name">gliffy_root</span> <span class="module_name">(Gliffy::Config)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000079"><span class="method_name">handle_error</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/CLIConfig.html#M000019"><span class="method_name">instance</span> <span class="module_name">(Gliffy::CLIConfig)</span></a></li>
+        <li><a href="classes/Gliffy/User.html#M000031"><span class="method_name">is_admin?</span> <span class="module_name">(Gliffy::User)</span></a></li>
+        <li><a href="classes/Gliffy/Diagram.html#M000009"><span class="method_name">is_private?</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
+        <li><a href="classes/Gliffy/Diagram.html#M000008"><span class="method_name">is_public?</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
+        <li><a href="classes/Gliffy/CLIConfig.html#M000020"><span class="method_name">load</span> <span class="module_name">(Gliffy::CLIConfig)</span></a></li>
+        <li><a href="classes/Gliffy/Rest.html#M000084"><span class="method_name">make_rest_request</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
+        <li><a href="classes/Gliffy/Rest.html#M000082"><span class="method_name">method_missing</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000076"><span class="method_name">move_diagram</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Error.html#M000053"><span class="method_name">new</span> <span class="module_name">(Gliffy::Error)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000043"><span class="method_name">new</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Rest.html#M000080"><span class="method_name">new</span> <span class="module_name">(Gliffy::Rest)</span></a></li>
+        <li><a href="classes/Gliffy/SignedURL.html#M000048"><span class="method_name">new</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
+        <li><a href="classes/Gliffy/Account.html#M000046"><span class="method_name">new</span> <span class="module_name">(Gliffy::Account)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000055"><span class="method_name">new</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Diagram.html#M000011"><span class="method_name">new</span> <span class="module_name">(Gliffy::Diagram)</span></a></li>
+        <li><a href="classes/Gliffy/LaunchLink.html#M000014"><span class="method_name">new</span> <span class="module_name">(Gliffy::LaunchLink)</span></a></li>
+        <li><a href="classes/Gliffy/Config.html#M000015"><span class="method_name">new</span> <span class="module_name">(Gliffy::Config)</span></a></li>
+        <li><a href="classes/Gliffy/CLIConfig.html#M000022"><span class="method_name">new</span> <span class="module_name">(Gliffy::CLIConfig)</span></a></li>
+        <li><a href="classes/Gliffy/UserToken.html#M000025"><span class="method_name">new</span> <span class="module_name">(Gliffy::UserToken)</span></a></li>
+        <li><a href="classes/Gliffy/User.html#M000032"><span class="method_name">new</span> <span class="module_name">(Gliffy::User)</span></a></li>
+        <li><a href="classes/Gliffy/Command.html#M000035"><span class="method_name">new</span> <span class="module_name">(Gliffy::Command)</span></a></li>
+        <li><a href="classes/Gliffy/Folder.html#M000029"><span class="method_name">new</span> <span class="module_name">(Gliffy::Folder)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000042"><span class="method_name">not_modified=</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000040"><span class="method_name">not_modified?</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000002"><span class="method_name">offline</span> <span class="module_name">(Gliffy)</span></a></li>
+        <li><a href="classes/Gliffy/SignedURL.html#M000050"><span class="method_name">params=</span> <span class="module_name">(Gliffy::SignedURL)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000005"><span class="method_name">parse_options</span> <span class="module_name">(Gliffy)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000060"><span class="method_name">remove_user_from_folder</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000056"><span class="method_name">rest_free</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Command.html#M000036"><span class="method_name">run</span> <span class="module_name">(Gliffy::Command)</span></a></li>
+        <li><a href="classes/Gliffy/CLIConfig.html#M000021"><span class="method_name">save</span> <span class="module_name">(Gliffy::CLIConfig)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000041"><span class="method_name">success=</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000039"><span class="method_name">success?</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Response.html#M000044"><span class="method_name">to_classname</span> <span class="module_name">(Gliffy::Response)</span></a></li>
+        <li><a href="classes/Gliffy/Error.html#M000054"><span class="method_name">to_s</span> <span class="module_name">(Gliffy::Error)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000078"><span class="method_name">update_token</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy/Handle.html#M000077"><span class="method_name">update_user</span> <span class="module_name">(Gliffy::Handle)</span></a></li>
+        <li><a href="classes/Gliffy.html#M000003"><span class="method_name">usage</span> <span class="module_name">(Gliffy)</span></a></li>
       </ol>
     </div>
   </body>

@@ -83,6 +83,10 @@ module Gliffy
       LaunchLink.new(diagram_name,url)
     end
 
+    def full_url
+      Gliffy::Config.config.protocol + "://" + Gliffy::Config.config.gliffy_app_root + url
+    end
+
     protected
 
     def initialize(name,url)

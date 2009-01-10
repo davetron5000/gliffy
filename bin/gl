@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+#
+$: << File.expand_path(File.dirname(__FILE__) + '/../lib') 
+$: << File.expand_path(File.dirname(__FILE__) + '/../ext') 
+
+require 'gliffy/cli'
+
+Gliffy::Command.execute(ARGV)

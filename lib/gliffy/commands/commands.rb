@@ -18,7 +18,12 @@ command :url do |gliffy,args|
   args.shift if open
   url = gliffy.get_diagram_as_url(args[0])
   if open
-    system "open \"#{url}\""
+    if CLIConfig.instance.config[:open_image]
+      system(sprintf(CLIConfig.instance.config[:open_image],url))
+    else
+      puts "Nothing configured for #{:open_image.to_s} to open the image"
+      puts url
+    end
   else
     puts url
   end
@@ -38,7 +43,12 @@ usage 'diagram_id'
 command :edit do |gliffy,args|
   return_link = gliffy.get_diagram_as_url(args[0])
   link = gliffy.get_edit_diagram_link(args[0],return_link,"Done")
-  system "open \"#{link.full_url}\""
+  if CLIConfig.instance.config[:open_url]
+    system(sprintf(CLIConfig.instance.config[:open_url],link.full_url))
+  else
+    puts "Nothing configured for #{:open_url.to_s} to open the url"
+    puts link.full_url
+  end
 end
 
 desc 'Create a new diagram'

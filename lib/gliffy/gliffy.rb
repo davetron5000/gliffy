@@ -119,9 +119,19 @@ module Gliffy
     def get_diagram_as_image(diagram_id,options={:mime_type => :jpeg})
       params,headers = create_diagram_request_info(options)
       update_token
-      bytes = @rest.get(url("diagrams/#{diagram_id}"),params,headers)
-      if bytes.respond_to?(:success?) && !bytes.success?
-        handle_error(bytes,"While getting bytes of diagram #{diagram_id}")
+      extension = extension_for(options[:mime_type])
+      extension = ''
+      puts headers['Accept']
+      bytes = @rest.get(url("diagrams/#{diagram_id}#{extension}"),params,headers)
+      response = nil
+      begin
+        response = Response.from_xml(bytes)
+      rescue
+        response = nil
+      end
+
+      if response.respond_to?(:success?) && !response.success?
+        handle_error(response,"While getting bytes of diagram #{diagram_id}")
       else
         if options[:file]
           fp = File.new(options[:file],'w')
@@ -138,7 +148,20 @@ module Gliffy
     def get_diagram_as_url(diagram_id,options={:mime_type => :jpeg})
       params,headers = create_diagram_request_info(options)
       update_token
-      @rest.create_url(url("diagrams/#{diagram_id}"),params)
+      extension = extension_for(options[:mime_type])
+      @rest.create_url(url("diagrams/#{diagram_id}#{extension}"),params)
+    end
+
+    def extension_for(mime_type)
+      case mime_type
+      when :jpeg
+        return ".jpg"
+      when :png
+        return ".png"
+      when :svg
+        return ".svg"
+      end
+      ""
     end
 
     # GliffyDiagram getDiagramMetaData (integer $diagramId)
@@ -297,7 +320,7 @@ module Gliffy
     def mime_type_to_header(mime_type_symbol)
       case mime_type_symbol
       when :jpeg: 'image/jpeg'
-      when :jpg: 'image/jpeg'
+      when :jpg: 'image/jpg'
       when :png: 'image/png'
       when :svg: 'image/svg+xml'
       else raise "#{mime_type_symbol} is not a known mime type"

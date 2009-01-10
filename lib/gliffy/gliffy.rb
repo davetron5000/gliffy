@@ -175,7 +175,7 @@ module Gliffy
     def get_diagrams(folder_path=nil)
       folder_path = Folder.encode_path_elements(folder_path) if folder_path
       url = (folder_path ? "folders/#{folder_path}/" : "") + "diagrams"
-      do_simple_rest(:get,url,"Get all folders in " + (folder_path ? folder_path : "account"))
+      do_simple_rest(:get,url,"Get all diagrams in " + (folder_path ? folder_path : "account"))
     end
 
     # Gets the link that can be used <b>by this user while his token is valid</b> to edit the diagram.

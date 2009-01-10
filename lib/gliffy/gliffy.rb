@@ -304,14 +304,25 @@ module Gliffy
       [params,headers]
     end
 
-    def do_simple_rest(method,url_fragment,description,params=nil,headers={})
+    def do_simple_rest_helper(method,url_fragment,description,params=nil,headers={},first=false)
       update_token
       response = Response.from_xml(@rest.send(method,url(url_fragment),params,headers))
       if !response.success?
-        handle_error(response,description)
+        if first
+          @logger.warn("Possible token problem, try again after updating token")
+          update_token true
+          response = do_simple_rest_helper(method,url_fragment,description,params,headers,false)
+        else
+          handle_error(response,description)
+        end
       end
       response
     end
+
+    def do_simple_rest(method,url_fragment,description,params=nil,headers={})
+      do_simple_rest_helper(method,url_fragment,description,params,headers,true)
+    end
+    
 
     def url(fragment)
       "/accounts/#{Config.config.account_name}/#{fragment}"

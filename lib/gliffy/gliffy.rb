@@ -21,12 +21,16 @@ module Gliffy
   class Handle
 
     # Create a new handle to gliffy for the given user.  Tokens will be requested as needed
-    def initialize(username)
+    def initialize(username,token=nil)
       @username = username
       @rest = Rest.new
       @logger = Logger.new(Config.config.log_device)
       @logger.level = Config.config.log_level
-      update_token(username)
+      if token
+        @rest.current_token = token
+      else
+        update_token(username)
+      end
     end
 
     # Run an arbitrary rest call against gliffy, parsing the result.  This allows you

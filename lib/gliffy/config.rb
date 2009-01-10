@@ -15,9 +15,9 @@ module Gliffy
     attr_accessor :log_device
     # The protocol, either 'http' or 'https' (though feel free to try 'gopher:' :)
     attr_accessor :protocol
-    # The gliffy web root, which is pretty much www.gliffy.com unless you know a secret
-    attr_accessor :gliffy_web_root
-    # The url relative to gliffy_web_root of where the API is accessed
+    # The gliffy app root, which is pretty much www.gliffy.com/gliffy unless you know a secret
+    attr_accessor :gliffy_app_root
+    # The url relative to gliffy_app_root of where the API is accessed
     attr_accessor :gliffy_rest_context
     # Your API Key
     attr_accessor :api_key
@@ -32,17 +32,17 @@ module Gliffy
       @log_level = Logger::DEBUG
       @log_device = STDERR
       @protocol = 'http'
-      @gliffy_web_root = 'www.gliffy.com';
-      @gliffy_rest_context = 'gliffy/rest'
+      @gliffy_app_root = 'www.gliffy.com/gliffy';
+      @gliffy_rest_context = 'rest'
       @api_key = 'no api key specified'
       @secret_key = 'no secret key specified'
       @account_name = 'no account name specified'
     end
 
-    # Returns the entire URL to the gliffy api root.  This uses protocol, gliffy_web_root
+    # Returns the entire URL to the gliffy api root.  This uses protocol, gliffy_app_root
     # and gliffy_rest_context, so you should not really override this
     def gliffy_root
-      "#{protocol}://#{gliffy_web_root}/#{gliffy_rest_context}"
+      "#{protocol}://#{gliffy_app_root}/#{gliffy_rest_context}"
     end
 
     def self.config=(config); @@instance = config; end

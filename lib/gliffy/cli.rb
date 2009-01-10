@@ -20,6 +20,10 @@ module Gliffy
       @@commands ||= {}
     end
 
+    def self.aliases
+      @@aliases ||= {}
+    end
+
     # The name of the command
     attr_reader :name
     # a short description
@@ -210,6 +214,7 @@ module Gliffy
     if options[:aliases]
       options[:aliases].each() do |a|
         Command.commands[a] = Command.commands[name]
+        Command.aliases[a] = true
       end
     end
     @next_usage = nil

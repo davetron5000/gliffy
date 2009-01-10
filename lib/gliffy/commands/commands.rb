@@ -1,6 +1,6 @@
 desc 'List all diagrams in the account'
 usage <<eos
-[-p] [-l]
+[-l]
 
   -l - show all information
 eos
@@ -125,18 +125,25 @@ command :help do |args|
       puts "No such command #{args[0]}"
     end
   else
-    command_string = "%6s - %s\n"
+    command_string = "   %-6s   %s %s\n"
     puts 'usage: gl [global_options] command [command_options]'
     puts 'global_options:'
     Command::GLOBAL_FLAGS.keys.sort.each do |flag|
-      printf command_string,flag,Command::GLOBAL_FLAGS[flag]
+      printf command_string,flag,Command::GLOBAL_FLAGS[flag],''
     end
     puts
     puts 'command:'
     command_names = Command.commands.keys.sort { |a,b| a.to_s <=> b.to_s }
     command_names.each() do |name|
       command = Command.commands[name]
-      printf command_string,name.to_s, command.description
+      if !Command.aliases[name]
+        aliases = Array.new
+        Command.aliases.keys.each() do |a| 
+          aliases << a if Command.commands[a] == command 
+        end
+        alias_string = '(also: ' + aliases.join(',') + ')' if aliases.length > 0
+        printf command_string,name.to_s, command.description,alias_string
+      end
     end
   end
 end

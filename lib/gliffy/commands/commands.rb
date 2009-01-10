@@ -126,7 +126,7 @@ command :help do |args|
     end
   else
     command_string = "   %-6s   %s %s\n"
-    puts 'usage: gl [global_options] command [command_options]'
+    puts 'usage: gliffy [global_options] command [command_options]'
     puts 'global_options:'
     Command::GLOBAL_FLAGS.keys.sort.each do |flag|
       printf command_string,flag,Command::GLOBAL_FLAGS[flag],''

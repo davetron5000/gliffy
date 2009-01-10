@@ -1,4 +1,8 @@
-<em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.  In progress for the moment.</em>
+<em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.</em>
+
+This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
+
+== Client Library
 
 Main entry point is Gliffy::Handle, though you should look at Gliffy::Config for configuration options.  Here's an example of getting the list of diagrams and then downloading the first one as a JPEG
 
@@ -18,3 +22,31 @@ The Gliffy::Handle is a <b>user-session based connection</b> to Gliffy.  You sho
 
 * RDoc is available a http://davetron5000.github.com/gliffy
 * Source is available at http://github.com/davetron5000/gliffy/tree/master
+
+== Command Line Client
+
++gliffy+ +help+ shows a list of commands.  Currently, there are:
+
+[+delete+] Delete a diagram (also: del,rm)
+[+edit+]   Edit a diagram 
+[+get+]    Download a diagram as an image to a file 
+[+help+]   Show commands 
+[+list+]   List all diagrams in the account (also: ls)
+[+new+]    Create a new diagram 
+[+url+]    Get the URL for an image 
+
+=== Configuration
+
+The first time you run the client, it will create a base configuration in your home directory called <tt>.gliffyrc</tt>, and will ask you to provide it with four pieces of information:
+
+[API Key] This is the API Key given to you by Gliffy
+[Secret Key] This is the Secret Key given to you by Gliffy.  <b>Do not check this value into source control</b>
+[Account Name] Your account's name.  This should've been provided with your API Key
+[Username] The username to work under.  The command line client only allows single-user access to your Gliffy account.  If you just signed up for Gliffy, this is probably the email address you used to sign up
+
+If you are not on OS X, you will want to configure two other options, and you can do this by editing your <tt>.gliffyrc</tt> directly:
+
+[<tt>open_image</tt>] Configures the command for opening an image from the command line.  This should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will be replaced with the name of the image file to open.
+[<tt>open_url</tt>] Configures the command for opening an url from the command line.  This should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will be replaced with the name of the url to open.
+
+The other options are all documented in Gliffy::Config.  Note that your most previously received user token is stored here as well, to keep from getting it every time the client is run.

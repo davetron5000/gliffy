@@ -102,19 +102,17 @@ end
 
 desc 'Create a new diagram'
 usage <<eos
-[-e] diagram_name
+[-t template_id] diagram_name
 
-  -e edit the diagram after creating it
+  -t specify the id of a diagram to server as the initial revision
 eos
 command :new do |gliffy,args|
-  edit = args[0] == '-e'
-  args.shift if edit
-  diagram = gliffy.create_diagram(args[0])
-  if edit
-    Gliffy::Command.commands[:edit].run [diagram.id]
-  else
-    puts "#{diagram.name} created with id #{diagram.id}"
-  end
+  options = parse_options(args)
+  name = args.shift
+  template_id = options['t']
+
+  diagram = gliffy.create_diagram(name,template_id)
+  Gliffy::Command.commands[:edit].run [diagram.id]
 end
 
 desc 'Show commands'

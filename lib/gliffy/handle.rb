@@ -167,8 +167,8 @@ module Gliffy
       ""
     end
 
-    # GliffyDiagram getDiagramMetaData (integer $diagramId)
-    def get_diagram_meta_data(diagram_id)
+    # Returns a Diagram with the diagram's meta data filled in.
+    def get_diagram_metadata(diagram_id)
       params = {'diagramId' => diagram_id}
       diagrams = do_simple_rest(:get,'diagrams',"Getting meta data for diagram #{diagram_id}",params)
       diagrams[0]

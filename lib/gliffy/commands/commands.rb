@@ -55,9 +55,11 @@ end
 
 desc 'Download a diagram as an image to a file'
 usage <<eos 
-[-v version_num] [-f filename] [-t image_type] diagram_id
+[-v version_num] [-f filename] [-d download_dir] [-t image_type] diagram_id
 
-   image_type can be :jpeg, :png, :svg, or :xml
+   image_type can be :jpeg, :jpg, :png, :svg, or :xml
+   if no filename specified, uses the diagram's name
+   if -d and -f are specified, -d is ignored
 eos
 command :get do |gliffy,args|
 
@@ -67,12 +69,15 @@ command :get do |gliffy,args|
   version_number = options['v'].to_i if options['v']
   filename = options['f'] if options['f']
   type = options['t'].to_sym if options['t']
-  type = :jpeg if !type
+  type = :jpg if !type
   if !filename
+    dir = options['d'] || '.'
+    metadata = gliffy.get_diagram_metadata(diagram_id)
+    filename = metadata.name.gsub(/[\s\/\-\+\$]/,'_')
     if version_number
-      filename = "#{diagram_id}_v#{version_number}.#{type.to_s}"
+      filename = "#{dir}/#{filename}_v#{version_number}.#{type.to_s}"
     else
-      filename = "#{diagram_id}.#{type.to_s}"
+      filename = "#{dir}/#{filename}.#{type.to_s}"
     end
   end
 

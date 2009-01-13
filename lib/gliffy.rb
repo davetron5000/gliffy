@@ -1,1 +1,1 @@
-require 'gliffy/gliffy'
+require 'gliffy/handle'

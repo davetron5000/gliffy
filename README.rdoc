@@ -50,3 +50,21 @@ If you are not on OS X, you will want to configure two other options, and you ca
 [<tt>open_url</tt>] Configures the command for opening an url from the command line.  This should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will be replaced with the name of the url to open.
 
 The other options are all documented in Gliffy::Config.  Note that your most previously received user token is stored here as well, to keep from getting it every time the client is run.
+
+=== Example
+
+    > gliffy ls
+    1573119 Deployment Artifacts
+    1569470 Monthly_Eligible
+    1569477 Monthly_Ineligibile
+    1569478 Quarterly_Eligible
+    1569479 Quarterly_Ineligibile
+    > gliffy get 1569479
+    Quarterly_Ineligibile.jpg
+    > gliffy get 1569479 -d ~/Downloads -t png
+    /Users/davec/Downloads/Quarterly_Ineligibile.png
+    > gliffy edit 1569470
+    # You are sent to gliffy.com in your browser to edit that diagram
+    > gliffy new -e "Class Diagram"
+    # You are sent to gliffy.com to edit the new diagram 
+

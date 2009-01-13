@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'gliffy'
-  s.version = '0.1.1'
+  s.version = '0.1.2'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/gliffy'
@@ -14,7 +14,7 @@ lib/gliffy/commands/commands.rb
 lib/gliffy/config.rb
 lib/gliffy/diagram.rb
 lib/gliffy/folder.rb
-lib/gliffy/gliffy.rb
+lib/gliffy/handle.rb
 lib/gliffy/response.rb
 lib/gliffy/rest.rb
 lib/gliffy/url.rb

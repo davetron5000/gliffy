@@ -7,78 +7,6 @@ require 'logger'
 module Gliffy
   extend self
 
-  # A command line option to the gliffy command line client
-  class Command
-
-    # Global flags
-    GLOBAL_FLAGS = {
-      '-v' => 'be more verbose (overrides config)',
-    }
-    
-    # Global access to all configured commands
-    def self.commands
-      @@commands ||= {}
-    end
-
-    def self.aliases
-      @@aliases ||= {}
-    end
-
-    # The name of the command
-    attr_reader :name
-    # a short description
-    attr_reader :description
-    # a usage statement
-    attr_reader :usage
-
-    # Create a new command
-    #
-    # [+name+] the name of the command (should be short, no spaces)
-    # [+description+] short description of the command
-    # [+offline+] true if this command doesn't require a connection to Gliffy
-    # [+usage+] usage statement
-    # [+block+] A block that represents the command itself.  This block will take  the gliffy handle and the args array as arguments *or* just the arguments if it is an "offline"
-    # command
-    def initialize(name,description,offline,usage,block)
-      @name = name
-      @description = description
-      @block = block
-      @offline = offline
-      @usage = usage ? usage : ""
-    end
-
-    # Runs the command with the given arguments
-    def run(args)
-      if (@offline)
-        @block.call(args)
-      else
-        previous_token = CLIConfig.instance.config[:current_token]
-        handle = Gliffy::Handle.new(CLIConfig.instance.config[:username],previous_token)
-        @block.call(handle,args)
-        CLIConfig.instance.config[:current_token] = handle.current_token
-        CLIConfig.instance.save
-      end
-    end
-
-    # Executes the command line that was given
-    def self.execute(argv)
-      globals = Hash.new
-      command = argv.shift
-      while !command.nil? && (command =~ /^-/) && !argv.empty?
-        globals[command] = true
-        command = argv.shift
-      end 
-      Gliffy::Config.config.log_level = Logger::DEBUG if globals['-v']
-      cmd = Gliffy::Command.commands[command.to_sym]
-      if cmd
-        cmd.run argv
-      else
-        puts "Unknown command #{command}"
-        Gliffy::Command.commands[:help].run []
-      end
-    end
-  end
-
   # Represents the configuration for the command line client.
   # This is a singleton
   class CLIConfig
@@ -192,69 +120,9 @@ module Gliffy
 
   end
 
-  # For defining commands, this specifies the description of the next command defined
-  def desc(description)
-    @next_desc = description
-  end
-
-  # For defining commands, this specifies if the next defined command is "offline"
-  def offline(bool)
-    @next_offline = bool
-  end
-
-  # For defining commands, specifies the usage statement of the next command
-  def usage(usage='')
-    @next_usage = usage
-  end
-
-  # defines a command.  The only options supported is ":aliases" which is an array of aliases
-  # for the command
-  def command(name,options={},&block)
-    Command.commands[name] = Command.new(name,@next_desc,@next_offline,@next_usage,block)
-    if options[:aliases]
-      options[:aliases].each() do |a|
-        Command.commands[a] = Command.commands[name]
-        Command.aliases[a] = true
-      end
-    end
-    @next_usage = nil
-    @next_offline = false
-    @next_desc = nil
-  end
-
-  def parse_options(args)
-    options = Hash.new
-    return options if !args
-    i = 0
-    while i < args.length
-      inc = 2
-      if args[i] =~ /^-/
-        arg = args[i].gsub(/^-/,'')
-        if !args[i+1] || (args[i+1] =~ /^-/)
-          inc = 1
-          options[arg] = true
-        else
-          options[arg] = args[i+1]
-        end
-      else
-        break
-      end
-      i += inc
-    end
-    i.times { args.shift }
-    options
-  end
-
   def format_date(date)
     date.strftime('%m/%d/%y %H:%M')
   end
 
 end
-
-include Gliffy
-require 'gliffy/commands/commands'
-if !CLIConfig.instance.load
-  exit -1
-end
-
 

@@ -28,6 +28,7 @@ bin/gliffy
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options << '--title' << 'Gliffy Ruby Client' << '--main' << 'README.rdoc' << '-ri'
   s.add_dependency('technoweenie-rest-client', '>= 0.5.1')
+  s.add_dependency('davetron5000-gli', '>= 0.1.2')
   s.bindir = 'bin'
   s.executables << 'gliffy'
 end

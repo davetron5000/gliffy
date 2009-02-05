@@ -8,9 +8,16 @@ spec = Gem::Specification.new do |s|
   s.summary = 'client to access the Gliffy API'
   s.files = %w(
 ext/array_has_response.rb
+bin/gliffy
 lib/gliffy/account.rb
 lib/gliffy/cli.rb
-lib/gliffy/commands/commands.rb
+lib/gliffy/commands/delete.rb
+lib/gliffy/commands/edit.rb
+lib/gliffy/commands/get.rb
+lib/gliffy/commands/list.rb
+lib/gliffy/commands/new.rb
+lib/gliffy/commands/url.rb
+lib/gliffy/commands.rb
 lib/gliffy/config.rb
 lib/gliffy/diagram.rb
 lib/gliffy/folder.rb
@@ -20,7 +27,6 @@ lib/gliffy/rest.rb
 lib/gliffy/url.rb
 lib/gliffy/user.rb
 lib/gliffy.rb
-bin/gliffy
   )
   s.require_paths << 'ext'
   s.require_paths << 'lib'

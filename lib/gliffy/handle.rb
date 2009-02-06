@@ -7,6 +7,7 @@ require 'gliffy/account'
 require 'gliffy/config'
 
 module Gliffy
+  VERSION = '0.1.5'
 
 
   # A "handle" to access Gliffy on a per-user-session basis

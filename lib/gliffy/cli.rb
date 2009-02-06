@@ -66,10 +66,26 @@ module Gliffy
 
     # Saves the configration to the user's config file name as YAML
     def save
+      ld = @config[:log_device]
+      @config[:log_device] = log_device_to_string(ld)
       fp = File.open(@config_file_name,'w') { |out| YAML::dump(@config,out) }
+      @config[:log_device] = ld
     end
 
     private
+
+    def log_device_to_string(ld)
+      if ld == STDERR
+        'STDERR'
+      elsif ld == STDOUT
+        'STDOUT'
+      elsif !ld.kind_of?(String)
+        puts "Warning: don't know how to persist a #{ld.class.name}"
+        nil
+      else
+        ld
+      end
+    end
     def read_config_from_user(name,symbol)
       if (!@config[symbol])
         puts "No #{name} configured.  Enter #{name}"
@@ -81,7 +97,7 @@ module Gliffy
       @config_file_name = File.expand_path("~/.gliffyrc")
       @config = {
         :log_level => Gliffy::Config.config.log_level,
-        :log_device => Gliffy::Config.config.log_device.to_s,
+        :log_device => log_device_to_string(Gliffy::Config.config.log_device),
         :gliffy_app_root => Gliffy::Config.config.gliffy_app_root,
         :gliffy_rest_context => Gliffy::Config.config.gliffy_rest_context,
         :protocol => Gliffy::Config.config.protocol,

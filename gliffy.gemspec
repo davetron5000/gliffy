@@ -33,7 +33,7 @@ lib/gliffy.rb
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options << '--title' << 'Gliffy Ruby Client' << '--main' << 'README.rdoc' << '-ri'
-  s.add_dependency('davetron5000-rest-client', '>= 0.5.2')
+  s.add_dependency('davetron5000-rest-client', '>= 0.5.3')
   s.add_dependency('davetron5000-gli', '>= 0.1.4')
   s.bindir = 'bin'
   s.executables << 'gliffy'

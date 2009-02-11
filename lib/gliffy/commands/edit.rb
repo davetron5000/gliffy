@@ -8,8 +8,8 @@ command :edit do |c|
 
     return_link = $gliffy.get_diagram_as_url(args[0])
     link = $gliffy.get_edit_diagram_link(args[0],return_link,"Done")
-    if CLIConfig.instance.config[:open_url]
-      system(sprintf(CLIConfig.instance.config[:open_url],link.full_url))
+    if Gliffy::CLIConfig.instance.config[:open_url]
+      system(sprintf(Gliffy::CLIConfig.instance.config[:open_url],link.full_url))
     else
       puts "Nothing configured for #{:open_url.to_s} to open the url"
       puts link.full_url

@@ -1,10 +1,10 @@
 require 'gliffy/config'
 require 'rubygems'
-require 'hmac'
 require 'hmac-sha1'
 require 'base64'
 
 module Gliffy
+
   # Handles signing and assembling the URL
   class SignedURL
 
@@ -39,7 +39,7 @@ module Gliffy
       @params['oauth_signature_method'] = 'HMAC-SHA1'
       @params['oauth_version'] = '1.0'
       @signing_key = "#{options[:consumer_secret]}&#{options[:access_secret]}"
-      @method = options[:method]
+      @method = options[:method].upcase
       @url = options[:url]
     end
 

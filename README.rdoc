@@ -1,5 +1,7 @@
 <em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.</em>
 
+<em>The documentation below is currently out of date; Gliffy has updated their API and I'm working on getting this code to work with the changes (mostly OAuth for authentication)</em>
+
 This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
 
 == Client Library

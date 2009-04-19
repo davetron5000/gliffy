@@ -34,22 +34,25 @@ module Gliffy
     # [:method] The HTTP Request method that will be made
     # [:url] The URL (without parameters) to request
     #
-    def initialize(options)
-      raise ArgumentError.new("consumer_key is required") if !options[:consumer_key]
-      raise ArgumentError.new("consumer_secret is required") if !options[:consumer_secret]
-      raise ArgumentError.new("url is required") if !options[:url]
-      raise ArgumentError.new("method is required") if !options[:method]
+    def initialize(credentials,url,method)
+      raise ArgumentError.new("credentials is required") if credentials.nil?
+      raise ArgumentError.new("url is required") if url.nil?
+      raise ArgumentError.new("method is required") if method.nil?
+
+      # TODO externalize this somehow
       @logger = Logger.new(Config.config.log_device)
       @logger.level = Config.config.log_level
-      @params = Hash.new
-      @params['oauth_consumer_key'] = options[:consumer_key]
-      @params['oauth_token'] = options[:access_token] if options[:access_token]
-      @params['oauth_signature_method'] = 'HMAC-SHA1'
-      @params['oauth_version'] = '1.0'
-      @consumer_secret = options[:consumer_secret]
-      @access_secret = options[:access_secret]
-      @method = options[:method].upcase
-      @url = options[:url]
+
+      @params = {
+        'oauth_signature_method' => 'HMAC-SHA1',
+        'oauth_version' => '1.0',
+      }
+      @params['oauth_consumer_key'] = credentials.consumer_key
+      @params['oauth_token'] = credentials.access_token if credentials.access_token
+      @consumer_secret = credentials.consumer_secret
+      @access_secret = credentials.access_secret
+      @method = method.upcase
+      @url = url
     end
 
     # Sets a request parameter

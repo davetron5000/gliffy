@@ -7,12 +7,15 @@ include Gliffy
 class TC_testURL < Test::Unit::TestCase
 
   def setup
-    @signed_url = SignedURL.new(:consumer_key => 'dpf43f3p2l4k3l03',
-                               :consumer_secret => 'kd94hf93k423kf44',
-                               :url => 'http://photos.example.net/photos',
-                               :access_token => 'nnch734d00sl2jdk',
-                               :access_secret => 'pfkkdhi9sl3r4s00',
-                               :method => 'GET')
+    @cred = Credentials.new('dpf43f3p2l4k3l03',
+                            'kd94hf93k423kf44',
+                            'Test Cases',
+                            666,
+                            'nnch734d00sl2jdk',
+                            'pfkkdhi9sl3r4s00')
+    @signed_url = SignedURL.new(@cred,
+                               'http://photos.example.net/photos',
+                               'GET')
   end
 
   def test_bad_param_override

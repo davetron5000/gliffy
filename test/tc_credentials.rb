@@ -1,4 +1,5 @@
 require 'gliffy/credentials'
+require 'testbase.rb'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
 
@@ -6,13 +7,13 @@ include Gliffy
 
 class TC_testCredentials < Test::Unit::TestCase
   def test_default_access_token
-    cred = Credentials.new('foo','bar','baz',1234)
+    cred = Credentials.new('foo','bar','baz',1234,'dave')
     assert_equal(nil,cred.access_token)
     assert_equal(nil,cred.access_secret)
   end
 
   def test_given_access_token
-    cred = Credentials.new('foo','bar','baz',1234,'blah','foo')
+    cred = Credentials.new('foo','bar','baz',1234,'dave','blah','foo')
     assert_equal('blah',cred.access_token)
     assert_equal('foo',cred.access_secret)
   end
@@ -25,15 +26,21 @@ class TC_testCredentials < Test::Unit::TestCase
     assert_raises(ArgumentError) { cred = Credentials.new('foo','bar','crud',nil) }
   end
 
+  def test_clear_token
+    cred = Credentials.new('foo','bar','baz',1234,'dave','blah','crud')
+    cred.clear_access_token
+    assert_equal(nil,cred.access_token)
+    assert_equal(nil,cred.access_secret)
+  end
   def test_update_token
-    cred = Credentials.new('foo','bar','baz',1234)
+    cred = Credentials.new('foo','bar','baz',1234,'dave')
     cred.update_access_token('blah','crud')
     assert_equal('blah',cred.access_token)
     assert_equal('crud',cred.access_secret)
   end
 
   def test_nonce
-    cred = Credentials.new('foo','bar','baz',1234)
+    cred = Credentials.new('foo','bar','baz',1234,'dave')
     n1 = cred.nonce
     n2 = cred.nonce
     assert(n1 != n2,"Two nonces shouldn't be the same: #{n1} =? #{n2}")

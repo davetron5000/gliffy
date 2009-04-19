@@ -1,8 +1,7 @@
-require 'gliffy/config'
-require 'cgi'
 require 'rubygems'
 require 'hmac-sha1'
 require 'base64'
+require 'gliffy/config'
 
 module Gliffy
 
@@ -25,6 +24,9 @@ module Gliffy
       end.gsub(' ', '%20')
     end
 
+    # Modify the logger
+    attr_accessor :logger
+
     # Create a new SignedURL with the following options (all required unless otherwise stated):
     #
     # [:consumer_key] The OAuth consumer key
@@ -34,14 +36,13 @@ module Gliffy
     # [:method] The HTTP Request method that will be made
     # [:url] The URL (without parameters) to request
     #
-    def initialize(credentials,url,method)
+    def initialize(credentials,url,method,logger=nil)
       raise ArgumentError.new("credentials is required") if credentials.nil?
       raise ArgumentError.new("url is required") if url.nil?
       raise ArgumentError.new("method is required") if method.nil?
 
-      # TODO externalize this somehow
-      @logger = Logger.new(Config.config.log_device)
-      @logger.level = Config.config.log_level
+      @logger = logger || Logger.new(STDOUT)
+      @logger.level = Logger::INFO
 
       @params = {
         'oauth_signature_method' => 'HMAC-SHA1',
@@ -70,13 +71,17 @@ module Gliffy
 
     # Sets all request parameters to those in the hash.
     def params=(params_hash)
+      raise ArgumentError.new('you may not set params to nil') if params_hash.nil?
       params_hash.each do |k,v|
         self[k]=v
       end
     end
 
     # Gets the full URL, signed and ready to be requested
-    def full_url(timestamp=Time.now.to_i,nonce=Time.now.to_i.to_s)
+    def full_url(timestamp=nil,nonce=nil)
+      # TODO clean this up
+      timestamp=Time.now.to_i if timestamp.nil?
+      nonce=@credentials.nonce if nonce.nil?
       @logger.debug("Getting full_url of #{@url}")
       @logger.debug("OAuth Part 1 : #{@method}")
       escaped_url = SignedURL::encode(@url)

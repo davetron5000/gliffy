@@ -35,6 +35,10 @@ module Gliffy
     # returning nil if none has been set
     attr_accessor :current_token
 
+    # Provides access to the current token secret, 
+    # returning nil if none has been set
+    attr_accessor :current_token_secret
+
     # Provides access to the logger
     # Do not set this to nil
     attr_accessor :logger

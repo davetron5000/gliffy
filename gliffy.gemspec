@@ -5,7 +5,7 @@ spec = Gem::Specification.new do |s|
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/gliffy'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'client to access the Gliffy API'
+  s.summary = 'Client to access the Gliffy API'
   s.files = %w(
 ext/array_has_response.rb
 bin/gliffy
@@ -33,7 +33,8 @@ lib/gliffy.rb
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options << '--title' << 'Gliffy Ruby Client' << '--main' << 'README.rdoc' << '-ri'
-  s.add_dependency('davetron5000-rest-client', '>= 0.5.3')
+  s.add_dependency('httparty', '>= 0.4.2')
+  s.add_dependency('ruby-hmac', '>= 0.3.2')
   s.add_dependency('davetron5000-gli', '>= 0.1.4')
   s.bindir = 'bin'
   s.executables << 'gliffy'

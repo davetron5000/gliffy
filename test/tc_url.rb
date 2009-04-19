@@ -1,6 +1,8 @@
 require 'gliffy/url'
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
+require 'testbase.rb'
+
 
 include Gliffy
 
@@ -11,11 +13,15 @@ class TC_testURL < Test::Unit::TestCase
                             'kd94hf93k423kf44',
                             'Test Cases',
                             666,
+                            'dave',
                             'nnch734d00sl2jdk',
                             'pfkkdhi9sl3r4s00')
     @signed_url = SignedURL.new(@cred,
                                'http://photos.example.net/photos',
                                'GET')
+    class << @signed_url
+      def [](param); @params[param]; end
+    end
   end
 
   def test_bad_param_override
@@ -39,6 +45,18 @@ class TC_testURL < Test::Unit::TestCase
     }
     @signed_url.params=params
     do_simple_assert
+  end
+
+  def test_assign_param
+    @signed_url['blah'] = :foo
+    @signed_url['crud'] = 'foo'
+    assert_equal('foo',@signed_url['blah'])
+    assert_equal('foo',@signed_url['crud'])
+  end
+
+  def test_nil_param_assign
+    @signed_url['blah'] = 'foo'
+    assert_raises(ArgumentError) { @signed_url.params = nil }
   end
 
   private

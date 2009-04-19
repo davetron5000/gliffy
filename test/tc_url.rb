@@ -4,7 +4,7 @@ require 'test/unit/ui/console/testrunner'
 
 include Gliffy
 
-class TC_testSigning < Test::Unit::TestCase
+class TC_testURL < Test::Unit::TestCase
 
   def setup
     @signed_url = SignedURL.new(:consumer_key => 'dpf43f3p2l4k3l03',
@@ -40,7 +40,9 @@ class TC_testSigning < Test::Unit::TestCase
 
   private
   def do_simple_assert
-    expected_url = 'http://photos.example.net/photos?file=vacation.jpg&oauth_consumer_key=dpf43f3p2l4k3l03&oauth_nonce=kllo9940pd9333jh&oauth_signature=yLAzw2MLOraWc%2B6GbXchR8PzIJI%3D%0A&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1191242096&oauth_token=nnch734d00sl2jdk&oauth_version=1.0&size=original'
+    signature = 'tR3+Ty81lMeYAr/Fid0kMTYa/WM='
+    signature_encoced = 'tR3%2BTy81lMeYAr%2FFid0kMTYa%2FWM%3D'
+    expected_url = 'http://photos.example.net/photos?file=vacation.jpg&oauth_consumer_key=dpf43f3p2l4k3l03&oauth_nonce=kllo9940pd9333jh&oauth_signature=tR3%2BTy81lMeYAr%2FFid0kMTYa%2FWM%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1191242096&oauth_token=nnch734d00sl2jdk&oauth_version=1.0&size=original'
     assert_equal(expected_url,@signed_url.full_url(1191242096,'kllo9940pd9333jh'))
   end
 

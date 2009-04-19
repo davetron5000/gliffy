@@ -1,4 +1,5 @@
 require 'gliffy/config'
+require 'cgi'
 require 'rubygems'
 require 'hmac-sha1'
 require 'base64'
@@ -16,6 +17,13 @@ module Gliffy
       'oauth_nonce' => true,
       'oauth_timestamp' => true,
     }
+
+    # Ruby's SignedURL::encode doesn't encode spaces correctly
+    def self.encode(string)
+      string.gsub(/([^ a-zA-Z0-9_.-]+)/n) do
+      '%' + $1.unpack('H2' * $1.size).join('%').upcase
+      end.gsub(' ', '%20')
+    end
 
     # Create a new SignedURL with the following options (all required unless otherwise stated):
     #
@@ -35,10 +43,11 @@ module Gliffy
       @logger.level = Config.config.log_level
       @params = Hash.new
       @params['oauth_consumer_key'] = options[:consumer_key]
-      @params['oauth_token'] = options[:access_token]
+      @params['oauth_token'] = options[:access_token] if options[:access_token]
       @params['oauth_signature_method'] = 'HMAC-SHA1'
       @params['oauth_version'] = '1.0'
-      @signing_key = "#{options[:consumer_secret]}&#{options[:access_secret]}"
+      @consumer_secret = options[:consumer_secret]
+      @access_secret = options[:access_secret]
       @method = options[:method].upcase
       @url = options[:url]
     end
@@ -66,36 +75,50 @@ module Gliffy
     # Gets the full URL, signed and ready to be requested
     def full_url(timestamp=Time.now.to_i,nonce=Time.now.to_i.to_s)
       @logger.debug("Getting full_url of #{@url}")
-      to_sign = @method + "&" + CGI::escape(@url) + "&"
+      @logger.debug("OAuth Part 1 : #{@method}")
+      escaped_url = SignedURL::encode(@url)
+      to_sign = @method + "&" + escaped_url + "&"
+      @logger.debug("OAuth Part 2 (raw) : #{@url}")
+      @logger.debug("OAuth Part 2 (esc) : #{escaped_url}")
       url_params = Hash.new
       param_part = ""
+      params = @params
+      params['oauth_timestamp'] = timestamp.to_s
+      params['oauth_nonce'] = nonce
       @params.keys.sort.each do |key|
-        @logger.debug("Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}")
-        param_part += key
+        value = @params[key]
+        raise ArgumentError.new("#{key} is nil; don't set params to be nil") if value.nil?
+        
+        @logger.debug("Adding param #{key} with value #{value} escaped as #{SignedURL::encode(value)}")
+        param_part += SignedURL::encode(key)
         param_part += "="
-        param_part += @params[key]
-        url_params[key] = CGI::escape(@params[key])
+        param_part += SignedURL::encode(value)
+        param_part += '&'
+        url_params[key] = SignedURL::encode(value)
       end
-      url_params['oauth_timestamp'] = timestamp.to_s
-      url_params['oauth_nonce'] = nonce
-      param_part += "oauth_timestamp=" + url_params['oauth_timestamp']
-      param_part += "oauth_nonce=" + url_params['oauth_nonce']
+      param_part.gsub!(/&$/,'')
+      escaped_params = SignedURL::encode(param_part)
+      @logger.debug("OAuth Part 3 (raw) : #{param_part}")
+      @logger.debug("OAuth Part 3 (esc) : #{escaped_params}")
 
-      to_sign += CGI::escape(param_part)
+      to_sign += escaped_params
 
-      @logger.debug("Signing '#{to_sign}'")
+      signing_key = SignedURL::encode(@consumer_secret) + "&" + SignedURL::encode(@access_secret.nil? ? "" : @access_secret)
 
-      sha1 = HMAC::SHA1.new(@signing_key)
+      @logger.debug("Signing '#{to_sign}' with key '#{signing_key}'")
+
+      sha1 = HMAC::SHA1.new(signing_key)
       sha1 << to_sign
       signature = Base64.encode64(sha1.digest())
+      signature.chomp!
 
       @logger.debug("signature == '#{signature}'")
 
-      url_params['oauth_signature'] = signature
+      url_params['oauth_signature'] = SignedURL::encode(signature)
 
       url = @url + '?'
       url_params.keys.sort.each do |key|
-        val = CGI::escape(url_params[key])
+        val = url_params[key]
         url += "#{key}=#{val}&"
       end
       url.gsub!(/\&$/,'')

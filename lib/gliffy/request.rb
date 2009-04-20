@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'httparty'
+require 'logger'
+require 'gliffy/url'
 
 module Gliffy
   # Handles making a request of the Gliffy server and all that that entails.

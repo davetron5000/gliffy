@@ -27,7 +27,7 @@ class TC_testRequest < Test::Unit::TestCase
                             @username,
                             'nnch734d00sl2jdk',
                             'pfkkdhi9sl3r4s00')
-    @api_root = 'http://www.gliffy.com/api/v1.0'
+    @api_root = 'http://www.gliffy.com/api/1.0'
     @request = Request.new(@api_root,@cred)
     @request.http = @http
 

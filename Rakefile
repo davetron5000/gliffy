@@ -33,6 +33,14 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/tc_*.rb']
 end
 
+desc 'Runs integration tests'
+Rake::TestTask.new(:inttest) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.libs << 'ext'
+  t.test_files = FileList['test/int_*.rb']
+end
+
 task :clobber_coverage do
     rm_rf "coverage"
 end

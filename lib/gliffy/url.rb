@@ -41,6 +41,8 @@ module Gliffy
       raise ArgumentError.new("url is required") if url.nil?
       raise ArgumentError.new("method is required") if method.nil?
 
+      @credentials = credentials
+
       @logger = logger || Logger.new(STDOUT)
       @logger.level = Logger::INFO
 

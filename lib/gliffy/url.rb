@@ -27,15 +27,11 @@ module Gliffy
     # Modify the logger
     attr_accessor :logger
 
-    # Create a new SignedURL with the following options (all required unless otherwise stated):
+    # Create a new SignedURL
     #
-    # [:consumer_key] The OAuth consumer key
-    # [:consumer_secret] The OAuth consumer secret
-    # [:access_token] The OAuth user access token (optional)
-    # [:access_secret] The OAuth user access token (required if :access_token provided, otherwise omit)
-    # [:method] The HTTP Request method that will be made
-    # [:url] The URL (without parameters) to request
-    #
+    # [+credentails+] The credentials available when signing the request (required).
+    # [+url+] The URL (without parameters) to request (required)
+    # [+method+] The HTTP Request method that will be made (required)
     def initialize(credentials,url,method,logger=nil)
       raise ArgumentError.new("credentials is required") if credentials.nil?
       raise ArgumentError.new("url is required") if url.nil?

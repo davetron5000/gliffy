@@ -5,6 +5,20 @@ require 'gliffy/url'
 
 module Gliffy
   # Handles making a request of the Gliffy server and all that that entails.
+  # This allows you to make requests using the "action" and the URL as
+  # described in the Gliffy documentation.  For example, if you wish 
+  # to get a user's folders, you could
+  #
+  #     request = Request.net('https://www.gliffy.com/api/1.0',credentials)
+  #     results = request.create('accounts/$account_id/users/$username/oauth_token.xml')
+  #     credentials.update_access_token(
+  #         results['response']['oauth_token_credentials']['oauth_token_secret'],
+  #         results['response']['oauth_token_credentials']['oauth_token'])
+  #     request.get('accounts/$account_id/users/$username/folders.xml')
+  #
+  # This will return a hash-referencable DOM objects, subbing the account id
+  # and username in when making the request (additionally, setting all needed
+  # parameters and signing the request).
   class Request
 
     attr_accessor :logger
@@ -12,6 +26,11 @@ module Gliffy
     # have the same interface as HTTParty.
     attr_accessor :http
 
+    # Create a new request object.
+    #
+    # [+api_root+] the root of where all API calls are made
+    # [+credentials+] a Credentials object with all the current credentials
+    # [+http+] This should implement the HTTParty interface
     def initialize(api_root,credentials,http=HTTParty,logger=nil)
       @api_root = api_root
       @api_root += '/' if !(@api_root =~ /\/$/)

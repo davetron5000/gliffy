@@ -10,12 +10,14 @@ class TC_testCredentials < Test::Unit::TestCase
     cred = Credentials.new('foo','bar','baz',1234,'dave')
     assert_equal(nil,cred.access_token)
     assert_equal(nil,cred.access_secret)
+    assert(!cred.has_access_token?)
   end
 
   def test_given_access_token
     cred = Credentials.new('foo','bar','baz',1234,'dave','blah','foo')
     assert_equal('blah',cred.access_token)
     assert_equal('foo',cred.access_secret)
+    assert(cred.has_access_token?)
   end
 
   def test_bad_args

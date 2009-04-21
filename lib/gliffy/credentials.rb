@@ -37,6 +37,10 @@ module Gliffy
       @account_id = account_id
     end
 
+    def has_access_token?
+      !(@access_token.nil? && @access_secret.nil?)
+    end
+
     # Update the access token
     def update_access_token(token,secret)
       @username = username

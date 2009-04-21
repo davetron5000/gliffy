@@ -8,11 +8,17 @@ include Gliffy
 
 
 class TC_testRequest < Test::Unit::TestCase
+  @@xml_crud = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
   # Simple Mock of HTTPart that returns the URL that was requested.
   # This allows us to see what URLs were being generated
   class MockHTTParty
+    def initialize(response=nil,nil_means_nil=false)
+      @response = response
+      @nil_means_nil = nil_means_nil
+    end
     def post(url)
-      return url
+      return nil if @nil_means_nil && @response.nil?
+      return @response.nil? ? url : @response
     end
   end
 
@@ -47,7 +53,44 @@ class TC_testRequest < Test::Unit::TestCase
     assert_equal("/accounts/#{@account_id}/users/#{@username}.xml",replaced_url)
   end
 
+  def test_custom_error_callback
+    error_message = 'This is a big fat error message'
+    @request.http = MockHTTParty.new({ 'response' => { 'error' => error_message, 'success' => 'false'}})
+    message_got = nil
+    @request.error_callback = Proc.new { |response,exception| message_got = exception.message }
+    @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    assert_equal(error_message,message_got)
+  end
+
+  def test_default_error_callback
+    @request.http = MockHTTParty.new(nil,true)
+    assert_raises(NoResponseException) do
+      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    end
+
+    @request.http = MockHTTParty.new({ 'blah' => '' })
+    assert_raises(BadResponseException) do
+      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    end
+
+    @request.http = MockHTTParty.new({ 'response' => {} })
+    assert_raises(BadResponseException) do
+      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    end
+
+    @request.http = MockHTTParty.new({ 'response' => {'success' => 'false' }})
+    assert_raises(RequestFailedException) do
+      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    end
+
+    @request.http = MockHTTParty.new({ 'response' => { 'success' => 'false', 'error' => 'Some Error Message'}})
+    assert_raises(RequestFailedException) do
+      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
+    end
+  end
+
   def test_simple_case
+    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}.xml")
     signed_url[:action] = 'delete'
     expected_full_url = signed_url.full_url(timestamp,nonce)
@@ -57,6 +100,7 @@ class TC_testRequest < Test::Unit::TestCase
   end
 
   def test_more_complex_case
+    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}.xml")
     signed_url[:action] = 'update'
     signed_url[:admin] = true
@@ -69,6 +113,7 @@ class TC_testRequest < Test::Unit::TestCase
 
   def test_getting_token
     @cred.clear_access_token
+    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}/oauth_token.xml")
     description = 'Test Cases'
     signed_url[:description] = description

@@ -33,12 +33,19 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/tc_*.rb']
 end
 
+if File.exists?('test/it_cred.rb')
 desc 'Runs integration tests'
 Rake::TestTask.new(:inttest) do |t|
   t.libs << 'lib'
   t.libs << 'test'
   t.libs << 'ext'
   t.test_files = FileList['test/int_*.rb']
+end
+else
+  task :inttest do
+    $stderr.puts "Integration tests won't run; you need to create test/it_cred.rb"
+    $stderr.puts "See the documentation for what this should look like"
+  end
 end
 
 task :clobber_coverage do

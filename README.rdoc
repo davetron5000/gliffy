@@ -4,6 +4,31 @@
 
 This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
 
+= Development
+
+== Unit Tests
+
+Make sure you get at least 100% statement coverage of the code you write via Unit Tests.
+
+== Integration Tests
+
+This code is capable of running integration tests against Gliffy's integration test servers.
+If you would like to run these tests, you must contact Gliffy for the information needed.
+You could technically run integration tests against your own Gliffy account on their production 
+server, but this may delete or change your account's data and is not recommended.  Once you
+have the information from Gliffy, create the file `test/it_cred.rb` as follows:
+
+    $account_id = # integration tests account id
+    $username = # integration tests admin user name
+    $oauth_consumer_key = # integration test account consumer key
+    $oauth_consumer_secret = # integration test account consumer secret
+    $api_root = # integration test server API endpoint
+    $http_auth_username = # integration test server HTTP Auth username
+    $http_auth_password = # integration test server HTTP Auth password
+
+
+= Old Documentation
+
 == Client Library
 
 Main entry point is Gliffy::Handle, though you should look at Gliffy::Config for configuration options.  Here's an example of getting the list of diagrams and then downloading the first one as a JPEG

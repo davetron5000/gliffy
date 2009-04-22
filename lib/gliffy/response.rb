@@ -73,10 +73,24 @@ module Gliffy
     end
   end
 
+  # Factory for parsing accounts
+  class VersionsParser
+    def self.from_http_response(root)
+      return ArrayParser.from_http_response(root,VersionParser,'versions','version')
+    end
+  end
+
   # Factory for parsing users
   class UsersParser
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,UserParser,'users','user')
+    end
+  end
+  
+  # Factory for parsing documents
+  class DocumentsParser
+    def self.from_http_response(root)
+      return ArrayParser.from_http_response(root,DocumentParser,'documents','document')
     end
   end
   
@@ -90,7 +104,9 @@ module Gliffy
     end
 
     def self.add_int(root,name,new_name=nil)
-      root[new_name.nil? ? name : new_name] = root[name].to_i
+      if root[name]
+        root[new_name.nil? ? name : new_name] = root[name].to_i
+      end
     end
 
     def self.add_boolean(root,name)
@@ -98,7 +114,9 @@ module Gliffy
     end
 
     def self.add_date(root,name)
-      root[name] = Time.at(root['expiration_date'].to_i / 1000) unless root[name].kind_of? Time
+      if root[name]
+        root[name] = Time.at(root[name].to_i / 1000) unless root[name].kind_of? Time
+      end
     end
   end
 
@@ -121,4 +139,31 @@ module Gliffy
       super(root)
     end
   end
+
+  # Factory for parsing an Account
+  class DocumentParser < BaseParser
+    def self.from_http_response(root)
+      add_int(root,'id','document_id')
+      add_int(root,'num_versions')
+      add_boolean(root,'is_private')
+      add_boolean(root,'is_public')
+      add_date(root,'create_date')
+      add_date(root,'mod_date')
+      add_date(root,'published_date')
+      root['owner'] = UserParser.from_http_response(root['owner'])
+      root['versions'] = VersionsParser.from_http_response(root)
+      super(root)
+    end
+  end
+
+  class VersionParser < BaseParser
+    def self.from_http_response(root)
+      add_int(root,'id','version_id')
+      add_int(root,'num')
+      add_date(root,'create_date')
+      root['owner'] = UserParser.from_http_response(root['owner'])
+      super(root)
+    end
+  end
+
 end

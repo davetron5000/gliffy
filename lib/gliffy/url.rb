@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'hmac-sha1'
 require 'base64'
-require 'gliffy/config'
 
 module Gliffy
 
@@ -47,9 +46,9 @@ module Gliffy
         'oauth_version' => '1.0',
       }
       @params['oauth_consumer_key'] = credentials.consumer_key
-      @params['oauth_token'] = credentials.access_token if credentials.access_token
+      @params['oauth_token'] = credentials.access_token.token if credentials.access_token
       @consumer_secret = credentials.consumer_secret
-      @access_secret = credentials.access_secret
+      @access_secret = credentials.access_token.secret if credentials.access_token
       @method = method.upcase
       @url = url
     end

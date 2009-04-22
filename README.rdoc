@@ -4,6 +4,12 @@
 
 This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
 
+= Design
+
+== HTTP Layer
+
+Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy URLs have an "action" HTTP param in them, this action is the method name, followed by the URL on which to perform that action (this is not a REST action, but specific to Gliffy).  You can optionally include other HTTP params, however those needed for authentication and signing are taken caref.  Request will examine the Crednetial object used to create the Request object, sign the request, make the request and return the result.  It will look at the result only enough to determine if it's an error, or a failure.  See the RubyDoc for more on how this works.
+
 = Development
 
 == Unit Tests

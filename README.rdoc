@@ -16,6 +16,8 @@ Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy U
 
 Make sure you get at least 100% statement coverage of the code you write via Unit Tests.
 
+Sometimes the test that two nonces shouldn't be the same fails.  This occurs, because they are generated in pretty much the same instant AND when the random number generator generates the same number twice in a row.  Usually if you run tests again, things pass.
+
 == Integration Tests
 
 This code is capable of running integration tests against Gliffy's integration test servers.

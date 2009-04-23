@@ -73,7 +73,14 @@ module Gliffy
     end
   end
 
-  # Factory for parsing accounts
+  # Factory for parsing folders
+  class FoldersParser
+    def self.from_http_response(root)
+      return ArrayParser.from_http_response(root,FolderParser,'folders','folder')
+    end
+  end
+
+  # Factory for parsing versions
   class VersionsParser
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,VersionParser,'versions','version')
@@ -117,6 +124,26 @@ module Gliffy
       if root[name]
         root[name] = Time.at(root[name].to_i / 1000) unless root[name].kind_of? Time
       end
+    end
+  end
+
+  class FolderParser < BaseParser
+    def self.from_http_response(root)
+      add_int(root,'id','folder_id')
+      add_boolean(root,'is_default')
+      if root['folder']
+        if root['folder'].kind_of? Array
+          root['child_folders'] = Array.new
+          root['folder'].each do |one|
+            root['child_folders'] << from_http_response(one)
+          end
+        else
+          root['child_folders'] = [from_http_response(root['folder'])]
+        end
+      else
+        root['child_folders'] = Array.new
+      end
+      super(root)
     end
   end
 

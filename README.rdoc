@@ -4,7 +4,33 @@
 
 This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
 
+= Getting Started
+
+    sudo gem install gliffy
+
+
 = Design
+
+== Domain Objects
+
+Instead of creating explicit objects for each domain object in Gliffy, we always return a Response object, that uses method_missing to implement accessors for data returned from Gliffy.  These implicit accessors should return typed values and are named accordingly:
+* If the name in the XSD[http://www.gliffy.com/developer/apidocs/xsddoc/] has dashes, underscores are used here
+* If the item is a boolean, its boolean value is available with a "?" at the end
+* The id field is available as type_id, e.g. document_id
+* Date fields are converted to Time objects
+* Any field in the repsonse that was not known about in this code will be available as a String, based on the above rules
+
+So, if you requested document meta data, you would have the following accessors available:
+
+* document.document_od
+* document.is_private?
+* document.is_public?
+* document.num_versions
+* document.mod_date # returns a Time
+* document.create_date # returns a Time
+* document.published_date # returns a Time
+* document.owner # Returns a Response that responds to user accessors
+* document.versions # Returns an array of Response objects that act like verisons
 
 == HTTP Layer
 

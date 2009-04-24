@@ -47,7 +47,7 @@ class INT_testRequest < Test::Unit::TestCase
 
   def test_get_account_metadata
     token,secret = test_get_token
-    @cred.update_access_token(token,secret)
+    @cred.update_access_token(RequestToken.new(token,secret))
     results = @request.get('accounts/$account_id.xml', :showUsers => true)
     assert(results['response']['success'] == 'true')
     account = results['response']['accounts']['account']

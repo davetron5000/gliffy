@@ -28,6 +28,7 @@ module Gliffy
     attr_reader :username
     attr_reader :account_id
     attr_reader :description
+    attr_reader :default_protocol
 
     # Create a new Credentials object.
     #
@@ -37,7 +38,7 @@ module Gliffy
     # [+account_id+] Your account id
     # [+username+] the Gliffy user name/identifier
     # [+access_token+] The access token you were given as a RequestToken, or nil if you don't have one yet.  
-    def initialize(consumer_key, consumer_secret, description, account_id, username, access_token = nil)
+    def initialize(consumer_key, consumer_secret, description, account_id, username, default_protocol=:http, access_token = nil)
       raise ArgumentError.new("consumer_key required") if consumer_key.nil?
       raise ArgumentError.new("consumer_secret required") if consumer_secret.nil?
       raise ArgumentError.new("description required") if description.nil? || description.strip == ''
@@ -50,6 +51,7 @@ module Gliffy
       @access_token = access_token
       @description = description
       @account_id = account_id
+      @default_protocol = default_protocol
     end
 
     def has_access_token?

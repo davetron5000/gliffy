@@ -8,12 +8,14 @@ include Gliffy
 class TC_testCredentials < Test::Unit::TestCase
   def test_default_access_token
     cred = Credentials.new('foo','bar','baz',1234,'dave')
+    assert_equal(:http,cred.default_protocol)
     assert_equal(nil,cred.access_token)
     assert(!cred.has_access_token?)
   end
 
   def test_given_access_token
-    cred = Credentials.new('foo','bar','baz',1234,'dave',RequestToken.new('blah','foo'))
+    cred = Credentials.new('foo','bar','baz',1234,'dave',:https,RequestToken.new('blah','foo'))
+    assert_equal(:https,cred.default_protocol)
     assert_equal('blah',cred.access_token.token)
     assert_equal('foo',cred.access_token.secret)
     assert(cred.has_access_token?)
@@ -28,7 +30,7 @@ class TC_testCredentials < Test::Unit::TestCase
   end
 
   def test_clear_token
-    cred = Credentials.new('foo','bar','baz',1234,'dave',RequestToken.new('blah','crud'))
+    cred = Credentials.new('foo','bar','baz',1234,'dave',:http,RequestToken.new('blah','crud'))
     cred.clear_access_token
     assert_equal(nil,cred.access_token)
   end

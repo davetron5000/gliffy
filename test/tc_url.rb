@@ -15,7 +15,7 @@ class TC_testURL < Test::Unit::TestCase
                             666,
                             'dave',
                             :http,
-                            RequestToken.new('nnch734d00sl2jdk','pfkkdhi9sl3r4s00'))
+                            AccessToken.new('nnch734d00sl2jdk','pfkkdhi9sl3r4s00'))
     @signed_url = SignedURL.new(@cred,
                                'http://photos.example.net/photos',
                                'GET')

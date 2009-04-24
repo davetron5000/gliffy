@@ -32,7 +32,7 @@ class TC_testRequest < Test::Unit::TestCase
                             @account_id,
                             @username,
                             :http,
-                            RequestToken.new('nnch734d00sl2jdk','pfkkdhi9sl3r4s00'))
+                            AccessToken.new('nnch734d00sl2jdk','pfkkdhi9sl3r4s00'))
     @api_root = 'www.gliffy.com/api/1.0'
     @request = Request.new(@api_root,@cred)
     @request.http = @http

@@ -33,7 +33,7 @@ class TC_testRequest < Test::Unit::TestCase
                             @username,
                             :http,
                             RequestToken.new('nnch734d00sl2jdk','pfkkdhi9sl3r4s00'))
-    @api_root = 'http://www.gliffy.com/api/1.0'
+    @api_root = 'www.gliffy.com/api/1.0'
     @request = Request.new(@api_root,@cred)
     @request.http = @http
 
@@ -130,7 +130,7 @@ class TC_testRequest < Test::Unit::TestCase
 
   private 
   def get_signed_url_nonce_timestamp(url_part)
-    url = @api_root + url_part
+    url = @cred.default_protocol.to_s + "://" + @api_root + url_part
     signed_url = SignedURL.new(@cred,url,'POST')
     [signed_url,'321654987','123456789']
   end

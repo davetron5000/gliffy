@@ -92,7 +92,7 @@ module Gliffy
         @logger.debug("Executing a #{symbol} against gliffy for url #{args[0]}")
 
         # exposing this for testing
-        @full_url_no_params = @api_root + replace_url(args[0])
+        @full_url_no_params = @credentials.default_protocol.to_s + "://" + @api_root + replace_url(args[0])
         url = SignedURL.new(@credentials,@full_url_no_params,'POST')
         url.params = args[1] if !args[1].nil?
         url[:action] = symbol

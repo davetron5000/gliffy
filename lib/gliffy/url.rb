@@ -76,15 +76,62 @@ module Gliffy
 
     # Gets the full URL, signed and ready to be requested
     def full_url(timestamp=nil,nonce=nil)
-      # TODO clean this up
+
       timestamp=Time.now.to_i if timestamp.nil?
       nonce=@credentials.nonce if nonce.nil?
+
       @logger.debug("Getting full_url of #{@url}")
       @logger.debug("OAuth Part 1 : #{@method}")
+
       escaped_url = SignedURL::encode(@url)
       to_sign = @method + "&" + escaped_url + "&"
+
       @logger.debug("OAuth Part 2 (raw) : #{@url}")
       @logger.debug("OAuth Part 2 (esc) : #{escaped_url}")
+
+      param_part,url_params = handle_params(timestamp,nonce)
+      escaped_params = SignedURL::encode(param_part)
+      @logger.debug("OAuth Part 3 (raw) : #{param_part}")
+      @logger.debug("OAuth Part 3 (esc) : #{escaped_params}")
+
+      to_sign += escaped_params
+
+      signature = get_signature(to_sign)
+
+      url_params['oauth_signature'] = SignedURL::encode(signature)
+
+      return assemble_url(url_params)
+    end
+
+    private
+
+    def assemble_url(url_params)
+      url = @url + '?'
+      url_params.keys.sort.each do |key|
+        val = url_params[key]
+        url += "#{key}=#{val}&"
+      end
+      url.gsub!(/\&$/,'')
+      return url
+    end
+
+    def get_signature(to_sign)
+      signing_key = get_signing_key
+      @logger.debug("Signing '#{to_sign}' with key '#{signing_key}'")
+
+      sha1 = HMAC::SHA1.new(signing_key)
+      sha1 << to_sign
+      signature = Base64.encode64(sha1.digest())
+      signature.chomp!
+      @logger.debug("signature == '#{signature}'")
+      signature
+    end
+
+    def get_signing_key
+      SignedURL::encode(@consumer_secret) + "&" + SignedURL::encode(@access_secret.nil? ? "" : @access_secret)
+    end
+
+    def handle_params(timestamp,nonce)
       url_params = Hash.new
       param_part = ""
       params = @params
@@ -102,32 +149,7 @@ module Gliffy
         url_params[key] = SignedURL::encode(value)
       end
       param_part.gsub!(/&$/,'')
-      escaped_params = SignedURL::encode(param_part)
-      @logger.debug("OAuth Part 3 (raw) : #{param_part}")
-      @logger.debug("OAuth Part 3 (esc) : #{escaped_params}")
-
-      to_sign += escaped_params
-
-      signing_key = SignedURL::encode(@consumer_secret) + "&" + SignedURL::encode(@access_secret.nil? ? "" : @access_secret)
-
-      @logger.debug("Signing '#{to_sign}' with key '#{signing_key}'")
-
-      sha1 = HMAC::SHA1.new(signing_key)
-      sha1 << to_sign
-      signature = Base64.encode64(sha1.digest())
-      signature.chomp!
-
-      @logger.debug("signature == '#{signature}'")
-
-      url_params['oauth_signature'] = SignedURL::encode(signature)
-
-      url = @url + '?'
-      url_params.keys.sort.each do |key|
-        val = url_params[key]
-        url += "#{key}=#{val}&"
-      end
-      url.gsub!(/\&$/,'')
-      return url
+      [param_part,url_params]
     end
   end
 end

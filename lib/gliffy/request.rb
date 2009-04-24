@@ -95,6 +95,7 @@ module Gliffy
         protocol = determine_protocol(args[1])
         @full_url_no_params = protocol + "://" + @api_root + replace_url(args[0])
         url = SignedURL.new(@credentials,@full_url_no_params,'POST')
+        url.logger = @logger
         url.params = args[1] if !args[1].nil?
         url[:protocol_override] = nil
         url[:action] = symbol

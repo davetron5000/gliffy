@@ -193,4 +193,12 @@ module Gliffy
     end
   end
 
+  class OauthTokenCredentialsParser
+    def self.from_http_response(root)
+      token = root['oauth_token_credentials']['oauth_token']
+      secret = root['oauth_token_credentials']['oauth_token_secret']
+      return AccessToken.new(token,secret)
+    end
+  end
+
 end

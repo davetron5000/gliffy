@@ -3,7 +3,7 @@ module Gliffy
 
   # Encapsulates a request token, which is what Gliffy returns when
   # you request a user's OAuth Token
-  class RequestToken
+  class AccessToken
     attr_reader :token
     attr_reader :secret
 
@@ -22,6 +22,7 @@ module Gliffy
   # outside of request-specific information.
   class Credentials
     @@nonce_counter = 1
+    @@last_nonce = nil
     attr_reader :consumer_key
     attr_reader :consumer_secret
     attr_reader :access_token
@@ -73,7 +74,10 @@ module Gliffy
     # Return a nonce that hasn't been used before (at least not in this space/time continuum)
     def nonce
       @@nonce_counter += 1
-      return Base64.encode64((@@nonce_counter + rand(100) + Time.new.to_i).to_s).chomp
+      this_nonce = Base64.encode64((@@nonce_counter + rand(100) + Time.new.to_i).to_s).chomp
+      return self.nonce if this_nonce == @@last_nonce
+      @@last_nonce = this_nonce
+      this_nonce
     end
   end
 end

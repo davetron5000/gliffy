@@ -114,13 +114,13 @@ class TC_testRequest < Test::Unit::TestCase
   def test_getting_token
     @cred.clear_access_token
     @request.error_callback = Proc.new {|response,message|}
-    signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}/oauth_token.xml")
+    signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}/oauth_token.xml","https")
     description = 'Test Cases'
     signed_url[:description] = description
     signed_url[:action] = 'create'
     expected_full_url = signed_url.full_url(timestamp,nonce)
 
-    results = @request.create('accounts/$account_id/users/$username/oauth_token.xml',{:description => description},timestamp,nonce)
+    results = @request.create('accounts/$account_id/users/$username/oauth_token.xml',{:description => description,:protocol_override => :https},timestamp,nonce)
     assert_equal(expected_full_url,results)
   end
 
@@ -129,8 +129,9 @@ class TC_testRequest < Test::Unit::TestCase
   end
 
   private 
-  def get_signed_url_nonce_timestamp(url_part)
-    url = @cred.default_protocol.to_s + "://" + @api_root + url_part
+  def get_signed_url_nonce_timestamp(url_part,protocol=nil)
+    protocol = @cred.default_protocol.to_s if protocol.nil?
+    url = protocol + "://" + @api_root + url_part
     signed_url = SignedURL.new(@cred,url,'POST')
     [signed_url,'321654987','123456789']
   end

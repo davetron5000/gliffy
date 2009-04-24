@@ -92,9 +92,11 @@ module Gliffy
         @logger.debug("Executing a #{symbol} against gliffy for url #{args[0]}")
 
         # exposing this for testing
-        @full_url_no_params = @credentials.default_protocol.to_s + "://" + @api_root + replace_url(args[0])
+        protocol = determine_protocol(args[1])
+        @full_url_no_params = protocol + "://" + @api_root + replace_url(args[0])
         url = SignedURL.new(@credentials,@full_url_no_params,'POST')
         url.params = args[1] if !args[1].nil?
+        url[:protocol_override] = nil
         url[:action] = symbol
 
         # These can be override for testing purposes
@@ -106,6 +108,14 @@ module Gliffy
         return response
       else
         super(symbol,@args)
+      end
+    end
+
+    def determine_protocol(params)
+      if params && params[:protocol_override]
+        params[:protocol_override].to_s
+      else
+        @credentials.default_protocol.to_s
       end
     end
 

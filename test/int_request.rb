@@ -36,7 +36,7 @@ class INT_testRequest < Test::Unit::TestCase
   end
 
   def test_get_token
-    results = @request.create('accounts/$account_id/users/$username/oauth_token.xml', :description => @cred.description)
+    results = @request.create('accounts/$account_id/users/$username/oauth_token.xml', :description => @cred.description, :protocol_override => :https)
     assert_equal('true',results['response']['success'])
     returned_credentials = results['response']['oauth_token_credentials']
     assert(returned_credentials != nil,results['response'].keys.join(','))

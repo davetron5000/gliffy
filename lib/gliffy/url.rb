@@ -60,10 +60,13 @@ module Gliffy
     #
     def []=(param,value)
       raise ArgumentError.new("param may not be nil") if param.nil?
-      raise ArgumentError.new("value may not be nil") if value.nil?
       param = param.to_s
       raise ArgumentError.new("You may not override #{param}") if READ_ONLY_PARAMS[param]
-      @params[param] = value.to_s
+      if value.nil? 
+        @params.delete(param)
+      else
+        @params[param] = value.to_s
+      end
     end
 
     # Sets all request parameters to those in the hash.

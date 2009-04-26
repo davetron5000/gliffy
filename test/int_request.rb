@@ -1,23 +1,11 @@
 require 'gliffy/credentials'
 require 'gliffy/request'
-require 'test/unit'
-require 'test/unit/ui/console/testrunner'
-require 'testbase.rb'
+require 'integration_testbase.rb'
 require 'it_cred.rb'
 
 include Gliffy
 
-class HTTPartyAuth
-  def initialize(auth)
-    @auth = auth
-  end
-
-  def post(url)
-    HTTParty.post(url,:basic_auth => @auth)
-  end
-end
-
-class INT_testRequest < Test::Unit::TestCase
+class INT_testRequest < IntegrationTestBase
   def setup
     @account_id = $account_id
     @username = $username

@@ -80,9 +80,6 @@ module Gliffy
     # Gets the full URL, signed and ready to be requested
     def full_url(timestamp=nil,nonce=nil)
 
-      timestamp=Time.now.to_i if timestamp.nil?
-      nonce=@credentials.nonce if nonce.nil?
-
       @logger.debug("Getting full_url of #{@url}")
       @logger.debug("OAuth Part 1 : #{@method}")
 
@@ -91,6 +88,9 @@ module Gliffy
 
       @logger.debug("OAuth Part 2 (raw) : #{@url}")
       @logger.debug("OAuth Part 2 (esc) : #{escaped_url}")
+
+      timestamp=Time.now.to_i if timestamp.nil?
+      nonce=@credentials.nonce if nonce.nil?
 
       param_part,url_params = handle_params(timestamp,nonce)
       escaped_params = SignedURL::encode(param_part)
@@ -103,7 +103,9 @@ module Gliffy
 
       url_params['oauth_signature'] = SignedURL::encode(signature)
 
-      return assemble_url(url_params)
+      assembled_url = assemble_url(url_params)
+      @logger.debug("Full URL is " + assembled_url)
+      return assembled_url
     end
 
     private
@@ -140,8 +142,8 @@ module Gliffy
       params = @params
       params['oauth_timestamp'] = timestamp.to_s
       params['oauth_nonce'] = nonce
-      @params.keys.sort.each do |key|
-        value = @params[key]
+      params.keys.sort.each do |key|
+        value = params[key]
         raise ArgumentError.new("#{key} is nil; don't set params to be nil") if value.nil?
         
         @logger.debug("Adding param #{key} with value #{value} escaped as #{SignedURL::encode(value)}")

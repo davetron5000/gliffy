@@ -57,6 +57,38 @@ class TC_testAccount < Test::Unit::TestCase
               }
             ]},
     }
+    @one_account_hash_with_one_user = {
+            'account_type' => @account_type,
+            'id' => @account_id.to_s,
+            'max_users' => @max_users.to_s,
+            'terms' => 'true',
+            'name' => @name,
+            'expiration_date' => (@expiration_date.to_i * 1000).to_s,
+            'users' => { 'user' => 
+              { 'id' => @user1_id.to_s,
+                'username' => @user1_username,
+                'email' => @user1_email,
+                'is_admin' => @user1_admin.to_s
+              }
+            },
+    }
+  end
+
+  def test_account_with_one_user
+    response = Response.from_http_response(TC_testResponse::make_response({
+      'response' => { 
+        'success' => 'true',
+        'accounts' => { 
+          'account' => @one_account_hash_with_one_user,
+        }
+      }
+    }))
+    assert_one_account(response)
+    assert_equal(1,response.users.size)
+    assert_equal(@user1_id,response.users[0].user_id)
+    assert_equal(@user1_username,response.users[0].username)
+    assert_equal(@user1_email,response.users[0].email)
+    assert_equal(@user1_admin,response.users[0].is_admin?)
   end
 
   def test_accounts_with_users

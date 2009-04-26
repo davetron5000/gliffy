@@ -110,6 +110,15 @@ module Gliffy
       Response.new(params)
     end
 
+    # Returns the item as an array, or nil if it was nil
+    def self.as_array(item)
+      if item.nil?
+        nil
+      else
+        [item].flatten
+      end
+    end
+
     def self.add_int(root,name,new_name=nil)
       if root[name]
         root[new_name.nil? ? name : new_name] = root[name].to_i
@@ -162,7 +171,7 @@ module Gliffy
       add_int(root,'max_users')
       add_boolean(root,'terms')
       add_date(root,'expiration_date')
-      root['users'] = UsersParser.from_http_response(root)
+      root['users'] = as_array(UsersParser.from_http_response(root))
       super(root)
     end
   end
@@ -178,7 +187,7 @@ module Gliffy
       add_date(root,'mod_date')
       add_date(root,'published_date')
       root['owner'] = UserParser.from_http_response(root['owner'])
-      root['versions'] = VersionsParser.from_http_response(root)
+      root['versions'] = as_array(VersionsParser.from_http_response(root))
       super(root)
     end
   end

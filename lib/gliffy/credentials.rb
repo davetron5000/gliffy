@@ -61,8 +61,8 @@ module Gliffy
 
     # Update the access token
     def update_access_token(token)
-      @username = username
       @access_token = token
+      @access_token
     end
 
     # Clear the access token if, for some reason, you know the one

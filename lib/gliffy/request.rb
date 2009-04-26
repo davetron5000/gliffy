@@ -108,7 +108,7 @@ module Gliffy
         verify(response)
         return response
       else
-        super(symbol,@args)
+        super(symbol,args)
       end
     end
 

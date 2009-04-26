@@ -31,6 +31,7 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
   t.libs << 'ext'
   t.test_files = FileList['test/tc_*.rb']
+  t.warning = true
 end
 
 if File.exists?('test/it_cred.rb')
@@ -40,6 +41,7 @@ Rake::TestTask.new(:inttest) do |t|
   t.libs << 'test'
   t.libs << 'ext'
   t.test_files = FileList['test/int_*.rb']
+  t.warning = true
 end
 else
   task :inttest do
@@ -63,7 +65,13 @@ Rcov::RcovTask.new do |t|
   t.libs << 'test'
   t.libs << 'ext'
   t.test_files = FileList['test/tc_*.rb']
-  # t.verbose = true     # uncomment to see the executed command
+end
+
+Rcov::RcovTask.new(:rcov_int) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.libs << 'ext'
+  t.test_files = FileList['test/int_*.rb']
 end
 
 task :default => :test

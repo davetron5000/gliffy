@@ -48,7 +48,11 @@ module Gliffy
       @params['oauth_consumer_key'] = credentials.consumer_key
       @params['oauth_token'] = credentials.access_token.token if credentials.access_token
       @consumer_secret = credentials.consumer_secret
-      @access_secret = credentials.access_token.secret if credentials.access_token
+      if credentials.access_token
+        @access_secret = credentials.access_token.secret 
+      else
+        @access_secret = nil
+      end
       @method = method.upcase
       @url = url
     end

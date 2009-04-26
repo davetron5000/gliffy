@@ -40,7 +40,7 @@ class TC_testUser < Test::Unit::TestCase
     assert_user1(response)
   end
 
-  def test_one_user
+  def test_two_users
     response = Response.from_http_response(TC_testResponse::make_response({
       'response' => { 
         'success' => 'true',

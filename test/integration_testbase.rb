@@ -1,5 +1,6 @@
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
+require 'testbase'
 
 class HTTPartyAuth
   def initialize(auth)

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<response success="true">  
+    <oauth-token-credentials>  
+        <oauth-token>140a1b58c248d13872499df769606766</oauth-token>  
+        <oauth-token-secret>481830f5827e35b0644a32c1caac5245</oauth-token-secret>  
+        <create-date>1236204382765</create-date>  
+    </oauth-token-credentials>  
+</response>  

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
 <response xmlns="http://www.gliffy.com" success="true">  
   <accounts>
-    <account account-type="Basic" id="45" max-users="100">
+    <account account-type="Basic" id="101" max-users="100">
       <name>Naildrivin5</name>
       <!-- June 13, 2010, 12:30:00 -->
       <expiration-date>1276432200000</expiration-date>
@@ -12,6 +12,9 @@
         </user>
         <user id="446" is-admin="false">
           <username>foobar</username>
+        </user>
+        <user id="447" is-admin="true">
+          <username>testuser@gliffy.com</username>
         </user>
         <user id="333">
           <email>blah.crud@something.info</email>

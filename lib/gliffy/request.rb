@@ -70,6 +70,7 @@ module Gliffy
       @credentials = credentials
       @logger = logger || Logger.new(STDOUT)
       @logger.level = Logger::INFO
+      @http = http
       @error_callback = Proc.new do |response,exception| 
         raise exception
       end

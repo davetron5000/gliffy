@@ -53,15 +53,7 @@ class TC_testHandle < Test::Unit::TestCase
     assert_equal('Naildrivin5',account.name)
     assert_equal('Basic',account.account_type)
     assert_equal(100,account.max_users)
-    assert_equal(4,account.users.size)
-    assert_equal(45,account.users[0].user_id)
-    assert(account.users[0].is_admin?)
-    assert_equal(446,account.users[1].user_id)
-    assert(!account.users[1].is_admin?)
-    assert_equal(447,account.users[2].user_id)
-    assert(account.users[2].is_admin?)
-    assert_equal(333,account.users[3].user_id)
-    assert(!account.users[3].is_admin?)
+    assert_users(account.users)
   end
 
   def test_account_admins
@@ -99,7 +91,35 @@ class TC_testHandle < Test::Unit::TestCase
     assert_equal(202,documents[1].owner.user_id)
   end
 
+  def test_account_users
+    users = @handle.account_users
+    assert_users(users)
+  end
+
+  def test_document_meta_data
+    document = @handle.document_get_metadata(1000003)
+    assert_equal(1000003,document.document_id)
+    assert_equal('Booze DB',document.name)
+    assert_equal('moe',document.owner.username)
+    assert_equal(2,document.versions.size)
+  end
+
   def teardown
     @s.shutdown
   end
+
+  private 
+
+  def assert_users(users)
+    assert_equal(4,users.size)
+    assert_equal(45,users[0].user_id)
+    assert(users[0].is_admin?)
+    assert_equal(446,users[1].user_id)
+    assert(!users[1].is_admin?)
+    assert_equal(447,users[2].user_id)
+    assert(users[2].is_admin?)
+    assert_equal(333,users[3].user_id)
+    assert(!users[3].is_admin?)
+  end
+
 end

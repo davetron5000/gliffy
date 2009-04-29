@@ -77,34 +77,46 @@ module Gliffy
 
     # Get users in your account
     def account_users 
+      make_request(:get,"#{account_url}/users.xml")
     end
 
-    # Create a new diagram
-    def diagram_create
+    # Create a new document
+    def document_create(name,folder_path=nil,template_id=nil,type=:document)
+      raise "Untested"
+      params = { 
+        :documentName => name,
+        :documentType => type
+      }
+      params[:templateDiagramId] = template_id if !template_id.nil? 
+      params[:folderPath] = folder_path if !folder_path.nil? 
+      make_request(:create,"#{account_url}/documents.xml",params)
     end
 
-    # Delete an existing diagram
-    def diagram_delete
+    # Delete an existing document
+    def document_delete
     end
 
-    # Get a diagram
-    def diagram_get
+    def document_get_metadata(document_id,show_revisions=:false)
+      make_request(:get,document_url(document_id),:showRevisions => show_revisions)
+    end
+    # Get a document
+    def document_get
     end
 
-    # Get a link to a diagram
-    def diagram_get_url
+    # Get a link to a document
+    def document_get_url
     end
 
-    # Get the link to edit a diagram
-    def diagram_edit_link
+    # Get the link to edit a document
+    def document_edit_link
     end
 
-    # Move a diagram to a different folder
-    def diagram_move
+    # Move a document to a different folder
+    def document_move
     end
 
-    # Update a diagram's XML content
-    def diagram_update_content
+    # Update a document's XML content
+    def document_update_content
     end
 
     # Add a user to a folder
@@ -155,6 +167,7 @@ module Gliffy
 
     def account_url; 'accounts/$account_id'; end
     def token_url; "#{account_url}/users/$username/oauth_token.xml"; end
+    def document_url(id); "#{account_url}/documents/#{id}.xml"; end
 
     def make_request(method,url,params=nil)
       update_token

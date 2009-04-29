@@ -4,27 +4,6 @@ require 'logger'
 require 'gliffy/url'
 
 module Gliffy
-  # Indicates no response at all was received.
-  class NoResponseException < Exception
-    def initialize(message)
-      super(message)
-    end
-  end
-  # Indicates that a response was received by that it wasn't
-  # parsable or readable as a Gliffy <response> 
-  class BadResponseException < Exception
-    def initialize(message)
-      super(message)
-    end
-  end
-  # Indicates that a valid Gliffy <response> was received and that it 
-  # indicated failure.  The message is the message sent by gliffy (if it was
-  # in the response)
-  class RequestFailedException < Exception
-    def initialize(message)
-      super(message)
-    end
-  end
   # Handles making a request of the Gliffy server and all that that entails.
   # This allows you to make requests using the "action" and the URL as
   # described in the Gliffy documentation.  For example, if you wish 
@@ -40,24 +19,12 @@ module Gliffy
   # This will return a hash-referencable DOM objects, subbing the account id
   # and username in when making the request (additionally, setting all needed
   # parameters and signing the request).
-  #
-  # This will also do a limited analysis of the response to determine if it is in
-  # error.  Since, under normal conditions, you should not get error responses from Gliffy
-  # this class, by default, will throw an exception when any error occurs.  You can
-  # override this behavior by setting an error_callback.
   class Request
 
     attr_accessor :logger
     # Modify the HTTP transport agent used.  This should
     # have the same interface as HTTParty.
     attr_accessor :http
-
-    # Set this to a Proc to handle errors if you don't want the default
-    # behavior.  The proc will get two arguments:
-    # [+response+] the raw response received (may be nil)
-    # [+exception+] One of NoResponseException, BadResponseException, or RequestFailedException.  The 
-    # message of that exception is a usable message if you want to ignore the exception
-    attr_writer :error_callback
 
     # Create a new request object.
     #
@@ -90,6 +57,11 @@ module Gliffy
     # that allows access to the returned DOM tree
     def method_missing(symbol,*args)
       if args.length >= 1
+        link_only = false
+        if symbol == :link_for
+          symbol = args.shift
+          link_only = true
+        end
         @logger.debug("Executing a #{symbol} against gliffy for url #{args[0]}")
 
         # exposing this for testing
@@ -105,9 +77,13 @@ module Gliffy
         timestamp = args[2] if args[2]
         nonce = args[3] if args[3]
 
-        response = @http.post(url.full_url(timestamp,nonce))
-        verify(response)
-        return response
+        full_url = url.full_url(timestamp,nonce)
+        if link_only
+          return full_url
+        else
+          response = @http.post(full_url)
+          return response
+        end
       else
         super(symbol,args)
       end
@@ -123,20 +99,6 @@ module Gliffy
 
     def replace_url(url)
       return url.gsub('$account_id',@credentials.account_id.to_s).gsub('$username',@credentials.username)
-    end
-
-    private 
-    # Verifies that the response represents success, calling
-    # the error callback if it doesn't
-    def verify(response)
-      return @error_callback.call(response,NoResponseException.new('No response received at all')) if response.nil? 
-      return @error_callback.call(response,BadResponseException.new('Not a Gliffy response')) if !response['response']
-      return @error_callback.call(response,BadResponseException.new('No indication of success from Gliffy')) if !response['response']['success']
-      if response['response']['success'] != 'true'
-        error = response['response']['error']
-        return @error_callback.call(response,RequestFailedException.new('Request failed but no error inside response')) if !error
-        return @error_callback.call(response,RequestFailedException.new(error))
-      end
     end
   end
 end

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<response xmlns="http://www.gliffy.com" success="true"> 
+    <documents> 
+        <document is-public="true" num-versions="2" id="1000003"> 
+            <name>Booze DB</name> 
+            <mod-date>1215538283000</mod-date> 
+            <create-date>1215538283000</create-date> 
+            <published-date>1215538283000</published-date> 
+            <owner id="208"> 
+                <username>moe</username> 
+                <email>moe@BurnsODyne.apiuser.gliffy.com</email> 
+            </owner> 
+            <versions>
+                <version id="1000002">
+                    <num>1</num>
+                    <create-date>1215538283000</create-date>
+                    <owner id="208">   
+                        <username>moe</username>   
+                        <email>moe@BurnsODyne.apiuser.gliffy.com</email>   
+                    </owner>
+                </version>
+                <version id="1000026">
+                    <num>2</num>
+                    <create-date>121559943322</create-date>
+                    <owner id="208">   
+                        <username>moe</username>   
+                        <email>moe@BurnsODyne.apiuser.gliffy.com</email>   
+                    </owner>
+                </version>
+            </versions>
+        </document> 
+    </documents> 
+</response>
+

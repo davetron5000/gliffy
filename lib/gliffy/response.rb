@@ -1,8 +1,36 @@
 require 'gliffy/request'
 
 module Gliffy
+  # Indicates no response at all was received.
+  class NoResponseException < Exception
+    def initialize(message)
+      super(message)
+    end
+  end
+  # Indicates that a response was received by that it wasn't
+  # parsable or readable as a Gliffy <response> 
+  class BadResponseException < Exception
+    def initialize(message)
+      super(message)
+    end
+  end
+  # Indicates that a valid Gliffy <response> was received and that it 
+  # indicated failure.  The message is the message sent by gliffy (if it was
+  # in the response)
+  class RequestFailedException < Exception
+    def initialize(message)
+      super(message)
+    end
+  end
   # Base class for all response from gliffy
   class Response
+    # Set this to a Proc to handle errors if you don't want the default
+    # behavior.  The proc will get two arguments:
+    # [+response+] the raw response received (may be nil)
+    # [+exception+] One of NoResponseException, BadResponseException, or RequestFailedException.  The 
+    # message of that exception is a usable message if you want to ignore the exception
+    attr_writer :error_callback
+
     # Factory for creating actual response subclasses.
     # This takes the results of HTTParty's response, which is a hash, essentially.
     # This assumes that any checks for validity have been done.
@@ -23,7 +51,7 @@ module Gliffy
     end
 
     attr_reader :body
-    
+
     def initialize(params)
       @params = params
     end
@@ -93,14 +121,14 @@ module Gliffy
       return ArrayParser.from_http_response(root,UserParser,'users','user')
     end
   end
-  
+
   # Factory for parsing documents
   class DocumentsParser
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,DocumentParser,'documents','document')
     end
   end
-  
+
   class BaseParser
     def self.from_http_response(root)
       params = Hash.new
@@ -207,6 +235,20 @@ module Gliffy
       token = root['oauth_token_credentials']['oauth_token']
       secret = root['oauth_token_credentials']['oauth_token_secret']
       return AccessToken.new(token,secret)
+    end
+  end
+
+  private
+  # Verifies that the response represents success, calling
+  # the error callback if it doesn't
+  def verify(response)
+    return @error_callback.call(response,NoResponseException.new('No response received at all')) if response.nil? 
+    return @error_callback.call(response,BadResponseException.new('Not a Gliffy response')) if !response['response']
+    return @error_callback.call(response,BadResponseException.new('No indication of success from Gliffy')) if !response['response']['success']
+    if response['response']['success'] != 'true'
+      error = response['response']['error']
+      return @error_callback.call(response,RequestFailedException.new('Request failed but no error inside response')) if !error
+      return @error_callback.call(response,RequestFailedException.new(error))
     end
   end
 

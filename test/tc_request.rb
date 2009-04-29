@@ -53,6 +53,7 @@ class TC_testRequest < Test::Unit::TestCase
     assert_equal("/accounts/#{@account_id}/users/#{@username}.xml",replaced_url)
   end
 
+=begin
   def test_custom_error_callback
     error_message = 'This is a big fat error message'
     @request.http = MockHTTParty.new({ 'response' => { 'error' => error_message, 'success' => 'false'}})
@@ -88,9 +89,9 @@ class TC_testRequest < Test::Unit::TestCase
       @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
     end
   end
+=end
 
   def test_simple_case
-    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}.xml")
     signed_url[:action] = 'delete'
     expected_full_url = signed_url.full_url(timestamp,nonce)
@@ -100,7 +101,6 @@ class TC_testRequest < Test::Unit::TestCase
   end
 
   def test_more_complex_case
-    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}.xml")
     signed_url[:action] = 'update'
     signed_url[:admin] = true
@@ -113,7 +113,6 @@ class TC_testRequest < Test::Unit::TestCase
 
   def test_getting_token
     @cred.clear_access_token
-    @request.error_callback = Proc.new {|response,message|}
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}/oauth_token.xml","https")
     description = 'Test Cases'
     signed_url[:description] = description

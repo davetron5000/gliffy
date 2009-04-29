@@ -104,6 +104,11 @@ class TC_testHandle < Test::Unit::TestCase
     assert_equal(2,document.versions.size)
   end
 
+  def test_document_link
+    link = @handle.document_get_url(666)
+    assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.jpeg\?action=get/,link)
+  end
+
   def teardown
     @s.shutdown
   end

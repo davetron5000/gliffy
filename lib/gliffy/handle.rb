@@ -99,12 +99,19 @@ module Gliffy
     def document_get_metadata(document_id,show_revisions=:false)
       make_request(:get,document_url(document_id),:showRevisions => show_revisions)
     end
-    # Get a document
-    def document_get
+
+    # Get a document; returning the actual bytes
+    def document_get(document_id,type=:jpeg,size=:L,version=nil)
+      params = { :size => size }
+      params[:version] = version if !version.nil?
+      make_request(:get,document_url(document_id,type),params,false)
     end
 
     # Get a link to a document
-    def document_get_url
+    def document_get_url(document_id,type=:jpeg,size=:L,version=nil)
+      params = { :size => size }
+      params[:version] = version if !version.nil?
+      make_request(:get,document_url(document_id,type),params,false,true)
     end
 
     # Get the link to edit a document
@@ -167,14 +174,22 @@ module Gliffy
 
     def account_url; 'accounts/$account_id'; end
     def token_url; "#{account_url}/users/$username/oauth_token.xml"; end
-    def document_url(id); "#{account_url}/documents/#{id}.xml"; end
+    def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
 
-    def make_request(method,url,params=nil)
+    def make_request(method,url,params=nil,parse=true,link_only=false)
       update_token
-      @logger.debug("Requesting #{url} with {#params.inspect}")
-      response = @request.send(method,url,params)
-      @logger.debug("Got back #{response.body}")
-      Response.from_http_response(response)
+      if link_only
+        @request.link_for(method,url,params)
+      else
+        @logger.debug("Requesting #{url} with {#params.inspect}")
+        response = @request.send(method,url,params)
+        @logger.debug("Got back #{response.body}")
+        if parse
+          Response.from_http_response(response)
+        else
+          response
+        end
+      end
     end
 
   end

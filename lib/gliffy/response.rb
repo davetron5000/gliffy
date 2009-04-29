@@ -24,17 +24,18 @@ module Gliffy
   end
   # Base class for all response from gliffy
   class Response
-    # Set this to a Proc to handle errors if you don't want the default
-    # behavior.  The proc will get two arguments:
-    # [+response+] the raw response received (may be nil)
-    # [+exception+] One of NoResponseException, BadResponseException, or RequestFailedException.  The 
-    # message of that exception is a usable message if you want to ignore the exception
-    attr_writer :error_callback
+    @@error_callback = Proc.new do |response,exception|
+      raise exception
+    end
 
     # Factory for creating actual response subclasses.
     # This takes the results of HTTParty's response, which is a hash, essentially.
     # This assumes that any checks for validity have been done.
-    def self.from_http_response(response)
+    # [error_response] Set this to a Proc to handle errors if you don't want the default behavior.  The proc will get two arguments:
+    #                  [+response+] the raw response received (may be nil)
+    #                  [+exception+] One of NoResponseException, BadResponseException, or RequestFailedException.  The message of that exception is a usable message if you want to ignore the exception
+    def self.from_http_response(response,error_callback=nil)
+      verify(response,error_callback)
       root = response['response']
       klass = nil
       root.keys.each do |key|
@@ -49,6 +50,21 @@ module Gliffy
       return Response.new(response.body) if !klass
       return klass.from_http_response(root)
     end
+
+    # Verifies that the response represents success, calling
+    # the error callback if it doesn't
+    def self.verify(response,error_callback)
+      error_callback = @@error_callback if error_callback.nil?
+      return error_callback.call(response,NoResponseException.new('No response received at all')) if response.nil? 
+      return error_callback.call(response,BadResponseException.new('Not a Gliffy response')) if !response['response']
+      return error_callback.call(response,BadResponseException.new('No indication of success from Gliffy')) if !response['response']['success']
+      if response['response']['success'] != 'true'
+        error = response['response']['error']
+        return error_callback.call(response,RequestFailedException.new('Request failed but no error inside response')) if !error
+        return error_callback.call(response,RequestFailedException.new(error))
+      end
+    end
+
 
     attr_reader :body
 
@@ -235,20 +251,6 @@ module Gliffy
       token = root['oauth_token_credentials']['oauth_token']
       secret = root['oauth_token_credentials']['oauth_token_secret']
       return AccessToken.new(token,secret)
-    end
-  end
-
-  private
-  # Verifies that the response represents success, calling
-  # the error callback if it doesn't
-  def verify(response)
-    return @error_callback.call(response,NoResponseException.new('No response received at all')) if response.nil? 
-    return @error_callback.call(response,BadResponseException.new('Not a Gliffy response')) if !response['response']
-    return @error_callback.call(response,BadResponseException.new('No indication of success from Gliffy')) if !response['response']['success']
-    if response['response']['success'] != 'true'
-      error = response['response']['error']
-      return @error_callback.call(response,RequestFailedException.new('Request failed but no error inside response')) if !error
-      return @error_callback.call(response,RequestFailedException.new(error))
     end
   end
 

@@ -107,6 +107,12 @@ class TC_testHandle < Test::Unit::TestCase
   def test_document_link
     link = @handle.document_get_url(666)
     assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.jpeg\?action=get/,link)
+    link = @handle.document_get_url(666,:png)
+    assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.png\?action=get/,link)
+    link = @handle.document_get_url(666,:xml)
+    assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.xml\?action=get/,link)
+    link = @handle.document_get_url(666,:svg)
+    assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.svg\?action=get/,link)
   end
 
   def teardown

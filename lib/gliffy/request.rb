@@ -38,9 +38,6 @@ module Gliffy
       @logger = logger || Logger.new(STDOUT)
       @logger.level = Logger::INFO
       @http = http
-      @error_callback = Proc.new do |response,exception| 
-        raise exception
-      end
     end
 
     # Implements getting a request and returning a response

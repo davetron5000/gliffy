@@ -53,43 +53,6 @@ class TC_testRequest < Test::Unit::TestCase
     assert_equal("/accounts/#{@account_id}/users/#{@username}.xml",replaced_url)
   end
 
-=begin
-  def test_custom_error_callback
-    error_message = 'This is a big fat error message'
-    @request.http = MockHTTParty.new({ 'response' => { 'error' => error_message, 'success' => 'false'}})
-    message_got = nil
-    @request.error_callback = Proc.new { |response,exception| message_got = exception.message }
-    @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    assert_equal(error_message,message_got)
-  end
-
-  def test_default_error_callback
-    @request.http = MockHTTParty.new(nil,true)
-    assert_raises(NoResponseException) do
-      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    end
-
-    @request.http = MockHTTParty.new({ 'blah' => '' })
-    assert_raises(BadResponseException) do
-      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    end
-
-    @request.http = MockHTTParty.new({ 'response' => {} })
-    assert_raises(BadResponseException) do
-      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    end
-
-    @request.http = MockHTTParty.new({ 'response' => {'success' => 'false' }})
-    assert_raises(RequestFailedException) do
-      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    end
-
-    @request.http = MockHTTParty.new({ 'response' => { 'success' => 'false', 'error' => 'Some Error Message'}})
-    assert_raises(RequestFailedException) do
-      @request.create('/accounts/$account_id/users/$username/oauth_token.xml')
-    end
-  end
-=end
 
   def test_simple_case
     signed_url,nonce,timestamp = get_signed_url_nonce_timestamp("/accounts/#{@account_id}/users/#{@username}.xml")

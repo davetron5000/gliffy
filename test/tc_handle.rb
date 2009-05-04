@@ -37,6 +37,18 @@ class TC_testHandle < Test::Unit::TestCase
     @handle = Gliffy::Handle.new(@api_root,@cred,AllGetHTTP.new)
   end
 
+  def test_bad_folder_users_request
+    assert_raises(BadResponseException) do
+      @handle.folder_users('a/b/c')
+    end
+  end
+
+  def test_bad_user_folders_request
+    assert_raises(BadResponseException) do
+      @handle.user_folders('blahblahnyborg')
+    end
+  end
+
   def test_delete_token
     account = @handle.account_get
     assert_equal(101,account.account_id)

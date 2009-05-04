@@ -72,7 +72,7 @@ module Gliffy
 
     # Returns account meta data
     def account_get(show_users=true)
-      make_request(:get,"#{account_url}.xml", :showUsers => show_users)
+      make_request(:get,"#{account_url}.xml", :showUsers => show_users)[0]
     end
 
     # Get users in your account
@@ -96,7 +96,7 @@ module Gliffy
     end
 
     def document_get_metadata(document_id,show_revisions=:false)
-      make_request(:get,document_url(document_id),:showRevisions => show_revisions)
+      make_request(:get,document_url(document_id),:showRevisions => show_revisions)[0]
     end
 
     # Get a document; returning the actual bytes
@@ -138,7 +138,8 @@ module Gliffy
     end
 
     # Get the documents in a folder
-    def folder_documents
+    def folder_documents(path)
+      make_request(:get,"#{folders_url(path)}/documents.xml")
     end
 
     # Get users with access to the folder
@@ -179,6 +180,12 @@ module Gliffy
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
     def folders_url(path=''); "#{account_url}/folders/#{path}"; end
 
+    # Handles the mechanics of making the request
+    # [+method+] the gliffy "action"
+    # [+url+] the url, relative to the gliffy API root, no params/query string stuff
+    # [+params+] hash of parameters
+    # [+parse+] if true, request is parsed; set to false to get the raw result back
+    # [+link_only+] don't make a request just send the full link (useful for <img> tags)
     def make_request(method,url,params=nil,parse=true,link_only=false)
       update_token
       if link_only

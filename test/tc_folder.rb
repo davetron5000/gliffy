@@ -85,6 +85,7 @@ class TC_testFolder < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_equal(@f2_id,response.folder_id)
     assert_equal(@f2_name,response.name)
     assert_equal(@f2_path,response.path)

@@ -98,14 +98,14 @@ module Gliffy
     def self.from_http_response(root,single_class,plural_name,single_name)
       root = root[plural_name]
       return nil if root.nil?
-      if root[single_name].kind_of? Array
+      if root[single_name].kind_of?(Array)
         list = Array.new
         root[single_name].each do |item|
           list << single_class.from_http_response(item)
         end
         list
       else
-        single_class.from_http_response(root[single_name])
+        [single_class.from_http_response(root[single_name])]
       end
     end
   end

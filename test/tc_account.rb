@@ -83,6 +83,7 @@ class TC_testAccount < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_one_account(response)
     assert_equal(1,response.users.size)
     assert_equal(@user1_id,response.users[0].user_id)
@@ -100,6 +101,7 @@ class TC_testAccount < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_one_account(response)
     assert_equal(2,response.users.size)
     assert_equal(@user1_id,response.users[0].user_id)
@@ -130,6 +132,7 @@ class TC_testAccount < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_one_account(response)
   end
 

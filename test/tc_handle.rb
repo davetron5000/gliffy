@@ -37,6 +37,10 @@ class TC_testHandle < Test::Unit::TestCase
     @handle = Gliffy::Handle.new(@api_root,@cred,AllGetHTTP.new)
   end
 
+  def teardown
+    @s.shutdown
+  end
+
   def test_bad_folder_users_request
     assert_raises(BadResponseException) do
       @handle.folder_users('a/b/c')
@@ -85,7 +89,8 @@ class TC_testHandle < Test::Unit::TestCase
   end
 
   def test_account_folders
-    root_folder = @handle.account_folders
+    folders = @handle.account_folders
+    root_folder = folders[0]
     assert_equal('ROOT',root_folder.name)
     assert_equal(true,root_folder.is_default?)
     assert_equal(2,root_folder.child_folders.size)
@@ -140,19 +145,28 @@ class TC_testHandle < Test::Unit::TestCase
   end
 
   def test_user_folders
-    root_folder = @handle.user_folders('davetron5000')
-    assert(2,root_folder.child_folders.size)
-    assert(3,root_folder.child_folders[1].child_folders.size)
-    assert('fauxml',root_folder.child_folders[1].child_folders[2].name)
+    folders = @handle.user_folders('davetron5000')
+    root_folder = folders[0]
+    assert_equal(2,root_folder.child_folders.size)
+    assert_equal(3,root_folder.child_folders[1].child_folders.size)
+    assert_equal('fauxml',root_folder.child_folders[1].child_folders[2].name)
 
-    root_folder = @handle.user_folders('testuser@gliffy.com')
-    assert(1,root_folder.child_folders.size)
-    assert('tmp',root_folder.child_folders[0].name)
+    folders = @handle.user_folders('testuser@gliffy.com')
+    root_folder = folders[0]
+    assert_equal(1,root_folder.child_folders.size)
+    assert_equal('tmp',root_folder.child_folders[0].name)
 
   end
 
-  def teardown
-    @s.shutdown
+  def test_folder_documents
+    documents = @handle.folder_documents('ROOT')
+    assert_equal(1,documents.size)
+    assert_equal('Booze DB',documents[0].name)
+
+    documents = @handle.folder_documents('ROOT/tmp')
+    assert_equal(2,documents.size)
+    assert_equal('Booze DB',documents[0].name)
+    assert_equal('Hounds Room',documents[1].name)
   end
 
   private 

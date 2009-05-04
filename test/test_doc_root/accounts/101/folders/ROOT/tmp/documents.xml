@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<response xmlns="http://www.gliffy.com" success="true">   
+    <documents>   
+        <document num-versions="2" id="1000003">   
+            <name>Booze DB</name>   
+            <mod-date>1215538283000</mod-date>   
+            <create-date>1215538283000</create-date>   
+            <published-date>1215538283000</published-date>   
+            <owner id="208">   
+                <username>moe</username>   
+                <email>moe@BurnsODyne.apiuser.gliffy.com</email>   
+            </owner>   
+        </document>   
+        <document is-public="true" num-versions="4" id="1000000">   
+            <name>Hounds Room</name>   
+            <mod-date>1215538283000</mod-date>   
+            <create-date>1215538283000</create-date>   
+            <published-date>1215538283000</published-date>   
+            <owner id="202">   
+                <username>monty</username>   
+                <email>monty@BurnsODyne.apiuser.gliffy.com</email>   
+            </owner>   
+        </document>   
+    </documents>   
+</response>  

@@ -37,7 +37,7 @@ class TC_testUser < Test::Unit::TestCase
         }
       }
     }))
-    assert_user1(response)
+    assert_user1(response[0])
   end
 
   def test_two_users

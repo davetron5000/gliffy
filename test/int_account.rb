@@ -39,7 +39,8 @@ class INT_testHandle < IntegrationTestBase
   end
 
   def test_account_folders
-    root_folder = @handle.account_folders
+    folders = @handle.account_folders
+    root_folder = folders[0]
     assert_equal('ROOT',root_folder.name)
     assert_equal(true,root_folder.is_default?)
     assert_equal(0,root_folder.child_folders.size)

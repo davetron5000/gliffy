@@ -147,6 +147,7 @@ class TC_testDocument < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_document1(response)
   end
 
@@ -159,6 +160,7 @@ class TC_testDocument < Test::Unit::TestCase
         }
       }
     }))
+    response = response[0]
     assert_document3(response)
   end
 

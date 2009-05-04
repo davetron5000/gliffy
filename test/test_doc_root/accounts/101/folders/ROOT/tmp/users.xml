@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<response xmlns="http://www.gliffy.com" success="true">  
+    <users>
+        <user id="45" is-admin="true">
+            <username>davetron5000</username>
+            <email>davetron5000@blah.com</email>
+        </user>
+        <user id="447" is-admin="true">
+            <username>testuser@gliffy.com</username>
+        </user>
+    </users>
+</response>

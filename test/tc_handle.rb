@@ -48,12 +48,15 @@ class TC_testHandle < Test::Unit::TestCase
   end
 
   def test_account_get
-    account = @handle.account_get
-    assert_equal(101,account.account_id)
-    assert_equal('Naildrivin5',account.name)
-    assert_equal('Basic',account.account_type)
-    assert_equal(100,account.max_users)
-    assert_users(account.users)
+    [true,false].each do |users|
+      account = @handle.account_get(users)
+      assert_equal(101,account.account_id)
+      assert_equal('Naildrivin5',account.name)
+      assert_equal('Basic',account.account_type)
+      assert_equal(100,account.max_users)
+      # this is faked, so the users var is only getting us some coverage
+      assert_users(account.users)
+    end
   end
 
   def test_account_admins
@@ -83,12 +86,14 @@ class TC_testHandle < Test::Unit::TestCase
   end
 
   def test_account_documents
-    documents = @handle.account_documents
-    assert_equal(2,documents.size)
-    assert_equal('Booze DB',documents[0].name)
-    assert_equal(208,documents[0].owner.user_id)
-    assert_equal('Hounds Room',documents[1].name)
-    assert_equal(202,documents[1].owner.user_id)
+    [nil,:public].each do |pub|
+      documents = @handle.account_documents(pub)
+      assert_equal(2,documents.size)
+      assert_equal('Booze DB',documents[0].name)
+      assert_equal(208,documents[0].owner.user_id)
+      assert_equal('Hounds Room',documents[1].name)
+      assert_equal(202,documents[1].owner.user_id)
+    end
   end
 
   def test_account_users
@@ -115,22 +120,53 @@ class TC_testHandle < Test::Unit::TestCase
     assert(link =~ /^http:\/\/localhost:2000\/accounts\/101\/documents\/666\.svg\?action=get/,link)
   end
 
+  def test_folders
+    users = @handle.folder_users('ROOT')
+    assert_users(users)
+    users = @handle.folder_users('ROOT/tmp')
+    assert_users(users,true)
+  end
+
+  def test_user_folders
+    root_folder = @handle.user_folders('davetron5000')
+    assert(2,root_folder.child_folders.size)
+    assert(3,root_folder.child_folders[1].child_folders.size)
+    assert('fauxml',root_folder.child_folders[1].child_folders[2].name)
+
+    root_folder = @handle.user_folders('testuser@gliffy.com')
+    assert(1,root_folder.child_folders.size)
+    assert('tmp',root_folder.child_folders[0].name)
+
+  end
+
   def teardown
     @s.shutdown
   end
 
   private 
 
-  def assert_users(users)
-    assert_equal(4,users.size)
-    assert_equal(45,users[0].user_id)
-    assert(users[0].is_admin?)
-    assert_equal(446,users[1].user_id)
-    assert(!users[1].is_admin?)
-    assert_equal(447,users[2].user_id)
-    assert(users[2].is_admin?)
-    assert_equal(333,users[3].user_id)
-    assert(!users[3].is_admin?)
+  def assert_users(users,admins_only=false)
+    assert_equal(admins_only ? 2 : 4,users.size)
+
+    index = 0;
+    assert_equal(45,users[index].user_id)
+    assert(users[index].is_admin?)
+
+    if !admins_only
+      index += 1
+      assert_equal(446,users[index].user_id)
+      assert(!users[index].is_admin?)
+    end
+
+    index += 1
+    assert_equal(447,users[index].user_id)
+    assert(users[index].is_admin?)
+
+    if !admins_only
+      index += 1
+      assert_equal(333,users[index].user_id)
+      assert(!users[index].is_admin?)
+    end
   end
 
 end

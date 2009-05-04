@@ -82,7 +82,6 @@ module Gliffy
 
     # Create a new document
     def document_create(name,folder_path=nil,template_id=nil,type=:document)
-      raise "Untested"
       params = { 
         :documentName => name,
         :documentType => type
@@ -143,7 +142,8 @@ module Gliffy
     end
 
     # Get users with access to the folder
-    def folder_users
+    def folder_users(path)
+      make_request(:get,"#{folders_url(path)}/users.xml")
     end
 
     # Remove a user from access to the folder
@@ -163,7 +163,8 @@ module Gliffy
     end
 
     # Get the folders a user has access to
-    def user_folders
+    def user_folders(username='$username')
+      make_request(:get,"#{user_url(username)}/folders.xml")
     end
 
     # Update a user's meta-data
@@ -173,8 +174,10 @@ module Gliffy
     private 
 
     def account_url; 'accounts/$account_id'; end
-    def token_url; "#{account_url}/users/$username/oauth_token.xml"; end
+    def user_url(username='$username'); "#{account_url}/users/#{username}/"; end
+    def token_url; "#{user_url}/oauth_token.xml"; end
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
+    def folders_url(path=''); "#{account_url}/folders/#{path}"; end
 
     def make_request(method,url,params=nil,parse=true,link_only=false)
       update_token

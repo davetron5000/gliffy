@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<response xmlns="http://www.gliffy.com" success="true">  
+  <folders>
+    <folder id="45" is-default="true">
+      <name>ROOT</name>
+      <path>ROOT</path>
+      <folder id="46">
+        <name>tmp</name>
+        <path>ROOT/tmp</path>
+      </folder>
+    </folder>
+  </folders>
+</response>

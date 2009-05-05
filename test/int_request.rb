@@ -39,7 +39,7 @@ class INT_testRequest < IntegrationTestBase
     results = @request.get('accounts/$account_id.xml', :showUsers => true)
     assert(results['response']['success'] == 'true')
     account = results['response']['accounts']['account']
-    assert_equal('Premium',account['account_type'])
-    assert_equal('TEST',account['name'])
+    assert_equal('Basic',account['account_type'])
+    assert_equal('Ruby Client Test Account',account['name'])
   end
 end

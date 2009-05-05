@@ -136,11 +136,10 @@ module Gliffy
     # Get a document; returning the actual bytes
     # [+document_id+] identifier of the document
     # [+type+] document type.  Types known to work:
-    #          [+:jpeg+]
-    #          [+:png+]
-    #          [+:svg+]
-    #          [+:xml+]
-    #          [+:xml+]
+    #          [+:jpeg+] - JPEG
+    #          [+:png+] - PNG
+    #          [+:svg+] - SVG (for Visio import)
+    #          [+:xml+] - Gliffy proprietary XML format (for archiving)
     # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
     # [+version+] The version to get, or nil to get the most recent
     def document_get(document_id,type=:jpeg,size=:L,version=nil)
@@ -152,11 +151,10 @@ module Gliffy
     # Get a link to a document
     # [+document_id+] identifier of the document
     # [+type+] document type.  Types known to work:
-    #          [+:jpeg+]
-    #          [+:png+]
-    #          [+:svg+]
-    #          [+:xml+]
-    #          [+:xml+]
+    #          [+:jpeg+] - JPEG
+    #          [+:png+] - PNG
+    #          [+:svg+] - SVG (for Visio import)
+    #          [+:xml+] - Gliffy proprietary XML format (for archiving)
     # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
     # [+version+] The version to get, or nil to get the most recent
     def document_get_url(document_id,type=:jpeg,size=:L,version=nil)
@@ -239,6 +237,10 @@ module Gliffy
       raise "Not Implemented"
     end
 
+    def anything(method,url,params={},parse=false,link=false)
+      make_request(method,url,params,parse,link)
+    end
+
     private 
 
     def account_url; 'accounts/$account_id'; end
@@ -262,7 +264,6 @@ module Gliffy
         documents
       end
     end
-
 
     # Handles the mechanics of making the request
     # [+method+] the gliffy "action"

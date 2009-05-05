@@ -1,13 +1,63 @@
-<em>The Gliffy API is currently in private beta.  This will be a Ruby implementation to access your Gliffy account.</em>
-
-<em>The documentation below is currently out of date; Gliffy has updated their API and I'm working on getting this code to work with the changes (mostly OAuth for authentication)</em>
-
-This consists of a Ruby client for Gliffy as well as a simple command line tool to access your Gliffy account using that client.
+This is the Ruby client library for interacting with Gliffy[http://www.gliffy.com].  It's main function is for you to integrate Gliffy documents into the workflow of another application.
 
 = Getting Started
 
     sudo gem install gliffy
 
+= Overview
+
+The main entry point to Gliffy is Gliffy::Handle, which provides high-level access to most features available from the API.  You should instantiate one of these objects per <i>user session</i>.  To create you, you will need to create and populate an instance of the Credentials class.  This class is constructed almost entirely from static data about your Gliffy account, so you will probably configure an instance of this globally.
+
+This is then used (along with the API root to Gliffy) to create an instance of Gliffy::Handle.  Objects of this class provide access to the features you will need to integrate Gliffy into your app's workflow.
+
+== Example
+
+Suppose you have created a group blog application using Rails and wish to give Blog authors the ability to use Gliffy diagrams.  In <tt>config/initializers/gliffy.rb</tt> you might configure values for the Credential object
+
+    $gliffy_api_key = 'your-consumer-key-here'
+    $gliffy_secret = 'your-secret-here'
+    $gliffy_app_description = 'My Awesome Group Blog',
+    $gliffy_account_id = 655321
+    $gliffy_root = 'www.gliffy.com/api/v1'
+
+Then, in your <tt>sessions_controller.rb</tt>:
+
+    require 'gliffy'
+    
+    def create
+      self.current_user = User.authenticate(params[:email],params[:password])
+      if logged_in?
+        # Whatever you do when they log in successfully
+        cred = Credentials.new(\
+          $gliffy_api_key,
+          $gliffy_secret,
+          $gliffy_app_description,
+          $gliffy_account_id,
+          self.current_user.username)
+        session[:gliffy] = Gliffy::Handle.new($gliffy_root,cred)
+    end
+
+Now you can use the gliffy handle in a controller or a view.  Perhaps you'd make an action to create a new document and send the user to edit it:
+
+    def create
+      new_doc = session[:gliffy].document_create(params[:name])
+      redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,
+                  {:returnURL => url_for(:controller => 'return_from_gliffy'),
+                   :returnButtonText => 'Back to My Awesome Blog'})) 
+    end
+
+== Digging Deeper
+
+If you wish to bypass the high-level API, you can interact with Gliffy directly via the Gliffy::Request class, which allows you to make arbitrary requests against the Gliffy API, but takes care of signing your URLs and all OAuth things that need to be done:
+
+    # Create a Credentials object as normal
+    request = Gliffy::Request.new('www.gliffy.com/api/v1',credentials)
+    # The method name maps directly to Gliffy's "action" parameters
+    response = request.delete('accounts/$account_id/documents/12345')
+
+You can manipulate the response directly, or attempt to parse it using the Gliffy::Response object:
+
+    model = Response.from_http_response(response)
 
 = Design
 
@@ -18,7 +68,7 @@ Instead of creating explicit objects for each domain object in Gliffy, we always
 * If the item is a boolean, its boolean value is available with a "?" at the end
 * The id field is available as type_id, e.g. document_id
 * Date fields are converted to Time objects
-* Any field in the repsonse that was not known about in this code will be available as a String, based on the above rules
+* Any field in the response that was not known about in this code will be available as a String, based on the above rules
 
 So, if you requested document meta data, you would have the following accessors available:
 
@@ -30,11 +80,11 @@ So, if you requested document meta data, you would have the following accessors 
 * document.create_date # returns a Time
 * document.published_date # returns a Time
 * document.owner # Returns a Response that responds to user accessors
-* document.versions # Returns an array of Response objects that act like verisons
+* document.versions # Returns an array of Response objects that act like versions
 
 == HTTP Layer
 
-Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy URLs have an "action" HTTP param in them, this action is the method name, followed by the URL on which to perform that action (this is not a REST action, but specific to Gliffy).  You can optionally include other HTTP params, however those needed for authentication and signing are taken caref.  Request will examine the Crednetial object used to create the Request object, sign the request, make the request and return the result.  It will look at the result only enough to determine if it's an error, or a failure.  See the RubyDoc for more on how this works.
+Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy URLs have an "action" HTTP param in them, this action is the method name, followed by the URL on which to perform that action (this is not a REST action, but specific to Gliffy).  You can optionally include other HTTP params, however those needed for authentication and signing are taken care of.  Request will examine the Credential object used to create the Request object, sign the request, make the request and return the result.  It will look at the result only enough to determine if it's an error, or a failure.  See the RubyDoc for more on how this works.
 
 = Development
 
@@ -60,29 +110,21 @@ have the information from Gliffy, create the file `test/it_cred.rb` as follows:
     $http_auth_username = # integration test server HTTP Auth username
     $http_auth_password = # integration test server HTTP Auth password
 
+== Functional Tests
+
+The functional tests perform actual workflows against a Gliffy server and, as such, are more fragile.  If something is wrong in your environment (or with Gliffy), you could leave the test account in a weird state.
+
+Each functional test assumes the following:
+
+* The account name is 'Ruby Client Test Account'
+* The account id is 1000001
+* The only user is testuser@gliffy.com
+* There are no documents/diagrams
+* The only folder is ROOT
+
+Each test will put data into Gliffy, query it, and remove it, thus leaving the account in the same state.
 
 = Old Documentation
-
-== Client Library
-
-Main entry point is Gliffy::Handle, though you should look at Gliffy::Config for configuration options.  Here's an example of getting the list of diagrams and then downloading the first one as a JPEG
-
-    require 'gliffy'
-
-    Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'
-    Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'
-    Gliffy::Config.config.account_name='Initech'
-
-    handle = Gliffy::Handle.new('lumberg@initech.com')
-
-    diagrams = handle.get_diagrams
-    diagram_name_safe = diagrams[0].name.gsub(/ /,'_')
-    handle.get_diagram_as_image(diagrams[0].id,:mime_type => :jpeg,:file=>"#{diagram_name_safe}.jpg")
-
-The Gliffy::Handle is a <b>user-session based connection</b> to Gliffy.  You shoudl therefore engineer your application to keep one of these per user who will access Gliffy and *not* make a global instance.
-
-* RDoc is available a http://davetron5000.github.com/gliffy
-* Source is available at http://github.com/davetron5000/gliffy/tree/master
 
 == Command Line Client
 

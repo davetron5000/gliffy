@@ -94,7 +94,7 @@ module Gliffy
     end
   end
 
-  class ArrayParser
+  class ArrayParser # :nodoc:
     def self.from_http_response(root,single_class,plural_name,single_name)
       root = root[plural_name]
       return nil if root.nil?
@@ -111,41 +111,41 @@ module Gliffy
   end
 
   # Factory for parsing accounts
-  class AccountsParser
+  class AccountsParser # :nodoc:
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,AccountParser,'accounts','account')
     end
   end
 
   # Factory for parsing folders
-  class FoldersParser
+  class FoldersParser # :nodoc:
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,FolderParser,'folders','folder')
     end
   end
 
   # Factory for parsing versions
-  class VersionsParser
+  class VersionsParser # :nodoc:
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,VersionParser,'versions','version')
     end
   end
 
   # Factory for parsing users
-  class UsersParser
+  class UsersParser # :nodoc:
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,UserParser,'users','user')
     end
   end
 
   # Factory for parsing documents
-  class DocumentsParser
+  class DocumentsParser # :nodoc:
     def self.from_http_response(root)
       return ArrayParser.from_http_response(root,DocumentParser,'documents','document')
     end
   end
 
-  class BaseParser
+  class BaseParser # :nodoc:
     def self.from_http_response(root)
       params = Hash.new
       root.each do |key,value|
@@ -180,7 +180,7 @@ module Gliffy
     end
   end
 
-  class FolderParser < BaseParser
+  class FolderParser < BaseParser # :nodoc:
     def self.from_http_response(root)
       add_int(root,'id','folder_id')
       add_boolean(root,'is_default')
@@ -200,7 +200,7 @@ module Gliffy
     end
   end
 
-  class UserParser < BaseParser
+  class UserParser < BaseParser # :nodoc:
     def self.from_http_response(root)
       add_int(root,'id','user_id')
       add_boolean(root,'is_admin')
@@ -209,7 +209,7 @@ module Gliffy
   end
 
   # Factory for parsing an Account
-  class AccountParser < BaseParser
+  class AccountParser < BaseParser # :nodoc:
     def self.from_http_response(root)
       add_int(root,'id','account_id')
       add_int(root,'max_users')
@@ -221,7 +221,7 @@ module Gliffy
   end
 
   # Factory for parsing an Account
-  class DocumentParser < BaseParser
+  class DocumentParser < BaseParser # :nodoc:
     def self.from_http_response(root)
       add_int(root,'id','document_id')
       add_int(root,'num_versions')
@@ -236,7 +236,7 @@ module Gliffy
     end
   end
 
-  class VersionParser < BaseParser
+  class VersionParser < BaseParser # :nodoc:
     def self.from_http_response(root)
       add_int(root,'id','version_id')
       add_int(root,'num')
@@ -246,7 +246,7 @@ module Gliffy
     end
   end
 
-  class OauthTokenCredentialsParser
+  class OauthTokenCredentialsParser # :nodoc:
     def self.from_http_response(root)
       token = root['oauth_token_credentials']['oauth_token']
       secret = root['oauth_token_credentials']['oauth_token_secret']

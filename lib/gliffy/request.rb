@@ -9,7 +9,7 @@ module Gliffy
   # described in the Gliffy documentation.  For example, if you wish 
   # to get a user's folders, you could
   #
-  #     request = Request.net('https://www.gliffy.com/api/1.0',credentials)
+  #     request = Request.get('https://www.gliffy.com/api/1.0',credentials)
   #     results = request.create('accounts/$account_id/users/$username/oauth_token.xml')
   #     credentials.update_access_token(
   #         results['response']['oauth_token_credentials']['oauth_token_secret'],
@@ -50,7 +50,7 @@ module Gliffy
     # note that you can use `$account_id` and `$username` in any URL and it 
     # will be replaced accordingly.
     #
-    # The return value is the return value from HTTPart, which is basically a hash
+    # The return value is the return value from HTTParty, which is basically a hash
     # that allows access to the returned DOM tree
     def method_missing(symbol,*args)
       if args.length >= 1

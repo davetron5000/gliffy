@@ -25,53 +25,38 @@ Rake::GemPackageTask.new(spec) do |pkg|
     pkg.need_tar = true
 end
 
-desc 'Runs tests'
-Rake::TestTask.new do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.libs << 'ext'
-  t.test_files = FileList['test/tc_*.rb']
-  t.warning = true
-end
+TEST_PROFILES = {
+  :test => { :desc => 'Runs Unit Tests', :prefix => 'tc', :required_file => nil },
+  :inttest => { :desc => 'Runs Integration Tests', :prefix => 'int', :required_file => 'it_cred.rb' },
+  :functest => { :desc => 'Runs Functional Tests', :prefix => 'func', :required_file => 'it_cred.rb' },
+}
 
-if File.exists?('test/it_cred.rb')
-desc 'Runs integration tests'
-Rake::TestTask.new(:inttest) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.libs << 'ext'
-  t.test_files = FileList['test/int_*.rb']
-  t.warning = true
-end
-else
-  task :inttest do
-    $stderr.puts "Integration tests won't run; you need to create test/it_cred.rb"
-    $stderr.puts "See the documentation for what this should look like"
+TEST_PROFILES.each do |test_name,test_info|
+  if test_info[:required_file] && !File.exists?('test/' + test_info[:required_file])
+    task test_name do
+      $stderr.puts "you need to create test/#{test_info[:required_file]} to run these tests"
+      $stderr.puts "See the documentation for what this should look like"
+    end
+  else
+    desc test_info[:desc]
+    Rake::TestTask.new(test_name) do |t|
+      t.libs << 'lib'
+      t.libs << 'test'
+      t.libs << 'ext'
+      t.test_files = FileList['test/' + test_info[:prefix] + '_*.rb']
+      #t.warning = true
+    end
+    Rcov::RcovTask.new(('rcov_' + test_name.to_s).to_sym) do |t|
+      t.libs << 'lib'
+      t.libs << 'test'
+      t.libs << 'ext'
+      t.test_files = FileList['test/' + test_info[:prefix] + '_*.rb']
+    end
   end
 end
 
 task :clobber_coverage do
     rm_rf "coverage"
-end
-
-desc 'Measures test coverage'
-task :coverage => :rcov do
-    system("open coverage/index.html") if PLATFORM['darwin']
-    rm output_yaml
-end
-
-Rcov::RcovTask.new do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.libs << 'ext'
-  t.test_files = FileList['test/tc_*.rb']
-end
-
-Rcov::RcovTask.new(:rcov_int) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.libs << 'ext'
-  t.test_files = FileList['test/int_*.rb']
 end
 
 task :default => :test

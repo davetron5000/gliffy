@@ -5,17 +5,43 @@ require 'gliffy/credentials'
 module Gliffy
   VERSION = '0.1.7'
 
-
   # A "handle" to access Gliffy on a per-user-session basis
   # Since most calls to gliffy require a user-token, this class
   # encapsulates that token and the calls made under it.
   #
   class Handle
 
+    # Get access to the logger (useful for controlling log messages)
     attr_reader :logger
+    # Get access to the Request (useful for hacking or testing)
     attr_reader :request
+    # Get access to the current token (useful for caching to disk)
     attr_reader :token
 
+    # Use this to override what happens when an error from Gliffy is received.
+    # The default (or nil) is to raise the exception that was generated.
+    # If you want to override this provide a block that takes the response that was
+    # received (which will be a hash-like object from HTTParty, possibly nil) and
+    # the exception that was generated (the message of which will have been parsed
+    # from Gliffy's XML if that was possible):
+    #     
+    #     # If we got an HTTParty response, try to print out the body and the Gliffy message
+    #     # Otherwise, barf
+    #     handle.response = Proc.new do |response,exception|
+    #       if response && response.respond_to? :body
+    #         puts exception.to_str
+    #         puts response.body
+    #       else
+    #         raise exception
+    #       end
+    #     end
+    attr_writer :error_callback
+
+    # Create a new handle to Gliffy
+    # [+api_root+] root URL (without the protocol) of where to connect to Gliffy
+    # [+credentials+] a Credentials object to use for access
+    # [+http+] override of http access class (use at your own risk; must be substituable for HTTPart)
+    # [+logger+] logger instance, if you don't want the default
     def initialize(api_root,credentials,http=nil,logger=nil)
       @credentials = credentials
       @request = Request.new(api_root,credentials)
@@ -26,9 +52,8 @@ module Gliffy
       if !@credentials.has_access_token?
         update_token
       end
-
+      @error_callback = nil
     end
-
 
     # Updates the token being used if there isn't one in the 
     # credentials, or by forcing
@@ -71,6 +96,7 @@ module Gliffy
     end
 
     # Returns account meta data
+    # [+show_users+] if true, include the list of users in this account
     def account_get(show_users=true)
       make_request(:get,"#{account_url}.xml", :showUsers => show_users)[0]
     end
@@ -81,7 +107,11 @@ module Gliffy
     end
 
     # Create a new document
-    def document_create(name,folder_path=nil,template_id=nil,type=:document)
+    # [+name+] Name of the new document
+    # [+folder_path+] Path in which to place the document initially
+    # [+template_id+] document id of a document to copy when initializing this new document
+    # [+type+] If Gliffy ever supports other document types, use this
+    def document_create(name,folder_path=nil,template_id=nil,type=:diagram)
       params = { 
         :documentName => name,
         :documentType => type
@@ -95,11 +125,23 @@ module Gliffy
     def document_delete
     end
 
-    def document_get_metadata(document_id,show_revisions=:false)
+    # Get meta-data about a document.
+    # [+document_id+] identifier of the document
+    # [+show_revisions+] if true, include info about the documents' revision history
+    def document_get_metadata(document_id,show_revisions=false)
       make_request(:get,document_url(document_id),:showRevisions => show_revisions)[0]
     end
 
     # Get a document; returning the actual bytes
+    # [+document_id+] identifier of the document
+    # [+type+] document type.  Types known to work:
+    #          [+:jpeg+]
+    #          [+:png+]
+    #          [+:svg+]
+    #          [+:xml+]
+    #          [+:xml+]
+    # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
+    # [+version+] The version to get, or nil to get the most recent
     def document_get(document_id,type=:jpeg,size=:L,version=nil)
       params = { :size => size }
       params[:version] = version if !version.nil?
@@ -107,6 +149,15 @@ module Gliffy
     end
 
     # Get a link to a document
+    # [+document_id+] identifier of the document
+    # [+type+] document type.  Types known to work:
+    #          [+:jpeg+]
+    #          [+:png+]
+    #          [+:svg+]
+    #          [+:xml+]
+    #          [+:xml+]
+    # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
+    # [+version+] The version to get, or nil to get the most recent
     def document_get_url(document_id,type=:jpeg,size=:L,version=nil)
       params = { :size => size }
       params[:version] = version if !version.nil?
@@ -138,11 +189,13 @@ module Gliffy
     end
 
     # Get the documents in a folder
+    # [+path+] the path to the folder whose documents to get
     def folder_documents(path)
       make_request(:get,"#{folders_url(path)}/documents.xml")
     end
 
     # Get users with access to the folder
+    # [+path+] the path to the folder whose users to get
     def folder_users(path)
       make_request(:get,"#{folders_url(path)}/users.xml")
     end
@@ -160,11 +213,13 @@ module Gliffy
     end
 
     # Get the documents a user has access to
+    # [username] if provided, get documents for the given username, otherwise get them for the logged-in user
     def user_documents(username='$username')
       user_documents_helper(username,user_folders(username)).values
     end
 
     # Get the folders a user has access to
+    # [username] if provided, get folders for the given username, otherwise get them for the logged-in user
     def user_folders(username='$username')
       make_request(:get,"#{user_url(username)}/folders.xml")
     end
@@ -213,7 +268,7 @@ module Gliffy
         response = @request.send(method,url,params)
         @logger.debug("Got back #{response.body}")
         if parse
-          Response.from_http_response(response)
+          Response.from_http_response(response,@error_callback)
         else
           response
         end

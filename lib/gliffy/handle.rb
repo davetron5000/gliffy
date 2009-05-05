@@ -123,6 +123,7 @@ module Gliffy
 
     # Delete an existing document
     def document_delete
+      raise "Not Implemented"
     end
 
     # Get meta-data about a document.
@@ -166,26 +167,32 @@ module Gliffy
 
     # Get the link to edit a document
     def document_edit_link
+      raise "Not Implemented"
     end
 
     # Move a document to a different folder
     def document_move
+      raise "Not Implemented"
     end
 
     # Update a document's XML content
     def document_update_content
+      raise "Not Implemented"
     end
 
     # Add a user to a folder
     def folder_add_user
+      raise "Not Implemented"
     end
 
     # Create a new folder
     def folder_create
+      raise "Not Implemented"
     end
 
     # Delete a folder
     def folder_delete
+      raise "Not Implemented"
     end
 
     # Get the documents in a folder
@@ -202,14 +209,17 @@ module Gliffy
 
     # Remove a user from access to the folder
     def folder_remove_user
+      raise "Not Implemented"
     end
 
     # Create a new user
     def user_add
+      raise "Not Implemented"
     end
 
     # Delete an existing user
     def user_delete
+      raise "Not Implemented"
     end
 
     # Get the documents a user has access to
@@ -226,6 +236,7 @@ module Gliffy
 
     # Update a user's meta-data
     def user_update
+      raise "Not Implemented"
     end
 
     private 
@@ -274,6 +285,5 @@ module Gliffy
         end
       end
     end
-
   end
 end

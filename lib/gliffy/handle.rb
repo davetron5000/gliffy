@@ -160,7 +160,8 @@ module Gliffy
     end
 
     # Get the documents a user has access to
-    def user_documents
+    def user_documents(username='$username')
+      user_documents_helper(username,user_folders(username)).values
     end
 
     # Get the folders a user has access to
@@ -179,6 +180,23 @@ module Gliffy
     def token_url; "#{user_url}/oauth_token.xml"; end
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
     def folders_url(path=''); "#{account_url}/folders/#{path}"; end
+
+    def user_documents_helper(username,folders)
+      if folders.nil?
+        {}
+      else
+        documents = {}
+        folders.each do |one_folder|
+          docs = folder_documents(one_folder.path)
+          docs.each do |doc|
+            documents[doc.document_id] = doc
+          end
+          documents.merge!(user_documents_helper(username,one_folder.child_folders))
+        end
+        documents
+      end
+    end
+
 
     # Handles the mechanics of making the request
     # [+method+] the gliffy "action"

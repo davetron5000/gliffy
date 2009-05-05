@@ -169,6 +169,16 @@ class TC_testHandle < Test::Unit::TestCase
     assert_equal('Hounds Room',documents[1].name)
   end
 
+  def test_user_documents
+    documents = @handle.user_documents
+    assert_equal(2,documents.size)
+    ['Hounds Room','Booze DB'].each do |name|
+      if (documents[0].name != name) && (documents[1].name != name)
+        assert(false,"Expected #{documents[0].name} or #{documents[1].name} to be #{name}")
+      end
+    end
+  end
+
   private 
 
   def assert_users(users,admins_only=false)

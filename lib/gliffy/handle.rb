@@ -241,8 +241,13 @@ module Gliffy
     end
 
     # Update a user's meta-data
-    def user_update
-      raise "Not Implemented"
+    # [+username+] the username to operate on
+    # [+options+] the options for updating their info.  Any omitted option will not change that value on the server.
+    #             [+:email+] sets their email address
+    #             [+:password+] sets their password for logging into gliffy.com
+    #             [+:admin+] if true, sets them to be an admin; if false, revokes their admin privs
+    def user_update(username,options)
+      make_request(:update,user_url(username),options)
     end
 
     def anything(method,url,params={},parse=false,link=false)

@@ -27,7 +27,8 @@ end
 
 { :test => { :desc => 'Runs Unit Tests', :prefix => 'tc', :required_file => nil, :coverage => true },
   :inttest => { :desc => 'Runs Integration Tests', :prefix => 'int', :required_file => 'it_cred.rb', :coverage => true },
-  :functest => { :desc => 'Runs Functional Tests', :prefix => 'func', :required_file => 'it_cred.rb', :coverage => true },
+  :functest => { :desc => 'Runs Functional Tests', :prefix => 'func', :required_file => 'functest_cred.rb', :coverage => true },
+  :alltest => { :desc => 'Runs All Tests at Once', :prefix => '*', :required_file => 'functest_cred.rb', :coverage => true },
   :setup_account => { :desc => 'Sets up a Test Account', :prefix => 'setup', :required_file => 'it_cred.rb', :coverage => false },
 }.each do |test_name,test_info|
   if test_info[:required_file] && !File.exists?('test/' + test_info[:required_file])

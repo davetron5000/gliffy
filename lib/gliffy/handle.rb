@@ -184,13 +184,20 @@ module Gliffy
     end
 
     # Create a new folder
-    def folder_create
-      raise "Not Implemented"
+    # [+path+] the path to the folder, each path separated by a forward slash.  If this starts with a forward slash
+    #          it will attempt to make folder with the exact given path. This will probably fail.  If this DOESN'T
+    #          start with a slash, this will make the folder inside ROOT, which is what you want.  So, don't
+    #          start this with a slash.
+    def folder_create(path)
+      path = normalize_folder_path(path)
+      make_request(:create,"#{folders_url(path)}.xml")
     end
 
     # Delete a folder
-    def folder_delete
-      raise "Not Implemented"
+    # [+path+] the path to the folder.  See folder_create.
+    def folder_delete(path)
+      path = normalize_folder_path(path)
+      make_request(:delete,"#{folders_url(path)}.xml")
     end
 
     # Get the documents in a folder
@@ -211,13 +218,14 @@ module Gliffy
     end
 
     # Create a new user
-    def user_add
-      raise "Not Implemented"
+    # [+username+] the name to give this user
+    def user_create(username)
+      make_request(:create,"#{account_url}/users.xml",{ :userName => username })
     end
 
     # Delete an existing user
-    def user_delete
-      raise "Not Implemented"
+    def user_delete(username)
+      make_request(:delete,"#{user_url(username)}.xml")
     end
 
     # Get the documents a user has access to
@@ -286,5 +294,11 @@ module Gliffy
         end
       end
     end
+  end
+
+  # Prepends the path with "ROOT" if the path doesn't start with a slash
+  def normalize_folder_path(path)
+    path = 'ROOT/' + path if !(path =~ /^\//)
+    path
   end
 end

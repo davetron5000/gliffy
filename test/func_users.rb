@@ -76,14 +76,5 @@ class FUNC_testUserUpdate < FunctionalTestBase
     end
     nil
   end
-
-  def test_create_delete
-    account_users = @handle.account_users
-    found = {}
-    account_users.each do |account_user|
-      found[account_user.username] = true if @users.include? account_user.username
-    end
-    assert_equal(@users.size,found.keys.size,found.inspect)
-  end
 end
 

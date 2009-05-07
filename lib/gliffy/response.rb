@@ -208,6 +208,18 @@ module Gliffy
     end
   end
 
+  # Parses the results from the test account request
+  class TestaccountParser < BaseParser # :nodoc:
+    def self.from_http_response(root)
+      root = root['testAccount']
+      add_int(root,'id','account_id')
+      add_int(root,'max_users')
+      add_boolean(root,'terms')
+      add_date(root,'expiration_date')
+      super(root)
+    end
+  end
+
   # Factory for parsing an Account
   class AccountParser < BaseParser # :nodoc:
     def self.from_http_response(root)

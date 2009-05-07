@@ -7,18 +7,7 @@ include Gliffy
 
 class INT_testRequest < IntegrationTestBase
   def setup
-    @account_id = $account_id
-    @username = $username
-    @oauth_consumer_key = $oauth_consumer_key
-    @oauth_consumer_secret = $oauth_consumer_secret
-    @cred = Credentials.new(@oauth_consumer_key,
-                            @oauth_consumer_secret,
-                            'Ruby Client - Integration Tests',
-                            @account_id,
-                            @username)
-    @api_root = $api_root
-    @basic_auth = {:username => $http_auth_username, :password => $http_auth_password}
-
+    super
     @request = Request.new(@api_root,@cred)
     @request.http = HTTPartyAuth.new(@basic_auth)
   end
@@ -39,7 +28,7 @@ class INT_testRequest < IntegrationTestBase
     results = @request.get('accounts/$account_id.xml', :showUsers => true)
     assert(results['response']['success'] == 'true')
     account = results['response']['accounts']['account']
-    assert_equal('Basic',account['account_type'])
-    assert_equal('Ruby Client Test Account',account['name'])
+    assert_equal(@account_type,account['account_type'])
+    assert_equal(@account_name,account['name'])
   end
 end

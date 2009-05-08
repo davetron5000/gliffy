@@ -25,7 +25,11 @@ module Gliffy
   # Base class for all response from gliffy
   class Response
     @@error_callback = Proc.new do |response,exception|
-      raise exception
+      if response
+        raise exception.class.new(exception.message + " : " + response.body)
+      else
+        raise exception 
+      end
     end
 
     # Factory for creating actual response subclasses.

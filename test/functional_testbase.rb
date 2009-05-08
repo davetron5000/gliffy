@@ -4,6 +4,7 @@ require 'testbase'
 require 'gliffy/credentials'
 require 'test/it_cred'
 require 'test/functest_cred'
+require 'logger'
 
 class HTTPartyAuth
   def initialize(auth)
@@ -19,7 +20,7 @@ include Gliffy
 
 class FunctionalTestBase < Test::Unit::TestCase
 
-  def setup
+  def setup_handle
     @account_name = 'Ruby Client Integration Test Account'
     @account_type = 'Basic'
     @account_max_users = nil
@@ -35,6 +36,7 @@ class FunctionalTestBase < Test::Unit::TestCase
     @api_root = $api_root
     @basic_auth = {:username => $http_auth_username, :password => $http_auth_password}
     @handle = Gliffy::Handle.new(@api_root,@cred,HTTPartyAuth.new(@basic_auth))
+#    @handle.logger.level = Logger::DEBUG
   end
 
   def test_true

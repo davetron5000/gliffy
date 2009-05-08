@@ -7,13 +7,12 @@ include Gliffy
 
 class FUNC_testFolderCreateDelete < FunctionalTestBase
   def setup
-    super
+    setup_handle
     @folders = %w(foo bar baz)
     @folders.each { |folder| @handle.folder_create(folder) }
   end
 
   def teardown
-    super
     @folders.each { |folder| @handle.folder_delete(folder) }
   end
 
@@ -33,7 +32,7 @@ end
 
 class FUNC_testFolderGrantRevoke < FunctionalTestBase
   def setup
-    super
+    setup_handle
     @folders = %w(gr_foo gr_bar)
     @folders.each { |folder| @handle.folder_create(folder) }
     @users = %w(user_foo user_bar user_baz)
@@ -41,7 +40,6 @@ class FUNC_testFolderGrantRevoke < FunctionalTestBase
   end
 
   def teardown
-    super
     @folders.each { |folder| @handle.folder_delete(folder) }
     @users.each { |user| @handle.user_delete(user) }
   end

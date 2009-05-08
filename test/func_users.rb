@@ -7,13 +7,12 @@ include Gliffy
 
 class FUNC_testUserCreateDelete < FunctionalTestBase
   def setup
-    super
+    setup_handle
     @users = %w(user_foo user_bar user_baz)
     @users.each { |user| @handle.user_create(user) }
   end
 
   def teardown
-    super
     @users.each { |user| @handle.user_delete(user) }
   end
 
@@ -29,33 +28,33 @@ end
 
 class FUNC_testUserUpdate < FunctionalTestBase
   def setup
-    super
-    @username = 'user_to_update'
-    @handle.user_create(@username)
+    setup_handle
+    @username_to_update = 'user_to_update'
+    @handle.user_create(@username_to_update)
   end
 
   def test_update
     email = 'user_to_update@foobar.info'
-    @handle.user_update(@username,:email => email)
-    user = get_user(@username)
+    @handle.user_update(@username_to_update,:email => email)
+    user = get_user(@username_to_update)
     assert_not_nil user
     assert_equal(email,user.email)
     is_admin = user.is_admin?
 
-    @handle.user_update(@username,:password => 'foobar69')
+    @handle.user_update(@username_to_update,:password => 'foobar69')
     # Can't check that it worked; only that if we get here, Gliffy gave us a success message
 
     new_admin = is_admin ? true : false
     [new_admin,!new_admin].each do |admin_expected|
-      @handle.user_update(@username,:admin => admin_expected)
-      user = get_user(@username)
+      @handle.user_update(@username_to_update,:admin => admin_expected)
+      user = get_user(@username_to_update)
       assert_equal(admin_expected,user.is_admin?,user.inspect)
 
     end
     [new_admin,!new_admin].each do |admin_expected|
       email = admin_expected.to_s + 'user_to_update@foobar.info'
-      @handle.user_update(@username,:email => email, :admin => admin_expected)
-      user = get_user(@username)
+      @handle.user_update(@username_to_update,:email => email, :admin => admin_expected)
+      user = get_user(@username_to_update)
       assert_equal(admin_expected,user.is_admin?,user.inspect)
       assert_equal(email,user.email,user.inspect)
     end
@@ -63,8 +62,7 @@ class FUNC_testUserUpdate < FunctionalTestBase
   end
 
   def teardown
-    super
-    @handle.user_delete(@username)
+    @handle.user_delete(@username_to_update)
   end
 
   private

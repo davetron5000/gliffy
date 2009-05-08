@@ -179,8 +179,8 @@ module Gliffy
     end
 
     # Add a user to a folder
-    def folder_add_user
-      raise "Not Implemented"
+    def folder_add_user(path,username)
+      make_request(:update,folder_users_url(path,username),{:read => true, :write => true})
     end
 
     # Create a new folder
@@ -189,14 +189,12 @@ module Gliffy
     #          start with a slash, this will make the folder inside ROOT, which is what you want.  So, don't
     #          start this with a slash.
     def folder_create(path)
-      path = normalize_folder_path(path)
       make_request(:create,"#{folders_url(path)}.xml")
     end
 
     # Delete a folder
     # [+path+] the path to the folder.  See folder_create.
     def folder_delete(path)
-      path = normalize_folder_path(path)
       make_request(:delete,"#{folders_url(path)}.xml")
     end
 
@@ -213,8 +211,8 @@ module Gliffy
     end
 
     # Remove a user from access to the folder
-    def folder_remove_user
-      raise "Not Implemented"
+    def folder_remove_user(path,username)
+      make_request(:update,folder_users_url(path,username),{:read => false, :write => false})
     end
 
     # Create a new user
@@ -260,7 +258,13 @@ module Gliffy
     def user_url(username='$username'); "#{account_url}/users/#{username}/"; end
     def token_url; "#{user_url}/oauth_token.xml"; end
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
-    def folders_url(path=''); "#{account_url}/folders/#{path}"; end
+    def folders_url(path=''); 
+      path = normalize_folder_path(path)
+      "#{account_url}/folders/#{path}"; 
+    end
+    def folder_users_url(path,username)
+      folders_url(path) + "/users/#{username}.xml"
+    end
 
     def user_documents_helper(username,folders)
       if folders.nil?
@@ -301,9 +305,13 @@ module Gliffy
     end
   end
 
+  ROOT_FOLDER = 'ROOT'
   # Prepends the path with "ROOT" if the path doesn't start with a slash
   def normalize_folder_path(path)
-    path = 'ROOT/' + path if !(path =~ /^\//)
+    return '' if path.nil? || path == ''
+    if !(path =~ /^\//) && !(path =~ /^#{ROOT_FOLDER}$/) && !(path =~ /^#{ROOT_FOLDER}\//)
+      path = "#{ROOT_FOLDER}/" + path 
+    end
     path
   end
 end

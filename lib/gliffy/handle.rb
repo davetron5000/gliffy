@@ -81,7 +81,7 @@ module Gliffy
     end
 
     # Returns all documents in the account
-    # [+show+] if nil, all documents are returned; if :public only public are returned.  If :private only non-public are returned.
+    # [+show+] if nil, all documents are returned; if :public only public are returned.  
     def account_documents(show=nil)
       if show.nil?
         make_request(:get,"#{account_url}/documents.xml")
@@ -108,22 +108,26 @@ module Gliffy
 
     # Create a new document
     # [+name+] Name of the new document
-    # [+folder_path+] Path in which to place the document initially
-    # [+template_id+] document id of a document to copy when initializing this new document
+    # [+folder_path+] Path in which to place the document initially (nil to use default)
+    # [+template_id+] document id of a document to copy when initializing this new document (nil to make a blank one)
     # [+type+] If Gliffy ever supports other document types, use this
+    #
+    # Returns a document representing the document that was created.
     def document_create(name,folder_path=nil,template_id=nil,type=:diagram)
       params = { 
         :documentName => name,
         :documentType => type
       }
       params[:templateDiagramId] = template_id if !template_id.nil? 
-      params[:folderPath] = folder_path if !folder_path.nil? 
-      make_request(:create,"#{account_url}/documents.xml",params)
+      params[:folderPath] = normalize_folder_path(folder_path) if !folder_path.nil? 
+      documents = make_request(:create,"#{account_url}/documents.xml",params)
+      return nil if documents.nil? 
+      documents[0]
     end
 
     # Delete an existing document
-    def document_delete
-      raise "Not Implemented"
+    def document_delete(document_id)
+      make_request(:delete,document_url(document_id))
     end
 
     # Get meta-data about a document.

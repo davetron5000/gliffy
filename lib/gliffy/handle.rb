@@ -178,8 +178,8 @@ module Gliffy
     end
 
     # Move a document to a different folder
-    def document_move
-      raise "Not Implemented"
+    def document_move(document_id,new_path)
+      make_request(:move,folders_url(new_path) + "/documents/#{document_id}.xml")
     end
 
     # Update a document's meta-data or content

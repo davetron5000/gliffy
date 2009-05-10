@@ -78,6 +78,14 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
 
       assert_equal(XML_CRUD + CONTENT_TO_UPDATE,xml)
 
+      @handle.document_move(created_document.document_id,@folders[2])
+      documents = @handle.folder_documents(@folders[2])
+
+      found = false
+      documents.each do |d|
+        found = true if d.name == name
+      end
+      assert(found,"Didn't find document #{name} in folder #{@folders[2]}")
     end
 
     documents = @handle.user_documents

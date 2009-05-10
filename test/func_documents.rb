@@ -38,12 +38,14 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
     assert_not_nil @created
     assert_not_nil @folders
     assert_not_nil @users
+    names = {}
     [
       {:name => 'My New Document ' + Time.now.to_f.to_s,:folder => nil},
       {:name => 'My Other New Document ' + Time.now.to_f.to_s,:folder => @folders[0]},
       {:name => 'My Other Other New Document ' + Time.now.to_f.to_s,:folder => @folders[1]},
     ].each do |test_case|
       name = test_case[:name]
+      names[name] = 1
       folder = test_case[:folder]
       created_document = @handle.document_create(name,folder)
       @created << created_document.document_id
@@ -58,7 +60,18 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
       assert_equal(name,meta_data.name)
       assert_equal(1,meta_data.num_versions)
     end
+
+    documents = @handle.user_documents
+    documents.each do |d|
+      names[d.name] += 1 if names[d.name]
+    end
+    names.each do |name,times|
+      expected = 1
+      times -= 1
+      assert_equal(expected,times,"Got #{times} for document named #{name}, instead of expected")
+    end
   end
+
   private
 
   def assert_document_in_list(name,documents,test_case)
@@ -97,6 +110,7 @@ class FUNC_testDocumentGet < FunctionalTestBase
     name = 'My Document Imana Get ' + Time.now.to_f.to_s[0..49]
     created_document = @handle.document_create(name)
     @created << created_document.document_id
+
     meta_data = @handle.document_get_metadata(created_document.document_id)
     assert_equal(name,meta_data.name)
     xml = @handle.document_get(created_document.document_id,:xml)
@@ -111,5 +125,8 @@ class FUNC_testDocumentGet < FunctionalTestBase
     PNG_BYTES.each_index do |i|
       assert_equal(PNG_BYTES[i],png[i].to_s(16),"Doesn't appear to be a valid PNG at byte #{i}")
     end
+
+    url = @handle.document_get_url(created_document.document_id,:png)
+    assert(url =~ /documents\/#{created_document.document_id}.png/,"#{url} didn't look how I expected")
   end
 end

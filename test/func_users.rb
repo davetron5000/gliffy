@@ -49,8 +49,8 @@ class FUNC_testUserUpdate < FunctionalTestBase
       @handle.user_update(@username_to_update,:admin => admin_expected)
       user = get_user(@username_to_update)
       assert_equal(admin_expected,user.is_admin?,user.inspect)
-
     end
+
     [new_admin,!new_admin].each do |admin_expected|
       email = admin_expected.to_s + 'user_to_update@foobar.info'
       @handle.user_update(@username_to_update,:email => email, :admin => admin_expected)

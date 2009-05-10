@@ -235,10 +235,11 @@ module Gliffy
       make_request(:delete,"#{user_url(username)}.xml")
     end
 
-    # Get the documents a user has access to
+    # Get the documents a user has access to (this is potentially expensive, as it results
+    # in multiple calls to gliffy)
     # [username] if provided, get documents for the given username, otherwise get them for the logged-in user
     def user_documents(username='$username')
-      user_documents_helper(username,user_folders(username)).values
+      return user_documents_helper(username,user_folders(username))
     end
 
     # Get the folders a user has access to
@@ -277,19 +278,19 @@ module Gliffy
     end
 
     def user_documents_helper(username,folders)
-      if folders.nil?
-        {}
-      else
-        documents = {}
-        folders.each do |one_folder|
-          docs = folder_documents(one_folder.path)
+      documents = []
+      return documents if folders.nil?
+      folders.each do |one_folder|
+        docs = folder_documents(one_folder.path)
+        if docs
           docs.each do |doc|
-            documents[doc.document_id] = doc
+            documents << doc
           end
-          documents.merge!(user_documents_helper(username,one_folder.child_folders))
         end
-        documents
+        rest = user_documents_helper(username,one_folder.child_folders)
+        rest.each { |d| documents << d} if rest
       end
+      return documents
     end
 
     # Handles the mechanics of making the request

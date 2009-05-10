@@ -36,7 +36,7 @@ class FunctionalTestBase < Test::Unit::TestCase
     @api_root = $api_root
     @basic_auth = {:username => $http_auth_username, :password => $http_auth_password}
     @handle = Gliffy::Handle.new(@api_root,@cred,HTTPartyAuth.new(@basic_auth))
-#    @handle.logger.level = Logger::DEBUG
+    #@handle.logger.level = Logger::DEBUG
   end
 
   def test_true

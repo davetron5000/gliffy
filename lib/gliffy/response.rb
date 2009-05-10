@@ -36,7 +36,8 @@ module Gliffy
       end
     end
 
-    @@error_callback = @@normal_error_callback
+    #@@error_callback = @@normal_error_callback
+    @@error_callback = @@debug_error_callback
 
     # Factory for creating actual response subclasses.
     # This takes the results of HTTParty's response, which is a hash, essentially.

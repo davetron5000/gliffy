@@ -134,7 +134,7 @@ module Gliffy
     # [+document_id+] identifier of the document
     # [+show_revisions+] if true, include info about the documents' revision history
     def document_get_metadata(document_id,show_revisions=false)
-      make_request(:get,document_url(document_id),:showRevisions => show_revisions)[0]
+      make_request(:get,document_metadata_url(document_id),:showRevisions => show_revisions)[0]
     end
 
     # Get a document; returning the actual bytes
@@ -149,19 +149,24 @@ module Gliffy
     def document_get(document_id,type=:jpeg,size=:L,version=nil)
       params = { :size => size }
       params[:version] = version if !version.nil?
-      make_request(:get,document_url(document_id,type),params,false)
+      response = make_request(:get,document_url(document_id,type),params,false)
+      if (type == :xml) || (type == :svg)
+        response.body
+      else
+        response
+      end
     end
 
     # Get a link to a document
     # [+document_id+] identifier of the document
     # [+type+] document type.  Types known to work:
-    #          [+:jpeg+] - JPEG
+    #          [+:jpg+] - JPEG
     #          [+:png+] - PNG
     #          [+:svg+] - SVG (for Visio import)
     #          [+:xml+] - Gliffy proprietary XML format (for archiving)
     # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
     # [+version+] The version to get, or nil to get the most recent
-    def document_get_url(document_id,type=:jpeg,size=:L,version=nil)
+    def document_get_url(document_id,type=:jpg,size=:L,version=nil)
       params = { :size => size }
       params[:version] = version if !version.nil?
       make_request(:get,document_url(document_id,type),params,false,true)
@@ -262,6 +267,7 @@ module Gliffy
     def user_url(username='$username'); "#{account_url}/users/#{username}/"; end
     def token_url; "#{user_url}/oauth_token.xml"; end
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
+    def document_metadata_url(id); "#{account_url}/documents/#{id}/meta-data.xml"; end
     def folders_url(path=''); 
       path = normalize_folder_path(path)
       "#{account_url}/folders/#{path}"; 

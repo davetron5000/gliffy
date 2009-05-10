@@ -59,6 +59,16 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
       meta_data = @handle.document_get_metadata(created_document.document_id)
       assert_equal(name,meta_data.name)
       assert_equal(1,meta_data.num_versions)
+
+      @handle.document_update(created_document.document_id,:name => 'New Name')
+      meta_data = @handle.document_get_metadata(created_document.document_id)
+      assert_equal('New Name',meta_data.name)
+
+      @handle.document_update(created_document.document_id,:name => name)
+      meta_data = @handle.document_get_metadata(created_document.document_id)
+      assert_equal(name,meta_data.name)
+
+      # Can't test public/private cause our test account is Basic
     end
 
     documents = @handle.user_documents

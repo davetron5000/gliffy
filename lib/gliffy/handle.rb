@@ -182,9 +182,22 @@ module Gliffy
       raise "Not Implemented"
     end
 
-    # Update a document's XML content
-    def document_update_content
-      raise "Not Implemented"
+    # Update a document's meta-data or content
+    # [+document_id+] identifier of document to update
+    # [+options+] data to update; omission of an option will not change it
+    #             [+:name+] change the name
+    #             [+:public+] if false, will remove public statues, if true, will make public
+    #             [+:content+] if present, should be the gliffy XML content to update (don't use this unless it's crucial)
+    def document_update(document_id,options)
+      if (options[:content])
+        raise "Not implemented"
+      end
+      if (options[:name] || options[:public])
+        params = {}
+        params[:documentName] = options[:name] if options[:name]
+        params[:public] = options[:public] if options[:public]
+        make_request(:update,document_metadata_url(document_id),params)
+      end
     end
 
     # Add a user to a folder

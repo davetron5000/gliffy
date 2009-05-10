@@ -4,7 +4,7 @@ require 'functional_testbase.rb'
 
 include Gliffy
 
-class FUNC_testFolderCreateDelete < FunctionalTestBase
+class FUNC_testDocumentrCreateDelete < FunctionalTestBase
   def setup
     setup_handle
     @created = Array.new
@@ -70,7 +70,7 @@ class FUNC_testFolderCreateDelete < FunctionalTestBase
   end
 end
 
-class FUNC_testFolderGet < FunctionalTestBase
+class FUNC_testDocumentGet < FunctionalTestBase
   BLANK_XML ='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><stage keygen_seq="1"><pageObj drawingHeight="200" drawingWidth="200" istt="false" stg="0" pb="0" gr="0" fill="16777215" height="5000" width="5000"><objects/></pageObj></stage>'
   BLANK_SVG = '<svg xmlns:x="http://ns.adobe.com/Extensibility/1.0/" xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" xmlns:graph="http://ns.adobe.com/Graphs/1.0/" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="201" height="201"><defs></defs><rect stroke="#000000" stroke-width="1" fill="#ffffff" x="0" y="0" width="200" height="200"/></svg>'
   

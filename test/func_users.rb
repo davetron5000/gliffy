@@ -39,19 +39,17 @@ class FUNC_testUserUpdate < FunctionalTestBase
     user = get_user(@username_to_update)
     assert_not_nil user
     assert_equal(email,user.email)
-    is_admin = user.is_admin?
 
     @handle.user_update(@username_to_update,:password => 'foobar69')
     # Can't check that it worked; only that if we get here, Gliffy gave us a success message
 
-    new_admin = is_admin ? true : false
-    [new_admin,!new_admin].each do |admin_expected|
+    [true, false].each do |admin_expected|
       @handle.user_update(@username_to_update,:admin => admin_expected)
       user = get_user(@username_to_update)
       assert_equal(admin_expected,user.is_admin?,user.inspect)
     end
 
-    [new_admin,!new_admin].each do |admin_expected|
+    [true, false].each do |admin_expected|
       email = admin_expected.to_s + 'user_to_update@foobar.info'
       @handle.user_update(@username_to_update,:email => email, :admin => admin_expected)
       user = get_user(@username_to_update)
@@ -59,6 +57,9 @@ class FUNC_testUserUpdate < FunctionalTestBase
       assert_equal(email,user.email,user.inspect)
     end
 
+    admins = @handle.account_admins
+    assert_equal(1,admins.size)
+    assert_equal(@username,admins[0].username)
   end
 
   def teardown

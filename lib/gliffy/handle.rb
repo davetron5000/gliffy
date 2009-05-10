@@ -190,7 +190,7 @@ module Gliffy
     #             [+:content+] if present, should be the gliffy XML content to update (don't use this unless it's crucial)
     def document_update(document_id,options)
       if (options[:content])
-        raise "Not implemented"
+        make_request(:update,document_url(document_id),{:content => options[:content]})
       end
       if (options[:name] || options[:public])
         params = {}

@@ -34,6 +34,9 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
     end
   end
 
+  XML_CRUD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+  CONTENT_TO_UPDATE = '<something><gliffy><will>not handle</will></gliffy></something>'
+
   def test_create_delete
     assert_not_nil @created
     assert_not_nil @folders
@@ -69,6 +72,12 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
       assert_equal(name,meta_data.name)
 
       # Can't test public/private cause our test account is Basic
+
+      @handle.document_update(created_document.document_id,:content => CONTENT_TO_UPDATE)
+      xml = @handle.document_get(created_document.document_id,:xml)
+
+      assert_equal(XML_CRUD + CONTENT_TO_UPDATE,xml)
+
     end
 
     documents = @handle.user_documents

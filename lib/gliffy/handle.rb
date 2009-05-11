@@ -173,8 +173,8 @@ module Gliffy
     end
 
     # Get the link to edit a document
-    def document_edit_link
-      raise "Not Implemented"
+    def document_edit_link(document_id,return_url,return_text='Return')
+      make_request(:GET,'gliffy',{ :launchDiagramId => document_id, :returnURL => return_url, :returnButtonText=> return_text},false,true)
     end
 
     # Move a document to a different folder

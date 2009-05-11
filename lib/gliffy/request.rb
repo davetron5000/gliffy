@@ -64,7 +64,7 @@ module Gliffy
         # exposing this for testing
         protocol = determine_protocol(args[1])
         @full_url_no_params = protocol + "://" + @api_root + replace_url(args[0])
-        url = SignedURL.new(@credentials,@full_url_no_params,'POST')
+        url = SignedURL.new(@credentials,@full_url_no_params,symbol == :GET ? 'GET' : 'POST')
         url.logger = @logger
         url.params = args[1] if !args[1].nil?
         url[:protocol_override] = nil
@@ -78,7 +78,11 @@ module Gliffy
         if link_only
           return full_url
         else
-          response = @http.post(full_url)
+          if (symbol == :GET)
+            response = @http.get(full_url)
+          else
+            response = @http.post(full_url)
+          end
           return response
         end
       else

@@ -25,6 +25,12 @@ class INT_testHandle < IntegrationTestBase
     assert(@cred.access_token.token != token,"Expected to get a token different than what we started with: #{token}")
   end
 
+  def test_error
+    assert_raises RequestFailedException do
+      @handle.folder_delete('ROOT/some/path/that/is/not/here')
+    end
+  end
+
   def test_account_meta_data
     [true,false].each do |show_users|
       account = @handle.account_get(show_users)

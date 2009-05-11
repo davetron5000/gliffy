@@ -161,7 +161,7 @@ class TC_testHandle < Test::Unit::TestCase
   def test_folder_documents
     documents = @handle.folder_documents('ROOT')
     assert_equal(1,documents.size)
-    assert_equal('Booze DB',documents[0].name)
+    assert_equal('Booze DB (orig)',documents[0].name)
 
     documents = @handle.folder_documents('ROOT/tmp')
     assert_equal(2,documents.size)
@@ -171,10 +171,10 @@ class TC_testHandle < Test::Unit::TestCase
 
   def test_user_documents
     documents = @handle.user_documents
-    assert_equal(2,documents.size)
-    ['Hounds Room','Booze DB'].each do |name|
-      if (documents[0].name != name) && (documents[1].name != name)
-        assert(false,"Expected #{documents[0].name} or #{documents[1].name} to be #{name}")
+    assert_equal(3,documents.size)
+    ['Booze DB (orig)','Hounds Room','Booze DB'].each do |name|
+      if (documents[0].name != name) && (documents[1].name != name) && (documents[2].name != name) 
+        assert(false,"Expected #{documents[0].name} or #{documents[1].name} or #{documents[2].name}to be #{name}")
       end
     end
   end

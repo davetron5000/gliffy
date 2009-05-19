@@ -39,12 +39,14 @@ module Gliffy
 
     # Create a new handle to Gliffy
     # [+api_root+] root URL (without the protocol) of where to connect to Gliffy
+    # [+edit_api_root+] root URL (without the protocol) of where to connect to Gliffy for the edit link only
     # [+credentials+] a Credentials object to use for access
     # [+http+] override of http access class (use at your own risk; must be substituable for HTTPart)
     # [+logger+] logger instance, if you don't want the default
-    def initialize(api_root,credentials,http=nil,logger=nil)
+    def initialize(api_root,edit_api_root,credentials,http=nil,logger=nil)
       @credentials = credentials
       @request = Request.new(api_root,credentials)
+      @edit_link_request = Request.new(edit_api_root,credentials)
       @request.http = http if !http.nil?
       @logger = logger || Logger.new(STDOUT)
       @logger.level = Logger::INFO
@@ -174,7 +176,11 @@ module Gliffy
 
     # Get the link to edit a document
     def document_edit_link(document_id,return_url,return_text='Return')
-      make_request(:GET,'gliffy',{ :launchDiagramId => document_id, :returnURL => return_url, :returnButtonText=> return_text},false,true)
+      update_token
+      @edit_link_request.link_for(:GET,'',{ 
+        :launchDiagramId => document_id, 
+        :returnURL => return_url, 
+        :returnButtonText=> return_text})
     end
 
     # Move a document to a different folder

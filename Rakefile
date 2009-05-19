@@ -27,7 +27,7 @@ end
 
 { :test => { :desc => 'Runs Unit Tests', :prefix => 'tc_', :required_file => nil, :coverage => true },
   :inttest => { :desc => 'Runs Integration Tests', :prefix => 'int_', :required_file => 'it_cred.rb', :coverage => true },
-  #:functest => { :desc => 'Runs Functional Tests', :prefix => 'func_users', :required_file => 'functest_cred.rb', :coverage => true },
+  #:functest => { :desc => 'Runs Functional Tests', :prefix => 'func_documents', :required_file => 'functest_cred.rb', :coverage => true },
   :functest => { :desc => 'Runs Functional Tests', :prefix => 'func_', :required_file => 'functest_cred.rb', :coverage => true },
   :alltest => { :desc => 'Runs All Tests at Once', :prefix => '', :required_file => 'functest_cred.rb', :coverage => true },
   :setup_account => { :desc => 'Sets up a Test Account', :prefix => 'setup_', :required_file => 'it_cred.rb', :coverage => false },

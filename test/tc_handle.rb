@@ -34,7 +34,7 @@ class TC_testHandle < Test::Unit::TestCase
                             101,
                             'testuser@gliffy.com')
     @api_root = 'localhost:2000'
-    @handle = Gliffy::Handle.new(@api_root,@cred,AllGetHTTP.new)
+    @handle = Gliffy::Handle.new(@api_root,@api_root,@cred,AllGetHTTP.new)
   end
 
   def teardown

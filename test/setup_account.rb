@@ -7,7 +7,7 @@ include Gliffy
 class SetupAccount < IntegrationTestBase
   def setup
     super
-    @handle = Gliffy::Handle.new(@api_root,@cred,HTTPartyAuth.new(@basic_auth))
+    @handle = Gliffy::Handle.new(@api_root,@api_root,@cred,HTTPartyAuth.new(@basic_auth))
   end
 
   def test_do_the_setup

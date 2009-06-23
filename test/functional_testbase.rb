@@ -35,7 +35,7 @@ class FunctionalTestBase < Test::Unit::TestCase
                             @username)
     @api_root = $api_root
     @basic_auth = {:username => $http_auth_username, :password => $http_auth_password}
-    @handle = Gliffy::Handle.new(@api_root,@api_root,@cred,HTTPartyAuth.new(@basic_auth))
+    @handle = Gliffy::Handle.new(@api_root,$api_root_for_edit_link,@cred,HTTPartyAuth.new(@basic_auth))
     #@handle.logger.level = Logger::DEBUG
   end
 

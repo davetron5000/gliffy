@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'rexml/formatters/pretty'
 
-=begin for JUnit later
+require 'test/unit/ui/console/testrunner'
+
 class Test::Unit::UI::Console::TestRunner
 
   alias :old_setup_mediator :setup_mediator 
@@ -16,11 +17,19 @@ class Test::Unit::UI::Console::TestRunner
   alias :old_start :start
   def start
     retval = old_start
-    @tests_run.each_key do |key|
-      puts "RAN RAN RAN #{key}" if !@tests_failed[key]
-    end
-    @tests_failed.each_key do |key|
-      puts "FAIL FAIL FAIL '#{key}'"
+    File.open("junit_output.xml","w") do |file|
+      file.puts "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+      file.puts "<testsuite errors=\"0\" skipped=\"0\" tests=\"#{@tests_run.size}\" time=\"#{Time.now.to_i}\""
+      file.puts "failures=\"#{@tests_failed.size}\" name=\"com.gliffy.ruby.unitTests\">"
+      @tests_run.each_key do |key|
+        file.puts "<testcase time=\"0\" name=\"#{key}\" />" if !@tests_failed[key]
+      end
+      @tests_failed.each_key do |test|
+        file.puts "<testcase time=\"0\" name=\"#{test.test_name}\">"
+        file.puts "<failure type=\"com.gliffy.ruby.unitTestFailure\" message=\"#{test.message.gsub(/\n/,' ')} failed\" />"
+        file.puts "</testcase>"
+      end
+      file.puts "</testsuite>"
     end
     return retval
   end
@@ -33,7 +42,7 @@ class Test::Unit::UI::Console::TestRunner
     @tests_failed[name] = true
   end
 end
-=end
+
 class REXML::Formatters::Pretty
   # fix cockup in RCov
   alias old_wrap wrap

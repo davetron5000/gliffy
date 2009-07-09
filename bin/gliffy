@@ -1,36 +1,213 @@
 #!/usr/bin/ruby
-#
-$: << File.expand_path(File.dirname(__FILE__) + '/../lib') 
-$: << File.expand_path(File.dirname(__FILE__) + '/../ext') 
-
-require 'gliffy/cli'
+$: << File.expand_path(File.dirname(__FILE__) + '/../lib')
+$: << File.expand_path(File.dirname(__FILE__) + '/../ext')
 require 'rubygems'
 require 'gli'
+require 'etc'
+require 'gliffy'
+
+$description = 'Gliffy Command Line Client'
+
 include GLI
 
-pre do |global_options,command,options,args|
-  if global_options[:version]
-    puts "#{$0} v#{Gliffy::VERSION}"
+desc 'Location of your gliffy configuration'
+default_value Etc.getpwuid.dir + '/.gliffyrc'
+arg_name 'path to gliffy config file'
+flag [:config]
+
+desc 'Use gob-go instead of the real gliffy (devs only)'
+switch [:gobgotest]
+
+desc 'List diagram ids and names'
+command [:ls,:list] do |c|
+  c.action do |global_options,options,args|
+    documents = $handle.user_documents
+    documents.each do |doc|
+      puts "#{doc.document_id} - #{doc.name}"
+    end
+  end
+end
+
+desc 'List all folders'
+command [:lsfolders,:listfolders] do |c|
+  c.action do |global_options,options,args|
+    folders = $handle.user_folders
+    folders.each do |folder|
+      puts "#{folder.name}/"
+    end
+  end
+end
+
+desc 'Move diagrams from one folder to another'
+command [:mv,:move] do |c|
+  c.action do |global_options,options,args|
+  end
+end
+
+desc 'Delete a diagram'
+command [:rm,:delete] do |c|
+  c.action do |global_options,options,args|
+    args.each do |document_id|
+      $handle.document_delete(document_id)
+      puts "Deleted #{document_id}"
+    end
+  end
+end
+
+desc 'Edit a diagram'
+command :edit do |c|
+
+  c.desc 'URL to return to after editing is complete'
+  c.default_value 'http://www.gliffy.com'
+  c.flag [:u,:url]
+
+  c.desc 'Text on the "Return" button in Gliffy'
+  c.default_value 'Return'
+  c.flag [:t,:text]
+
+  c.action do |global_options,options,args|
+    if args.length == 1
+      puts "Go to the URL in your browser"
+      puts $handle.document_edit_link(args[0],options[:u],options[:t])
+    else
+      $stderr.puts "Provide exactly one document id"
+    end
+  end
+end
+
+desc 'View a diagram as an image, or download it'
+command [:view,:get] do |c|
+
+  c.desc 'File Type'
+  c.default_value 'jpeg'
+  c.arg_name 'jpeg, png, svg, xml'
+  c.flag [:t,:type]
+
+  c.desc 'Size'
+  c.default_value 'L'
+  c.arg_name 'L, M, S, T'
+  c.flag [:s,:size]
+
+  c.desc 'Version'
+  c.arg_name 'version number (omit for latest)'
+  c.flag [:v,:version]
+
+  c.action do |global_options,options,args|
+    args.each do |document_id|
+      version = options[:v]
+      version_name = ''
+      version_name = "_V#{version}" if version
+      bytes = $handle.document_get(document_id,options[:t].to_sym,options[:s].to_sym,version)
+      filename = "#{document_id}_#{options[:s]}#{version_name}.#{options[:t]}"
+      File.open(filename,'wb') do |f|
+        f.write(bytes)
+      end
+      puts "Wrote #{filename}"
+    end
+  end
+end
+
+desc 'Create a new diagram'
+arg_name 'Name of the diagram'
+command :new do |c|
+  c.action do |global_options,options,args|
+    if args.length > 0
+      new_document = $handle.document_create(args.join(" "))
+      puts "Created document #{new_document.document_id} - #{new_document.name}"
+    else
+      $stderr.puts "You must supply the diagram name"
+    end
+  end
+end
+
+desc 'Modify configuration (currently only create)'
+command :config do |c|
+
+  c.desc 'Force a recreation of your config file, even if it exists'
+  c.switch :force
+
+  c.action do |global_options,options,args|
+    if $config.nil? || options[:force]
+      puts "What is account ID?"
+      id = $stdin.gets.chomp
+      puts "What is your Consumer Key?"
+      key = $stdin.gets.chomp
+      puts "What is your Consumer Secret?"
+      secret = $stdin.gets.chomp
+      puts "What is the username or email address of an admin user?"
+      user = $stdin.gets.chomp
+      puts "About to create your configuration with the following information:"
+      puts "Account ID      : #{id}"
+      puts "Consumer Key    : #{key}"
+      puts "Consumer Secret : #{secret}"
+      puts "User Name       : #{user}"
+      puts 
+      puts "OK? (Y/N)"
+      response = $stdin.gets
+      if response =~ /^[Yy]/
+        cred = Gliffy::Credentials.new(key,secret,$description,id,user)
+        write_config(cred,global_options[:config])
+        puts "Wrote config to #{global_options[:config]}"
+      else
+        puts "Aborted"
+      end
+    else
+      $stderr.puts "You already have a config; edit it by hand or use --force to recreate"
+    end
+  end
+end
+
+pre do |global,command,options,args|
+  require 'yaml'
+  message = nil
+  begin
+  $config = File.open(global[:config]) { |f| YAML::load(f) }
+  rescue
+    message = "No config file found at #{global[:config]}\nUse #{$0} config to create one"
+    $config = nil
+  end
+  if $config.nil? && command.name != :config
+    $stderr.puts message if !message.nil?
     false
-  elsif !Gliffy::CLIConfig.instance.load
-    puts "Problem loading config"
-    false
-  elsif command && command.name != :help
-    previous_token = Gliffy::CLIConfig.instance.config[:current_token]
-    Gliffy::Config.config.log_level = Logger::DEBUG if global_options[:v]
-    $gliffy = Gliffy::Handle.new(Gliffy::CLIConfig.instance.config[:username],previous_token)
-    true
   else
+    if command.name != :config
+      if global[:gobgotest]
+        puts "Going against gob-go -- developers only!"
+        class HTTPartyAuth
+          def post(url)
+            HTTParty.post(url,:basic_auth => {:username => 'gobgotest' , :password => 'gobgotest'})
+          end
+        end
+        $handle = Gliffy::Handle.new(
+          'gob-go-stable.gliffy.com/api/1.0',
+          'gob-go-stable.gliffy.com/gliffy',
+          $config,HTTPartyAuth.new)
+      else
+        $handle = Gliffy::Handle.new(
+          'www.gliffy.com/api/1.0',
+          'www.gliffy.com/gliffy',
+          $config)
+      end
+      token = $handle.update_token
+      write_config($config,global[:config])
+    end
     true
   end
 end
 
-desc 'show version'
-switch :version
+post do |global,command,options,args|
+  # Post logic here
+end
 
-desc 'be more verbose'
-switch :v
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
 
-require 'gliffy/commands'
-
+def write_config(cred,config)
+  File.open(config,'w') do |out|
+    YAML.dump(cred,out)
+  end
+end
 GLI.run(ARGV)

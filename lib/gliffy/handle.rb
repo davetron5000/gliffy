@@ -284,7 +284,7 @@ module Gliffy
     private 
 
     def account_url; 'accounts/$account_id'; end
-    def user_url(username='$username'); "#{account_url}/users/#{username}/"; end
+    def user_url(username='$username'); "#{account_url}/users/#{username}"; end
     def token_url; "#{user_url}/oauth_token.xml"; end
     def document_url(id,type=:xml); "#{account_url}/documents/#{id}.#{type.to_s}"; end
     def document_metadata_url(id); "#{account_url}/documents/#{id}/meta-data.xml"; end
@@ -333,15 +333,15 @@ module Gliffy
         end
       end
     end
-  end
 
-  ROOT_FOLDER = 'ROOT'
-  # Prepends the path with "ROOT" if the path doesn't start with a slash
-  def normalize_folder_path(path)
-    return '' if path.nil? || path == ''
-    if !(path =~ /^\//) && !(path =~ /^#{ROOT_FOLDER}$/) && !(path =~ /^#{ROOT_FOLDER}\//)
-      path = "#{ROOT_FOLDER}/" + path 
+    ROOT_FOLDER = 'ROOT'
+    # Prepends the path with "ROOT" if the path doesn't start with a slash
+    def normalize_folder_path(path)
+      return '' if path.nil? || path == ''
+      if !(path =~ /^\//) && !(path =~ /^#{ROOT_FOLDER}$/) && !(path =~ /^#{ROOT_FOLDER}\//)
+        path = "#{ROOT_FOLDER}/" + path 
+      end
+      path
     end
-    path
   end
 end

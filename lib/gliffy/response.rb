@@ -25,10 +25,6 @@ module Gliffy
   # Base class for all response from gliffy
   class Response
     @@normal_error_callback = Proc.new do |response,exception|
-      raise exception
-    end
-
-    @@debug_error_callback = Proc.new do |response,exception|
       if response
         raise exception.class.new(exception.message + " : " + response.body)
       else
@@ -36,8 +32,7 @@ module Gliffy
       end
     end
 
-    #@@error_callback = @@normal_error_callback
-    @@error_callback = @@debug_error_callback
+    @@error_callback = @@normal_error_callback
 
     # Factory for creating actual response subclasses.
     # This takes the results of HTTParty's response, which is a hash, essentially.

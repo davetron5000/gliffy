@@ -78,11 +78,7 @@ module Gliffy
         if link_only
           return full_url
         else
-          if (symbol == :GET)
-            response = @http.get(full_url)
-          else
-            response = @http.post(full_url)
-          end
+          response = @http.post(full_url)
           return response
         end
       else

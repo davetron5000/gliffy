@@ -39,8 +39,8 @@ class INT_testHandle < IntegrationTestBase
       assert_equal(@account_max_users,account.max_users,show_users ? "Showing Users" : "Not Showing Users")
       assert_equal(@account_type,account.account_type,show_users ? "Showing Users" : "Not Showing Users")
       if show_users
-        assert_equal(1,account.users.size)
-        assert_equal($username,account.users[0].username)
+        assert(account.users.size > 0 && account.users.size < 3,"Expected 1 or 2 users #{account.users.inspect}")
+        assert( $username == account.users[0].username || $username == account.users[1].username , "Got #{account.users.inspect}; one should've been #{$username}")
       else
         assert_nil(account.users)
       end

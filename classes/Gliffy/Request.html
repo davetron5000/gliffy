@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>: Gliffy::Request [Ruby Client for Gliffy]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Class</span>
+          Gliffy::Request
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/gliffy/request_rb.html">lib/gliffy/request.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Parent:
+          <strong>Object</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            Handles making a request of the <a href="../Gliffy.html">Gliffy</a> server
+            and all that that entails. This allows you to make requests using the
+            &#8220;action&#8221; and the URL as described in the <a
+            href="../Gliffy.html">Gliffy</a> documentation. For example, if you wish to
+            get a user&#8217;s folders, you could
+            </p>
+            <pre>request = Request.get('https://www.gliffy.com/api/1.0',credentials)&#x000A;results = request.create('accounts/$account_id/users/$username/oauth_token.xml')&#x000A;credentials.update_access_token(&#x000A;    results['response']['oauth_token_credentials']['oauth_token_secret'],&#x000A;    results['response']['oauth_token_credentials']['oauth_token'])&#x000A;request.get('accounts/$account_id/users/$username/folders.xml')</pre>
+            <p>
+            This will return a hash-referencable DOM objects, subbing the account id
+            and username in when making the request (additionally, setting all needed
+            parameters and signing the request).
+            </p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public class</h3>
+            <ol>
+              <li><a href="#M000042">new</a></li>
+            </ol>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000044">determine_protocol</a></li>
+              <li><a href="#M000043">method_missing</a></li>
+              <li><a href="#M000045">replace_url</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>http</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      Modify the HTTP transport agent used. This should have the same interface
+                      as HTTParty.
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>logger</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public class methods</h2>
+              <div class='public-class method' id='method-M000042'>
+                <a name='M000042'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(api_root,credentials,http=HTTParty,logger=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create a new request object.
+                  </p>
+                  <dl>
+                  <dt><tt>api_root</tt></dt><dd>the root of where all API calls are made
+                  
+                  </dd>
+                  <dt><tt>credentials</tt></dt><dd>a <a href="Credentials.html">Credentials</a> object with all the current
+                  credentials
+                  
+                  </dd>
+                  <dt><tt>http</tt></dt><dd>This should implement the HTTParty interface
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000042-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000042-source'><span class="ruby-comment cmt"># File lib/gliffy/request.rb, line 34</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_root</span>,<span class="ruby-identifier">credentials</span>,<span class="ruby-identifier">http</span>=<span class="ruby-constant">HTTParty</span>,<span class="ruby-identifier">logger</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-ivar">@api_root</span> = <span class="ruby-identifier">api_root</span>&#x000A;      <span class="ruby-ivar">@api_root</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>(<span class="ruby-ivar">@api_root</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\/$/</span>)&#x000A;      <span class="ruby-ivar">@credentials</span> = <span class="ruby-identifier">credentials</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">logger</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDOUT</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">INFO</span>&#x000A;      <span class="ruby-ivar">@http</span> = <span class="ruby-identifier">http</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000044'>
+                <a name='M000044'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>determine_protocol</span>
+                  <span class='arguments'>(params)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000044-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000044-source'><span class="ruby-comment cmt"># File lib/gliffy/request.rb, line 89</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">determine_protocol</span>(<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:protocol_override</span>]&#x000A;        <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:protocol_override</span>].<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">default_protocol</span>.<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000043'>
+                <a name='M000043'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>method_missing</span>
+                  <span class='arguments'>(symbol,*args)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Implements getting a request and returning a response The implements
+                  methods that correspond to Gliffy&#8217;s &#8220;action=&#8221; parameter.
+                  Based on this, it will know to do a GET or POST. The method signature is
+                  </p>
+                  <pre>request.action_name(url,params)</pre>
+                  <p>
+                  for example
+                  </p>
+                  <pre>request.get('accounts/$account_id.xml',:showUsers =&gt; true)</pre>
+                  <p>
+                  note that you can use `$account_id` and `$username` in any URL and it will
+                  be replaced accordingly.
+                  </p>
+                  <p>
+                  The return value is the return value from HTTParty, which is basically a
+                  hash that allows access to the returned DOM tree
+                  </p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000043-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000043-source'><span class="ruby-comment cmt"># File lib/gliffy/request.rb, line 55</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span>&#x000A;        <span class="ruby-identifier">link_only</span> = <span class="ruby-keyword kw">false</span>&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symbol</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:link_for</span>&#x000A;          <span class="ruby-identifier">symbol</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>&#x000A;          <span class="ruby-identifier">link_only</span> = <span class="ruby-keyword kw">true</span>&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Executing a #{symbol} against gliffy for url #{args[0]}&quot;</span>)&#x000A;&#x000A;        <span class="ruby-comment cmt"># exposing this for testing</span>&#x000A;        <span class="ruby-identifier">protocol</span> = <span class="ruby-identifier">determine_protocol</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>])&#x000A;        <span class="ruby-ivar">@full_url_no_params</span> = <span class="ruby-identifier">protocol</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@api_root</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">replace_url</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>])&#x000A;        <span class="ruby-identifier">url</span> = <span class="ruby-constant">SignedURL</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@credentials</span>,<span class="ruby-ivar">@full_url_no_params</span>,<span class="ruby-identifier">symbol</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:GET</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'GET'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'POST'</span>)&#x000A;        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-ivar">@logger</span>&#x000A;        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">params</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">nil?</span>&#x000A;        <span class="ruby-identifier">url</span>[<span class="ruby-identifier">:protocol_override</span>] = <span class="ruby-keyword kw">nil</span>&#x000A;        <span class="ruby-identifier">url</span>[<span class="ruby-identifier">:action</span>] = <span class="ruby-identifier">symbol</span>&#x000A;&#x000A;        <span class="ruby-comment cmt"># These can be override for testing purposes</span>&#x000A;        <span class="ruby-identifier">timestamp</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">2</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">2</span>]&#x000A;        <span class="ruby-identifier">nonce</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">3</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">3</span>]&#x000A;&#x000A;        <span class="ruby-identifier">full_url</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">full_url</span>(<span class="ruby-identifier">timestamp</span>,<span class="ruby-identifier">nonce</span>)&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link_only</span>&#x000A;          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">full_url</span>&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@http</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">full_url</span>)&#x000A;          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000045'>
+                <a name='M000045'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>replace_url</span>
+                  <span class='arguments'>(url)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000045-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000045-source'><span class="ruby-comment cmt"># File lib/gliffy/request.rb, line 97</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replace_url</span>(<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'$account_id'</span>,<span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">account_id</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'$username'</span>,<span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">username</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

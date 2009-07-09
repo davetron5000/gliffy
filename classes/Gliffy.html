@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>Module: Gliffy [Ruby Client for Gliffy]</title>
+    <title>: Gliffy [Ruby Client for Gliffy]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -25,25 +25,16 @@
   <body class='page'>
     <div class='class' id='wrapper'>
       <div class='header'>
-        <h1 class='name'>
+        <div class='name'>
           <span class='type'>Module</span>
           Gliffy
-        </h1>
+        </div>
         <ol class='paths'>
           <li>
-            <a href="../files/lib/gliffy/account_rb.html">lib/gliffy/account.rb</a>
+            <a href="../files/lib/gliffy/credentials_rb.html">lib/gliffy/credentials.rb</a>
           </li>
           <li class='other'>
-            <a href="../files/lib/gliffy/cli_rb.html">lib/gliffy/cli.rb</a>
-          </li>
-          <li class='other'>
-            <a href="../files/lib/gliffy/config_rb.html">lib/gliffy/config.rb</a>
-          </li>
-          <li class='other'>
-            <a href="../files/lib/gliffy/diagram_rb.html">lib/gliffy/diagram.rb</a>
-          </li>
-          <li class='other'>
-            <a href="../files/lib/gliffy/folder_rb.html">lib/gliffy/folder.rb</a>
+            <a href="../files/lib/gliffy/request_rb.html">lib/gliffy/request.rb</a>
           </li>
           <li class='other'>
             <a href="../files/lib/gliffy/handle_rb.html">lib/gliffy/handle.rb</a>
@@ -52,13 +43,10 @@
             <a href="../files/lib/gliffy/response_rb.html">lib/gliffy/response.rb</a>
           </li>
           <li class='other'>
-            <a href="../files/lib/gliffy/rest_rb.html">lib/gliffy/rest.rb</a>
-          </li>
-          <li class='other'>
             <a href="../files/lib/gliffy/url_rb.html">lib/gliffy/url.rb</a>
           </li>
           <li class='other'>
-            <a href="../files/lib/gliffy/user_rb.html">lib/gliffy/user.rb</a>
+            <a href="../files/lib/gliffy_rb.html">lib/gliffy.rb</a>
           </li>
           <li>
             <a class='show' href='#' onclick='this.parentNode.parentNode.className += " expanded"; this.parentNode.removeChild(this); return false'>show all</a>
@@ -67,143 +55,261 @@
       </div>
       <div id='content'>
         <div id='text'>
-          <div id='method-list'>
-            <h2>Methods</h2>
-            <h3>public instance</h3>
-            <ol>
-              <li><a href="#M000004">command</a></li>
-              <li><a href="#M000001">desc</a></li>
-              <li><a href="#M000006">format_date</a></li>
-              <li><a href="#M000002">offline</a></li>
-              <li><a href="#M000005">parse_options</a></li>
-              <li><a href="#M000003">usage</a></li>
-            </ol>
+          <div id='description'>
+            <p>
+            This is the Ruby client library for interacting with <a
+            href="http://www.gliffy.com">Gliffy</a>. It&#8217;s main function is for
+            you to integrate <a href="Gliffy.html">Gliffy</a> documents into the
+            workflow of another application.
+            </p>
+            <h1>Getting Started</h1>
+            <pre>sudo gem install gliffy</pre>
+            <h1>Overview</h1>
+            <p>
+            The main entry point to <a href="Gliffy.html">Gliffy</a> is <a
+            href="Gliffy/Handle.html">Gliffy::Handle</a>, which provides high-level
+            access to most features available from the API. You should instantiate one
+            of these objects per <em>user session</em>. To create it, you will need to
+            create and populate an instance of the <a
+            href="Gliffy/Credentials.html">Credentials</a> class. This class is
+            constructed almost entirely from static data about your <a
+            href="Gliffy.html">Gliffy</a> account, so you will probably configure an
+            instance of this globally.
+            </p>
+            <p>
+            This is then used (along with the API root to <a
+            href="Gliffy.html">Gliffy</a>) to create an instance of <a
+            href="Gliffy/Handle.html">Gliffy::Handle</a>. Objects of this class provide
+            access to the features you will need to integrate <a
+            href="Gliffy.html">Gliffy</a> into your app&#8217;s workflow.
+            </p>
+            <h2>Example</h2>
+            <p>
+            Suppose you have created a group blog application using Rails and wish to
+            give Blog authors the ability to use <a href="Gliffy.html">Gliffy</a>
+            diagrams. In <tt>config/initializers/gliffy.rb</tt> you might configure
+            values for the Credential object
+            </p>
+            <pre>$gliffy_api_key = 'your-consumer-key-here'&#x000A;$gliffy_secret = 'your-secret-here'&#x000A;$gliffy_app_description = 'My Awesome Group Blog',&#x000A;$gliffy_account_id = 655321&#x000A;$gliffy_root = 'www.gliffy.com/api/v1'&#x000A;$gliffy_edit_root = 'www.gliffy.com/gliffy'</pre>
+            <p>
+            Then, in your <tt>sessions_controller.rb</tt>:
+            </p>
+            <pre>require 'gliffy'&#x000A;&#x000A;def create&#x000A;  self.current_user = User.authenticate(params[:email],params[:password])&#x000A;  if logged_in?&#x000A;    # Whatever you do when they log in successfully&#x000A;    # Then create the credentials object&#x000A;    cred = Credentials.new(\&#x000A;      $gliffy_api_key,&#x000A;      $gliffy_secret,&#x000A;      $gliffy_app_description,&#x000A;      $gliffy_account_id,&#x000A;      self.current_user.username)&#x000A;    session[:gliffy] = Gliffy::Handle.new($gliffy_root,$gliffy_edit_root,cred)&#x000A;end</pre>
+            <p>
+            Now you can use the gliffy handle in a controller or a view. Perhaps
+            you&#8217;d make an action to create a new document and send the user to
+            edit it:
+            </p>
+            <pre>def create&#x000A;  new_doc = session[:gliffy].document_create(params[:name])&#x000A;  redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,&#x000A;              {:returnURL =&gt; url_for(:controller =&gt; 'return_from_gliffy'),&#x000A;               :returnButtonText =&gt; 'Back to My Awesome Blog'}))&#x000A;end</pre>
+            <h2>Digging Deeper</h2>
+            <p>
+            If you wish to bypass the high-level API, you can interact with <a
+            href="Gliffy.html">Gliffy</a> directly via the <a
+            href="Gliffy/Request.html">Gliffy::Request</a> class, which allows you to
+            make arbitrary requests against the <a href="Gliffy.html">Gliffy</a> API,
+            but takes care of signing your URLs and all OAuth things that need to be
+            done:
+            </p>
+            <pre># Create a Credentials object as normal&#x000A;request = Gliffy::Request.new('www.gliffy.com/api/v1',credentials)&#x000A;# The method name maps directly to Gliffy's &quot;action&quot; parameters&#x000A;response = request.delete('accounts/$account_id/documents/12345')</pre>
+            <p>
+            You can manipulate the response directly, or attempt to parse it using the
+            <a href="Gliffy/Response.html">Gliffy::Response</a> object:
+            </p>
+            <pre>model = Response.from_http_response(response)</pre>
+            <h1>Design</h1>
+            <h2>Domain Objects</h2>
+            <p>
+            Instead of creating explicit objects for each domain object in <a
+            href="Gliffy.html">Gliffy</a>, we always return a <a
+            href="Gliffy/Response.html">Response</a> object, that uses method_missing
+            to implement accessors for data returned from <a
+            href="Gliffy.html">Gliffy</a>. These implicit accessors should return typed
+            values and are named accordingly:
+            </p>
+            <ul>
+            <li>If the name in the <a
+            href="http://www.gliffy.com/developer/apidocs/xsddoc/">XSD</a> has dashes,
+            underscores are used here
+            
+            </li>
+            <li>If the item is a boolean, its boolean value is available with a
+            &#8220;?&#8221; at the end
+            
+            </li>
+            <li>The id field is available as type_id, e.g. document_id
+            
+            </li>
+            <li>Date fields are converted to Time objects
+            
+            </li>
+            <li>Any field in the response that was not known about in this code will be
+            available as a String, based on the above rules
+            
+            </li>
+            </ul>
+            <p>
+            So, if you requested document meta data, you would have the following
+            accessors available:
+            </p>
+            <ul>
+            <li>document.document_id
+            
+            </li>
+            <li>document.is_private?
+            
+            </li>
+            <li>document.is_public?
+            
+            </li>
+            <li>document.num_versions
+            
+            </li>
+            <li>document.mod_date # returns a Time
+            
+            </li>
+            <li>document.create_date # returns a Time
+            
+            </li>
+            <li>document.published_date # returns a Time
+            
+            </li>
+            <li>document.owner # Returns a <a href="Gliffy/Response.html">Response</a> that
+            responds to user accessors
+            
+            </li>
+            <li>document.versions # Returns an array of <a
+            href="Gliffy/Response.html">Response</a> objects that act like versions
+            
+            </li>
+            </ul>
+            <h2>HTTP Layer</h2>
+            <p>
+            <a href="Gliffy/Request.html">Request</a> implements the HTTP layer, and is
+            based on HTTParty. Since all <a href="Gliffy.html">Gliffy</a> URLs have an
+            &#8220;action&#8221; HTTP param in them, this action is the method name,
+            followed by the URL on which to perform that action (this is not a REST
+            action, but specific to <a href="Gliffy.html">Gliffy</a>). You can
+            optionally include other HTTP params, however those needed for
+            authentication and signing are taken care of. <a
+            href="Gliffy/Request.html">Request</a> will examine the Credential object
+            used to create the <a href="Gliffy/Request.html">Request</a> object, sign
+            the request, make the request and return the result. It will look at the
+            result only enough to determine if it&#8217;s an error, or a failure. See
+            the RubyDoc for more on how this works.
+            </p>
+            <h1>Development</h1>
+            <h2>Gems</h2>
+            <p>
+            You will need:
+            </p>
+            <pre>* hanna 0.1.7, available via `gem install mislav-hanna`&#x000A;* httparty 0.4.2 or better&#x000A;* ruby-hmac 0.3.2 or better&#x000A;* gli 0.1.6 or better</pre>
+            <p>
+            All of these save for hanna are installed if you installed the gem.
+            </p>
+            <h2>Unit Tests</h2>
+            <p>
+            Make sure you get at least 100% statement coverage of the code you write
+            via Unit Tests.
+            </p>
+            <p>
+            Sometimes the test that two nonces shouldn&#8217;t be the same fails. This
+            occurs, because they are generated in pretty much the same instant AND when
+            the random number generator generates the same number twice in a row.
+            Usually if you run tests again, things pass.
+            </p>
+            <h2>Integration Tests</h2>
+            <p>
+            This code is capable of running integration tests against Gliffy&#8217;s
+            integration test servers. If you would like to run these tests, you must
+            contact <a href="Gliffy.html">Gliffy</a> for the information needed. You
+            could technically run integration tests against your own <a
+            href="Gliffy.html">Gliffy</a> account on their production server, but this
+            may delete or change your account&#8217;s data and is not recommended. Once
+            you have the information from <a href="Gliffy.html">Gliffy</a>, create the
+            file `test/it_cred.rb` as follows:
+            </p>
+            <pre>$account_id = # integration tests account id&#x000A;$username = # integration tests admin user name&#x000A;$oauth_consumer_key = # integration test account consumer key&#x000A;$oauth_consumer_secret = # integration test account consumer secret&#x000A;$api_root = # integration test server API endpoint&#x000A;$http_auth_username = # integration test server HTTP Auth username&#x000A;$http_auth_password = # integration test server HTTP Auth password</pre>
+            <h2>Functional Tests</h2>
+            <p>
+            The functional tests perform actual workflows against a <a
+            href="Gliffy.html">Gliffy</a> server and, as such, are more fragile. If
+            something is wrong in your environment (or with <a
+            href="Gliffy.html">Gliffy</a>), you could leave the test account in a weird
+            state. As such, you should create a new account using a test-only API call.
+            This can be done via
+            </p>
+            <pre>rake setup_account</pre>
+            <p>
+            This requires that it_cred.rb is set up and runs test/setup_account.rb.
+            This will create the file functest_cred.rb with the necessary information
+            to access the newly created account. The accounts seem to get reset every
+            day, so you will not be able to reliably automate this. That being said,
+            the only way to get 100% coverage is to run these tests.
+            </p>
+            <p>
+            Each functional test assumes the following:
+            </p>
+            <ul>
+            <li>The account name is &#8216;Ruby Client Test Account&#8217;
+            
+            </li>
+            <li>The account id is 1000001
+            
+            </li>
+            <li>The only user is testuser@gliffy.com
+            
+            </li>
+            <li>There are no documents/diagrams
+            
+            </li>
+            <li>The only folder is ROOT
+            
+            </li>
+            </ul>
+            <p>
+            Each test will put data into <a href="Gliffy.html">Gliffy</a>, query it,
+            and remove it, thus leaving the account in the same state.
+            </p>
+            <p>
+            To fully test the edit launch link, run
+            </p>
+            <pre>rake TEST_LINK=true functest</pre>
+            <p>
+            This will print out the launch link and pause the testing. Copy/Paste this
+            into your browser to make sure it works and then come back to the console
+            and hit return. Do not do this for automated builds.
+            </p>
+            <h2>JUnit output</h2>
+            <p>
+            I monkeypatched the Ruby unit test classes to output JUnit-style XML when
+            the tests are run. I believe this file gets overridden with each type of
+            test, but you only really should care about it for the `test` target. The
+            file is called `junit_output.xml`.
+            </p>
           </div>
           <div id='section'>
             <div id='class-list'>
               <h2>Classes and Modules</h2>
-              Class <a href="Gliffy/Account.html" class="link">Gliffy::Account</a><br />
-              Class <a href="Gliffy/Accounts.html" class="link">Gliffy::Accounts</a><br />
-              Class <a href="Gliffy/ArrayResponseParser.html" class="link">Gliffy::ArrayResponseParser</a><br />
-              Class <a href="Gliffy/CLIConfig.html" class="link">Gliffy::CLIConfig</a><br />
-              Class <a href="Gliffy/Command.html" class="link">Gliffy::Command</a><br />
-              Class <a href="Gliffy/Config.html" class="link">Gliffy::Config</a><br />
-              Class <a href="Gliffy/Diagram.html" class="link">Gliffy::Diagram</a><br />
-              Class <a href="Gliffy/Diagrams.html" class="link">Gliffy::Diagrams</a><br />
-              Class <a href="Gliffy/Error.html" class="link">Gliffy::Error</a><br />
-              Class <a href="Gliffy/Folder.html" class="link">Gliffy::Folder</a><br />
-              Class <a href="Gliffy/Folders.html" class="link">Gliffy::Folders</a><br />
+              Class <a href="Gliffy/AccessToken.html" class="link">Gliffy::AccessToken</a><br />
+              Class <a href="Gliffy/BadResponseException.html" class="link">Gliffy::BadResponseException</a><br />
+              Class <a href="Gliffy/Credentials.html" class="link">Gliffy::Credentials</a><br />
               Class <a href="Gliffy/Handle.html" class="link">Gliffy::Handle</a><br />
-              Class <a href="Gliffy/LaunchLink.html" class="link">Gliffy::LaunchLink</a><br />
+              Class <a href="Gliffy/NoResponseException.html" class="link">Gliffy::NoResponseException</a><br />
+              Class <a href="Gliffy/Request.html" class="link">Gliffy::Request</a><br />
+              Class <a href="Gliffy/RequestFailedException.html" class="link">Gliffy::RequestFailedException</a><br />
               Class <a href="Gliffy/Response.html" class="link">Gliffy::Response</a><br />
-              Class <a href="Gliffy/Rest.html" class="link">Gliffy::Rest</a><br />
               Class <a href="Gliffy/SignedURL.html" class="link">Gliffy::SignedURL</a><br />
-              Class <a href="Gliffy/User.html" class="link">Gliffy::User</a><br />
-              Class <a href="Gliffy/UserToken.html" class="link">Gliffy::UserToken</a><br />
-              Class <a href="Gliffy/Users.html" class="link">Gliffy::Users</a><br />
             </div>
-            <div id='methods'>
-              <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000004'>
-                <a name='M000004'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>command</span>
-                  <span class='arguments'>(name,options={},&amp;block)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  defines a command. The only options supported is &#8220;:aliases&#8221;
-                  which is an array of aliases for the command
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000004-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000004-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 212</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">command</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;    <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">Command</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>,<span class="ruby-ivar">@next_desc</span>,<span class="ruby-ivar">@next_offline</span>,<span class="ruby-ivar">@next_usage</span>,<span class="ruby-identifier">block</span>)&#x000A;    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:aliases</span>]&#x000A;      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:aliases</span>].<span class="ruby-identifier">each</span>() <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">a</span>] = <span class="ruby-constant">Command</span>.<span class="ruby-identifier">commands</span>[<span class="ruby-identifier">name</span>]&#x000A;        <span class="ruby-constant">Command</span>.<span class="ruby-identifier">aliases</span>[<span class="ruby-identifier">a</span>] = <span class="ruby-keyword kw">true</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-ivar">@next_usage</span> = <span class="ruby-keyword kw">nil</span>&#x000A;    <span class="ruby-ivar">@next_offline</span> = <span class="ruby-keyword kw">false</span>&#x000A;    <span class="ruby-ivar">@next_desc</span> = <span class="ruby-keyword kw">nil</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000001'>
-                <a name='M000001'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>desc</span>
-                  <span class='arguments'>(description)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  For defining commands, this specifies the description of the next command
-                  defined
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000001-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 196</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">desc</span>(<span class="ruby-identifier">description</span>)&#x000A;    <span class="ruby-ivar">@next_desc</span> = <span class="ruby-identifier">description</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000006'>
-                <a name='M000006'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>format_date</span>
-                  <span class='arguments'>(date)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 248</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_date</span>(<span class="ruby-identifier">date</span>)&#x000A;    <span class="ruby-identifier">date</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%m/%d/%y %H:%M'</span>)&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000002'>
-                <a name='M000002'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>offline</span>
-                  <span class='arguments'>(bool)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  For defining commands, this specifies if the next defined command is
-                  &#8220;offline&#8220;
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000002-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 201</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">offline</span>(<span class="ruby-identifier">bool</span>)&#x000A;    <span class="ruby-ivar">@next_offline</span> = <span class="ruby-identifier">bool</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000005'>
-                <a name='M000005'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>parse_options</span>
-                  <span class='arguments'>(args)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000005-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000005-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 225</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_options</span>(<span class="ruby-identifier">args</span>)&#x000A;    <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">options</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>&#x000A;    <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>&#x000A;    <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span>&#x000A;      <span class="ruby-identifier">inc</span> = <span class="ruby-value">2</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^-/</span>&#x000A;        <span class="ruby-identifier">arg</span> = <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^-/</span>,<span class="ruby-value str">''</span>)&#x000A;        <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^-/</span>)&#x000A;          <span class="ruby-identifier">inc</span> = <span class="ruby-value">1</span>&#x000A;          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">arg</span>] = <span class="ruby-keyword kw">true</span>&#x000A;        <span class="ruby-keyword kw">else</span>&#x000A;          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">arg</span>] = <span class="ruby-identifier">args</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">break</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">inc</span>&#x000A;    <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span> }&#x000A;    <span class="ruby-identifier">options</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-instance method' id='method-M000003'>
-                <a name='M000003'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>usage</span>
-                  <span class='arguments'>(usage='')</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  For defining commands, specifies the usage statement of the next command
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000003-source'><span class="ruby-comment cmt"># File lib/gliffy/cli.rb, line 206</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usage</span>(<span class="ruby-identifier">usage</span>=<span class="ruby-value str">''</span>)&#x000A;    <span class="ruby-ivar">@next_usage</span> = <span class="ruby-identifier">usage</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
-                </div>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>VERSION</td>
+                    <td>=</td>
+                    <td class='context-item-value'>'0.1.7'</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>

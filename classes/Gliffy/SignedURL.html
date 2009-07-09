@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>Class: Gliffy::SignedURL [Ruby Client for Gliffy]</title>
+    <title>: Gliffy::SignedURL [Ruby Client for Gliffy]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -50,34 +50,97 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000048">new</a></li>
+              <li><a href="#M000009">encode</a></li>
+              <li><a href="#M000010">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000049">[]=</a></li>
-              <li><a href="#M000051">full_url</a></li>
-              <li><a href="#M000050">params=</a></li>
+              <li><a href="#M000011">[]=</a></li>
+              <li><a href="#M000013">full_url</a></li>
+              <li><a href="#M000012">params=</a></li>
             </ol>
           </div>
           <div id='section'>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>READ_ONLY_PARAMS</td>
+                    <td>=</td>
+                    <td class='context-item-value'>{       'oauth_consumer_key' =&gt; true,       'oauth_token' =&gt; true,       'oauth_signature_method' =&gt; true,       'oauth_version' =&gt; true,       'oauth_nonce' =&gt; true,       'oauth_timestamp' =&gt; true,     }</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>logger</td>
+                    <td class='context-item-value'>[RW]</td>
+                    <td class='context-item-desc'>
+                      
+                      Modify the logger
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000048'>
-                <a name='M000048'>      </a>
+              <div class='public-class method' id='method-M000009'>
+                <a name='M000009'>      </a>
                 <div class='synopsis'>
-                  <span class='name'>new</span>
-                  <span class='arguments'>(api_key,secret_key,url_root,url)</span>
+                  <span class='name'>encode</span>
+                  <span class='arguments'>(string)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Ruby&#8217;s SignedURL::encode doesn&#8217;t encode spaces correctly
+                  </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000048-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000048-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 7</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_key</span>,<span class="ruby-identifier">secret_key</span>,<span class="ruby-identifier">url_root</span>,<span class="ruby-identifier">url</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;api_key is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">api_key</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;secret_key is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">secret_key</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;url_root is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">url_root</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;url is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">url_root</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_device</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">log_level</span>&#x000A;      <span class="ruby-ivar">@params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-ivar">@params</span>[<span class="ruby-value str">'apiKey'</span>] = <span class="ruby-identifier">api_key</span>&#x000A;      <span class="ruby-ivar">@secret_key</span> = <span class="ruby-identifier">secret_key</span>&#x000A;      <span class="ruby-ivar">@url_root</span> = <span class="ruby-identifier">url_root</span>&#x000A;      <span class="ruby-ivar">@url</span> = <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 20</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">string</span>)&#x000A;      <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/([^ a-zA-Z0-9_.-]+)/n</span>) <span class="ruby-keyword kw">do</span>&#x000A;      <span class="ruby-value str">'%'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'H2'</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">size</span>).<span class="ruby-identifier">join</span>(<span class="ruby-value str">'%'</span>).<span class="ruby-identifier">upcase</span>&#x000A;      <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">' '</span>, <span class="ruby-value str">'%20'</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-class method' id='method-M000010'>
+                <a name='M000010'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(credentials,url,method,logger=nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Create a new <a href="SignedURL.html">SignedURL</a>
+                  </p>
+                  <dl>
+                  <dt><tt>credentails</tt></dt><dd>The credentials available when signing the request (required).
+                  
+                  </dd>
+                  <dt><tt>url</tt></dt><dd>The URL (without parameters) to request (required)
+                  
+                  </dd>
+                  <dt><tt>method</tt></dt><dd>The HTTP <a href="Request.html">Request</a> method that will be made
+                  (required)
+                  
+                  </dd>
+                  </dl>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000010-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000010-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 34</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">credentials</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">logger</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;credentials is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;url is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;method is required&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">nil?</span>&#x000A;&#x000A;      <span class="ruby-ivar">@credentials</span> = <span class="ruby-identifier">credentials</span>&#x000A;&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">logger</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDOUT</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">INFO</span>&#x000A;&#x000A;      <span class="ruby-ivar">@params</span> = {&#x000A;        <span class="ruby-value str">'oauth_signature_method'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'HMAC-SHA1'</span>,&#x000A;        <span class="ruby-value str">'oauth_version'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'1.0'</span>,&#x000A;      }&#x000A;      <span class="ruby-ivar">@params</span>[<span class="ruby-value str">'oauth_consumer_key'</span>] = <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">consumer_key</span>&#x000A;      <span class="ruby-ivar">@params</span>[<span class="ruby-value str">'oauth_token'</span>] = <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">access_token</span>.<span class="ruby-identifier">token</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">access_token</span>&#x000A;      <span class="ruby-ivar">@consumer_secret</span> = <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">consumer_secret</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">access_token</span>&#x000A;        <span class="ruby-ivar">@access_secret</span> = <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">access_token</span>.<span class="ruby-identifier">secret</span> &#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-ivar">@access_secret</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-ivar">@method</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">upcase</span>&#x000A;      <span class="ruby-ivar">@url</span> = <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000049'>
-                <a name='M000049'>      </a>
+              <div class='public-instance method' id='method-M000011'>
+                <a name='M000011'>      </a>
                 <div class='synopsis'>
                   <span class='name'>[]=</span>
                   <span class='arguments'>(param,value)</span>
@@ -87,7 +150,7 @@
                   Sets a request parameter
                   </p>
                   <dl>
-                  <dt>param</dt><dd>the name of the parameter, as a string
+                  <dt>param</dt><dd>the name of the parameter, as a string or symbol
                   
                   </dd>
                   <dt>value</dt><dd>the value of the parameter, unencoded
@@ -96,17 +159,17 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000049-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000011-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000049-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 26</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">param</span>,<span class="ruby-identifier">value</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">param</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'apiKey'</span>)&#x000A;        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'You may not override the api_key in this way'</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">param</span>] = <span class="ruby-identifier">value</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000011-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 65</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">param</span>,<span class="ruby-identifier">value</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;param may not be nil&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">param</span> = <span class="ruby-identifier">param</span>.<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;You may not override #{param}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">READ_ONLY_PARAMS</span>[<span class="ruby-identifier">param</span>]&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> &#x000A;        <span class="ruby-ivar">@params</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">param</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">param</span>] = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000051'>
-                <a name='M000051'>      </a>
+              <div class='public-instance method' id='method-M000013'>
+                <a name='M000013'>      </a>
                 <div class='synopsis'>
                   <span class='name'>full_url</span>
-                  <span class='arguments'>()</span>
+                  <span class='arguments'>(timestamp=nil,nonce=nil)</span>
                 </div>
                 <div class='description'>
                   <p>
@@ -114,14 +177,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000051-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000013-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000051-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 41</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_url</span>&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Getting full_url of #{@url}&quot;</span>)&#x000A;      <span class="ruby-identifier">to_sign</span> = <span class="ruby-ivar">@url</span>&#x000A;      <span class="ruby-identifier">url_params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>&#x000A;      <span class="ruby-ivar">@params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Adding param #{key} (#{to_sign.class.to_s}, #{key.class.to_s}) : #{to_sign.to_s}&quot;</span>)&#x000A;        <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">key</span>&#x000A;        <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">to_s</span>&#x000A;        <span class="ruby-identifier">url_params</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">to_s</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@secret_key</span>&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Signing '#{to_sign}'&quot;</span>)&#x000A;      <span class="ruby-identifier">signature</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">to_sign</span>)&#x000A;      <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^0/</span>,<span class="ruby-value str">''</span>) <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">signature</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^0/</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;signature == '#{signature}'&quot;</span>)&#x000A;      <span class="ruby-identifier">url_params</span>[<span class="ruby-value str">'signature'</span>] = <span class="ruby-identifier">signature</span>&#x000A;&#x000A;      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@url_root</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@url</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'?'</span>&#x000A;      <span class="ruby-identifier">url_params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">val</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">url_params</span>[<span class="ruby-identifier">key</span>])&#x000A;        <span class="ruby-identifier">url</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{key}=#{val}&amp;&quot;</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-identifier">url</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\&amp;$/</span>,<span class="ruby-value str">''</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000013-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 85</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_url</span>(<span class="ruby-identifier">timestamp</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">nonce</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;Getting full_url of #{@url}&quot;</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;OAuth Part 1 : #{@method}&quot;</span>)&#x000A;&#x000A;      <span class="ruby-identifier">escaped_url</span> = <span class="ruby-constant">SignedURL</span><span class="ruby-operator">::</span><span class="ruby-identifier">encode</span>(<span class="ruby-ivar">@url</span>)&#x000A;      <span class="ruby-identifier">to_sign</span> = <span class="ruby-ivar">@method</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;&amp;&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">escaped_url</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;&amp;&quot;</span>&#x000A;&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;OAuth Part 2 (raw) : #{@url}&quot;</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;OAuth Part 2 (esc) : #{escaped_url}&quot;</span>)&#x000A;&#x000A;      <span class="ruby-identifier">timestamp</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">timestamp</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">nonce</span>=<span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">nonce</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nonce</span>.<span class="ruby-identifier">nil?</span>&#x000A;&#x000A;      <span class="ruby-identifier">param_part</span>,<span class="ruby-identifier">url_params</span> = <span class="ruby-identifier">handle_params</span>(<span class="ruby-identifier">timestamp</span>,<span class="ruby-identifier">nonce</span>)&#x000A;      <span class="ruby-identifier">escaped_params</span> = <span class="ruby-constant">SignedURL</span><span class="ruby-operator">::</span><span class="ruby-identifier">encode</span>(<span class="ruby-identifier">param_part</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;OAuth Part 3 (raw) : #{param_part}&quot;</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-node">&quot;OAuth Part 3 (esc) : #{escaped_params}&quot;</span>)&#x000A;&#x000A;      <span class="ruby-identifier">to_sign</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">escaped_params</span>&#x000A;&#x000A;      <span class="ruby-identifier">signature</span> = <span class="ruby-identifier">get_signature</span>(<span class="ruby-identifier">to_sign</span>)&#x000A;&#x000A;      <span class="ruby-identifier">url_params</span>[<span class="ruby-value str">'oauth_signature'</span>] = <span class="ruby-constant">SignedURL</span><span class="ruby-operator">::</span><span class="ruby-identifier">encode</span>(<span class="ruby-identifier">signature</span>)&#x000A;&#x000A;      <span class="ruby-identifier">assembled_url</span> = <span class="ruby-identifier">assemble_url</span>(<span class="ruby-identifier">url_params</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">&quot;Full URL is &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">assembled_url</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">assembled_url</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000050'>
-                <a name='M000050'>      </a>
+              <div class='public-instance method' id='method-M000012'>
+                <a name='M000012'>      </a>
                 <div class='synopsis'>
                   <span class='name'>params=</span>
                   <span class='arguments'>(params_hash)</span>
@@ -132,10 +195,10 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000050-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000012-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000050-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 34</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">params=</span>(<span class="ruby-identifier">params_hash</span>)&#x000A;      <span class="ruby-identifier">api_key</span> = <span class="ruby-ivar">@params</span>[<span class="ruby-value str">'apiKey'</span>]&#x000A;      <span class="ruby-ivar">@params</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">params_hash</span>)&#x000A;      <span class="ruby-ivar">@params</span>[<span class="ruby-value str">'apiKey'</span>] = <span class="ruby-identifier">api_key</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000012-source'><span class="ruby-comment cmt"># File lib/gliffy/url.rb, line 77</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">params=</span>(<span class="ruby-identifier">params_hash</span>)&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'you may not set params to nil'</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params_hash</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">params_hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">k</span>]=<span class="ruby-identifier">v</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

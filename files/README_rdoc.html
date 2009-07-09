@@ -3,7 +3,7 @@
   <head>
     <title>File: README.rdoc [Ruby Client for Gliffy]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -25,135 +25,245 @@
   <body class='page'>
     <div class='file' id='wrapper'>
       <div class='header'>
-        <h1 class='name'>README.rdoc</h1>
+        <div class='name'>README.rdoc</div>
         <div class='paths'>
           README.rdoc
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Jan 12 19:18:25 -0500 2009</span>
+          <span class='datetime'>Wed Jul 08 20:35:03 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
           <div id='description'>
             <p>
-            <em>The <a href="../classes/Gliffy.html">Gliffy</a> API is currently in
-            private beta. This will be a Ruby implementation to access your <a
-            href="../classes/Gliffy.html">Gliffy</a> account.</em>
+            This is the Ruby client library for interacting with <a
+            href="http://www.gliffy.com">Gliffy</a>. It&#8217;s main function is for
+            you to integrate <a href="../classes/Gliffy.html">Gliffy</a> documents into
+            the workflow of another application.
+            </p>
+            <h1>Getting Started</h1>
+            <pre>sudo gem install gliffy</pre>
+            <h1>Overview</h1>
+            <p>
+            The main entry point to <a href="../classes/Gliffy.html">Gliffy</a> is <a
+            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, which provides
+            high-level access to most features available from the API. You should
+            instantiate one of these objects per <em>user session</em>. To create it,
+            you will need to create and populate an instance of the Credentials class.
+            This class is constructed almost entirely from static data about your <a
+            href="../classes/Gliffy.html">Gliffy</a> account, so you will probably
+            configure an instance of this globally.
             </p>
             <p>
-            This consists of a Ruby client for <a
-            href="../classes/Gliffy.html">Gliffy</a> as well as a simple command line
-            tool to access your <a href="../classes/Gliffy.html">Gliffy</a> account
-            using that client.
+            This is then used (along with the API root to <a
+            href="../classes/Gliffy.html">Gliffy</a>) to create an instance of <a
+            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>. Objects of this
+            class provide access to the features you will need to integrate <a
+            href="../classes/Gliffy.html">Gliffy</a> into your app&#8217;s workflow.
             </p>
-            <h2>Client Library</h2>
+            <h2>Example</h2>
             <p>
-            Main entry point is <a
-            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, though you should
-            look at <a href="../classes/Gliffy/Config.html">Gliffy::Config</a> for
-            configuration options. Here&#8217;s an example of getting the list of
-            diagrams and then downloading the first one as a JPEG
+            Suppose you have created a group blog application using Rails and wish to
+            give Blog authors the ability to use <a
+            href="../classes/Gliffy.html">Gliffy</a> diagrams. In
+            <tt>config/initializers/gliffy.rb</tt> you might configure values for the
+            Credential object
             </p>
-            <pre>require 'gliffy'&#x000A;&#x000A;Gliffy::Config.config.api_key='aa9d0e8d-449b-44ad-904a-bf87deb7c403'&#x000A;Gliffy::Config.config.secret_key='a52585f7-5952-4229-8bbe-b5787521b571'&#x000A;Gliffy::Config.config.account_name='Initech'&#x000A;&#x000A;handle = Gliffy::Handle.new('lumberg@initech.com')&#x000A;&#x000A;diagrams = handle.get_diagrams&#x000A;diagram_name_safe = diagrams[0].name.gsub(/ /,'_')&#x000A;handle.get_diagram_as_image(diagrams[0].id,:mime_type =&gt; :jpeg,:file=&gt;&quot;#{diagram_name_safe}.jpg&quot;)</pre>
+            <pre>$gliffy_api_key = 'your-consumer-key-here'&#x000A;$gliffy_secret = 'your-secret-here'&#x000A;$gliffy_app_description = 'My Awesome Group Blog',&#x000A;$gliffy_account_id = 655321&#x000A;$gliffy_root = 'www.gliffy.com/api/v1'&#x000A;$gliffy_edit_root = 'www.gliffy.com/gliffy'</pre>
             <p>
-            The <a href="../classes/Gliffy/Handle.html">Gliffy::Handle</a> is a
-            <b>user-session based connection</b> to <a
-            href="../classes/Gliffy.html">Gliffy</a>. You shoudl therefore engineer
-            your application to keep one of these per user who will access <a
-            href="../classes/Gliffy.html">Gliffy</a> and <b>not</b> make a global
-            instance.
+            Then, in your <tt>sessions_controller.rb</tt>:
+            </p>
+            <pre>require 'gliffy'&#x000A;&#x000A;def create&#x000A;  self.current_user = User.authenticate(params[:email],params[:password])&#x000A;  if logged_in?&#x000A;    # Whatever you do when they log in successfully&#x000A;    # Then create the credentials object&#x000A;    cred = Credentials.new(\&#x000A;      $gliffy_api_key,&#x000A;      $gliffy_secret,&#x000A;      $gliffy_app_description,&#x000A;      $gliffy_account_id,&#x000A;      self.current_user.username)&#x000A;    session[:gliffy] = Gliffy::Handle.new($gliffy_root,$gliffy_edit_root,cred)&#x000A;end</pre>
+            <p>
+            Now you can use the gliffy handle in a controller or a view. Perhaps
+            you&#8217;d make an action to create a new document and send the user to
+            edit it:
+            </p>
+            <pre>def create&#x000A;  new_doc = session[:gliffy].document_create(params[:name])&#x000A;  redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,&#x000A;              {:returnURL =&gt; url_for(:controller =&gt; 'return_from_gliffy'),&#x000A;               :returnButtonText =&gt; 'Back to My Awesome Blog'}))&#x000A;end</pre>
+            <h2>Digging Deeper</h2>
+            <p>
+            If you wish to bypass the high-level API, you can interact with <a
+            href="../classes/Gliffy.html">Gliffy</a> directly via the <a
+            href="../classes/Gliffy/Request.html">Gliffy::Request</a> class, which
+            allows you to make arbitrary requests against the <a
+            href="../classes/Gliffy.html">Gliffy</a> API, but takes care of signing
+            your URLs and all OAuth things that need to be done:
+            </p>
+            <pre># Create a Credentials object as normal&#x000A;request = Gliffy::Request.new('www.gliffy.com/api/v1',credentials)&#x000A;# The method name maps directly to Gliffy's &quot;action&quot; parameters&#x000A;response = request.delete('accounts/$account_id/documents/12345')</pre>
+            <p>
+            You can manipulate the response directly, or attempt to parse it using the
+            <a href="../classes/Gliffy/Response.html">Gliffy::Response</a> object:
+            </p>
+            <pre>model = Response.from_http_response(response)</pre>
+            <h1>Design</h1>
+            <h2>Domain Objects</h2>
+            <p>
+            Instead of creating explicit objects for each domain object in <a
+            href="../classes/Gliffy.html">Gliffy</a>, we always return a Response
+            object, that uses method_missing to implement accessors for data returned
+            from <a href="../classes/Gliffy.html">Gliffy</a>. These implicit accessors
+            should return typed values and are named accordingly:
             </p>
             <ul>
-            <li>RDoc is available a <a
-            href="http://davetron5000.github.com/gliffy">davetron5000.github.com/gliffy</a>
+            <li>If the name in the <a
+            href="http://www.gliffy.com/developer/apidocs/xsddoc/">XSD</a> has dashes,
+            underscores are used here
             
             </li>
-            <li>Source is available at <a
-            href="http://github.com/davetron5000/gliffy/tree/master">github.com/davetron5000/gliffy/tree/master</a>
+            <li>If the item is a boolean, its boolean value is available with a
+            &#8220;?&#8221; at the end
+            
+            </li>
+            <li>The id field is available as type_id, e.g. document_id
+            
+            </li>
+            <li>Date fields are converted to Time objects
+            
+            </li>
+            <li>Any field in the response that was not known about in this code will be
+            available as a String, based on the above rules
             
             </li>
             </ul>
-            <h2>Command Line Client</h2>
             <p>
-            <tt>gliffy</tt> <tt>help</tt> shows a list of commands. Currently, there
-            are:
+            So, if you requested document meta data, you would have the following
+            accessors available:
             </p>
-            <dl>
-            <dt><tt>delete</tt></dt><dd>Delete a diagram (also: del,rm)
+            <ul>
+            <li>document.document_id
             
-            </dd>
-            <dt><tt>edit</tt></dt><dd>Edit a diagram
+            </li>
+            <li>document.is_private?
             
-            </dd>
-            <dt><tt>get</tt></dt><dd>Download a diagram as an image to a file
+            </li>
+            <li>document.is_public?
             
-            </dd>
-            <dt><tt>help</tt></dt><dd>Show commands
+            </li>
+            <li>document.num_versions
             
-            </dd>
-            <dt><tt>list</tt></dt><dd>List all diagrams in the account (also: ls)
+            </li>
+            <li>document.mod_date # returns a Time
             
-            </dd>
-            <dt><tt>new</tt></dt><dd>Create a new diagram
+            </li>
+            <li>document.create_date # returns a Time
             
-            </dd>
-            <dt><tt>url</tt></dt><dd>Get the URL for an image
+            </li>
+            <li>document.published_date # returns a Time
             
-            </dd>
-            </dl>
-            <h3>Configuration</h3>
+            </li>
+            <li>document.owner # Returns a Response that responds to user accessors
+            
+            </li>
+            <li>document.versions # Returns an array of Response objects that act like
+            versions
+            
+            </li>
+            </ul>
+            <h2>HTTP Layer</h2>
             <p>
-            The first time you run the client, it will create a base configuration in
-            your home directory called <tt>.gliffyrc</tt>, and will ask you to provide
-            it with four pieces of information:
+            Request implements the HTTP layer, and is based on HTTParty. Since all <a
+            href="../classes/Gliffy.html">Gliffy</a> URLs have an &#8220;action&#8221;
+            HTTP param in them, this action is the method name, followed by the URL on
+            which to perform that action (this is not a REST action, but specific to <a
+            href="../classes/Gliffy.html">Gliffy</a>). You can optionally include other
+            HTTP params, however those needed for authentication and signing are taken
+            care of. Request will examine the Credential object used to create the
+            Request object, sign the request, make the request and return the result.
+            It will look at the result only enough to determine if it&#8217;s an error,
+            or a failure. See the RubyDoc for more on how this works.
             </p>
-            <dl>
-            <dt>API Key</dt><dd>This is the API Key given to you by <a
-            href="../classes/Gliffy.html">Gliffy</a>
-            
-            </dd>
-            <dt>Secret Key</dt><dd>This is the Secret Key given to you by <a
-            href="../classes/Gliffy.html">Gliffy</a>. <b>Do not check this value into
-            source control</b>
-            
-            </dd>
-            <dt>Account Name</dt><dd>Your account&#8217;s name. This should&#8217;ve been provided with your API
-            Key
-            
-            </dd>
-            <dt>Username</dt><dd>The username to work under. The command line client only allows single-user
-            access to your <a href="../classes/Gliffy.html">Gliffy</a> account. If you
-            just signed up for <a href="../classes/Gliffy.html">Gliffy</a>, this is
-            probably the email address you used to sign up
-            
-            </dd>
-            </dl>
+            <h1>Development</h1>
+            <h2>Gems</h2>
             <p>
-            If you are not on OS X, you will want to configure two other options, and
-            you can do this by editing your <tt>.gliffyrc</tt> directly:
+            You will need:
             </p>
-            <dl>
-            <dt><tt>open_image</tt></dt><dd>Configures the command for opening an image from the command line. This
-            should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will
-            be replaced with the name of the image file to open.
-            
-            </dd>
-            <dt><tt>open_url</tt></dt><dd>Configures the command for opening an url from the command line. This
-            should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will
-            be replaced with the name of the url to open.
-            
-            </dd>
-            </dl>
+            <pre>* hanna 0.1.7, available via `gem install mislav-hanna`&#x000A;* httparty 0.4.2 or better&#x000A;* ruby-hmac 0.3.2 or better&#x000A;* gli 0.1.6 or better</pre>
             <p>
-            The other options are all documented in <a
-            href="../classes/Gliffy/Config.html">Gliffy::Config</a>. Note that your
-            most previously received user token is stored here as well, to keep from
-            getting it every time the client is run.
+            All of these save for hanna are installed if you installed the gem.
             </p>
-            <h3>Example</h3>
-            <pre>&gt; gliffy ls&#x000A;1573119 Deployment Artifacts&#x000A;1569470 Monthly_Eligible&#x000A;1569477 Monthly_Ineligibile&#x000A;1569478 Quarterly_Eligible&#x000A;1569479 Quarterly_Ineligibile&#x000A;&gt; gliffy get 1569479&#x000A;Quarterly_Ineligibile.jpg&#x000A;&gt; gliffy get 1569479 -d ~/Downloads -t png&#x000A;/Users/davec/Downloads/Quarterly_Ineligibile.png&#x000A;&gt; gliffy edit 1569470&#x000A;# You are sent to gliffy.com in your browser to edit that diagram&#x000A;&gt; gliffy new -e &quot;Class Diagram&quot;&#x000A;# You are sent to gliffy.com to edit the new diagram</pre>
+            <h2>Unit Tests</h2>
+            <p>
+            Make sure you get at least 100% statement coverage of the code you write
+            via Unit Tests.
+            </p>
+            <p>
+            Sometimes the test that two nonces shouldn&#8217;t be the same fails. This
+            occurs, because they are generated in pretty much the same instant AND when
+            the random number generator generates the same number twice in a row.
+            Usually if you run tests again, things pass.
+            </p>
+            <h2>Integration Tests</h2>
+            <p>
+            This code is capable of running integration tests against Gliffy&#8217;s
+            integration test servers. If you would like to run these tests, you must
+            contact <a href="../classes/Gliffy.html">Gliffy</a> for the information
+            needed. You could technically run integration tests against your own <a
+            href="../classes/Gliffy.html">Gliffy</a> account on their production
+            server, but this may delete or change your account&#8217;s data and is not
+            recommended. Once you have the information from <a
+            href="../classes/Gliffy.html">Gliffy</a>, create the file `test/it_cred.rb`
+            as follows:
+            </p>
+            <pre>$account_id = # integration tests account id&#x000A;$username = # integration tests admin user name&#x000A;$oauth_consumer_key = # integration test account consumer key&#x000A;$oauth_consumer_secret = # integration test account consumer secret&#x000A;$api_root = # integration test server API endpoint&#x000A;$http_auth_username = # integration test server HTTP Auth username&#x000A;$http_auth_password = # integration test server HTTP Auth password</pre>
+            <h2>Functional Tests</h2>
+            <p>
+            The functional tests perform actual workflows against a <a
+            href="../classes/Gliffy.html">Gliffy</a> server and, as such, are more
+            fragile. If something is wrong in your environment (or with <a
+            href="../classes/Gliffy.html">Gliffy</a>), you could leave the test account
+            in a weird state. As such, you should create a new account using a
+            test-only API call. This can be done via
+            </p>
+            <pre>rake setup_account</pre>
+            <p>
+            This requires that it_cred.rb is set up and runs test/setup_account.rb.
+            This will create the file functest_cred.rb with the necessary information
+            to access the newly created account. The accounts seem to get reset every
+            day, so you will not be able to reliably automate this. That being said,
+            the only way to get 100% coverage is to run these tests.
+            </p>
+            <p>
+            Each functional test assumes the following:
+            </p>
+            <ul>
+            <li>The account name is &#8216;Ruby Client Test Account&#8217;
+            
+            </li>
+            <li>The account id is 1000001
+            
+            </li>
+            <li>The only user is testuser@gliffy.com
+            
+            </li>
+            <li>There are no documents/diagrams
+            
+            </li>
+            <li>The only folder is ROOT
+            
+            </li>
+            </ul>
+            <p>
+            Each test will put data into <a href="../classes/Gliffy.html">Gliffy</a>,
+            query it, and remove it, thus leaving the account in the same state.
+            </p>
+            <p>
+            To fully test the edit launch link, run
+            </p>
+            <pre>rake TEST_LINK=true functest</pre>
+            <p>
+            This will print out the launch link and pause the testing. Copy/Paste this
+            into your browser to make sure it works and then come back to the console
+            and hit return. Do not do this for automated builds.
+            </p>
+            <h2>JUnit output</h2>
+            <p>
+            I monkeypatched the Ruby unit test classes to output JUnit-style XML when
+            the tests are run. I believe this file gets overridden with each type of
+            test, but you only really should care about it for the `test` target. The
+            file is called `junit_output.xml`.
+            </p>
           </div>
           <div id='section'>
           </div>

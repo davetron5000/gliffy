@@ -3,7 +3,7 @@
   <head>
     <title>File: gliffy [Ruby Client for Gliffy]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
     <script type='text/javascript'>
       //<![CDATA[
         function popupCode(url) {
@@ -31,20 +31,53 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Jan 10 10:57:01 -0500 2009</span>
+          <span class='datetime'>Wed Jul 08 21:51:03 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
         <div id='text'>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000001">write_config</a></li>
+            </ol>
+          </div>
           <div id='context'>
             <div id='requires'>
               <h2>Required files</h2>
               <ol>
-                <li>gliffy/cli</li>
+                <li>rubygems</li>
+                <li>gli</li>
+                <li>etc</li>
+                <li>gliffy</li>
+                <li>yaml</li>
+              </ol>
+            </div>
+            <div id='includes'>
+              <h2>Included modules</h2>
+              <ol>
+                <li>GLI</li>
               </ol>
             </div>
           </div>
           <div id='section'>
+            <div id='methods'>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000001'>
+                <a name='M000001'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>write_config</span>
+                  <span class='arguments'>(cred,config)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000001-source'><span class="ruby-comment cmt"># File bin/gliffy, line 192</span>&#x000A;<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_config</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">config</span>)&#x000A;  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">config</span>,<span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">out</span>)&#x000A;  <span class="ruby-keyword kw">end</span>&#x000A;<span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

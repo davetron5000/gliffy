@@ -28,22 +28,6 @@ command [:ls,:list] do |c|
   end
 end
 
-desc 'List all folders'
-command [:lsfolders,:listfolders] do |c|
-  c.action do |global_options,options,args|
-    folders = $handle.user_folders
-    folders.each do |folder|
-      puts "#{folder.name}/"
-    end
-  end
-end
-
-desc 'Move diagrams from one folder to another'
-command [:mv,:move] do |c|
-  c.action do |global_options,options,args|
-  end
-end
-
 desc 'Delete a diagram'
 command [:rm,:delete] do |c|
   c.action do |global_options,options,args|

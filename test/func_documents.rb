@@ -97,6 +97,18 @@ class FUNC_testDocumentrCreateDelete < FunctionalTestBase
       times -= 1
       assert_equal(expected,times,"Got #{times} for document named #{name}, instead of expected")
     end
+
+    link = @handle.document_edit_link(documents[0].document_id,'http://www.google.com','Return From Functional Test')
+    if ENV['TEST_LINK']
+      puts '=================='
+      puts link
+      puts '=================='
+      puts 'Hit Return When Done'
+      $stdin.readline
+    else
+      puts link
+      puts "Re-run with 'TEST_LINK=true' to pause here so you can try the link"
+    end
   end
 
   private

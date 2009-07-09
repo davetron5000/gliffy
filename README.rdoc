@@ -6,7 +6,7 @@ This is the Ruby client library for interacting with Gliffy[http://www.gliffy.co
 
 = Overview
 
-The main entry point to Gliffy is Gliffy::Handle, which provides high-level access to most features available from the API.  You should instantiate one of these objects per <i>user session</i>.  To create you, you will need to create and populate an instance of the Credentials class.  This class is constructed almost entirely from static data about your Gliffy account, so you will probably configure an instance of this globally.
+The main entry point to Gliffy is Gliffy::Handle, which provides high-level access to most features available from the API.  You should instantiate one of these objects per <i>user session</i>.  To create it, you will need to create and populate an instance of the Credentials class.  This class is constructed almost entirely from static data about your Gliffy account, so you will probably configure an instance of this globally.
 
 This is then used (along with the API root to Gliffy) to create an instance of Gliffy::Handle.  Objects of this class provide access to the features you will need to integrate Gliffy into your app's workflow.
 
@@ -19,6 +19,7 @@ Suppose you have created a group blog application using Rails and wish to give B
     $gliffy_app_description = 'My Awesome Group Blog',
     $gliffy_account_id = 655321
     $gliffy_root = 'www.gliffy.com/api/v1'
+    $gliffy_edit_root = 'www.gliffy.com/gliffy'
 
 Then, in your <tt>sessions_controller.rb</tt>:
 
@@ -28,13 +29,14 @@ Then, in your <tt>sessions_controller.rb</tt>:
       self.current_user = User.authenticate(params[:email],params[:password])
       if logged_in?
         # Whatever you do when they log in successfully
+        # Then create the credentials object
         cred = Credentials.new(\
           $gliffy_api_key,
           $gliffy_secret,
           $gliffy_app_description,
           $gliffy_account_id,
           self.current_user.username)
-        session[:gliffy] = Gliffy::Handle.new($gliffy_root,cred)
+        session[:gliffy] = Gliffy::Handle.new($gliffy_root,$gliffy_edit_root,cred)
     end
 
 Now you can use the gliffy handle in a controller or a view.  Perhaps you'd make an action to create a new document and send the user to edit it:
@@ -72,7 +74,7 @@ Instead of creating explicit objects for each domain object in Gliffy, we always
 
 So, if you requested document meta data, you would have the following accessors available:
 
-* document.document_od
+* document.document_id
 * document.is_private?
 * document.is_public?
 * document.num_versions
@@ -112,7 +114,11 @@ have the information from Gliffy, create the file `test/it_cred.rb` as follows:
 
 == Functional Tests
 
-The functional tests perform actual workflows against a Gliffy server and, as such, are more fragile.  If something is wrong in your environment (or with Gliffy), you could leave the test account in a weird state.
+The functional tests perform actual workflows against a Gliffy server and, as such, are more fragile.  If something is wrong in your environment (or with Gliffy), you could leave the test account in a weird state.  As such, you should create a new account using a test-only API call.  This can be done via
+
+    rake setup_account
+
+This requires that it_cred.rb is set up and runs test/setup_account.rb.  This will create the file functest_cred.rb with the necessary information to access the newly created account.  The accounts seem to get reset every day, so you will not be able to reliably automate this.  That being said, the only way to get 100% coverage is to run these tests.
 
 Each functional test assumes the following:
 
@@ -123,51 +129,4 @@ Each functional test assumes the following:
 * The only folder is ROOT
 
 Each test will put data into Gliffy, query it, and remove it, thus leaving the account in the same state.
-
-= Old Documentation
-
-== Command Line Client
-
-+gliffy+ +help+ shows a list of commands.  Currently, there are:
-
-[+delete+] Delete a diagram (also: del,rm)
-[+edit+]   Edit a diagram 
-[+get+]    Download a diagram as an image to a file 
-[+help+]   Show commands 
-[+list+]   List all diagrams in the account (also: ls)
-[+new+]    Create a new diagram 
-[+url+]    Get the URL for an image 
-
-=== Configuration
-
-The first time you run the client, it will create a base configuration in your home directory called <tt>.gliffyrc</tt>, and will ask you to provide it with four pieces of information:
-
-[API Key] This is the API Key given to you by Gliffy
-[Secret Key] This is the Secret Key given to you by Gliffy.  <b>Do not check this value into source control</b>
-[Account Name] Your account's name.  This should've been provided with your API Key
-[Username] The username to work under.  The command line client only allows single-user access to your Gliffy account.  If you just signed up for Gliffy, this is probably the email address you used to sign up
-
-If you are not on OS X, you will want to configure two other options, and you can do this by editing your <tt>.gliffyrc</tt> directly:
-
-[<tt>open_image</tt>] Configures the command for opening an image from the command line.  This should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will be replaced with the name of the image file to open.
-[<tt>open_url</tt>] Configures the command for opening an url from the command line.  This should be a string of the form <tt>command %s</tt> where <tt>%s</tt> will be replaced with the name of the url to open.
-
-The other options are all documented in Gliffy::Config.  Note that your most previously received user token is stored here as well, to keep from getting it every time the client is run.
-
-=== Example
-
-    > gliffy ls
-    1573119 Deployment Artifacts
-    1569470 Monthly_Eligible
-    1569477 Monthly_Ineligibile
-    1569478 Quarterly_Eligible
-    1569479 Quarterly_Ineligibile
-    > gliffy get 1569479
-    Quarterly_Ineligibile.jpg
-    > gliffy get 1569479 -d ~/Downloads -t png
-    /Users/davec/Downloads/Quarterly_Ineligibile.png
-    > gliffy edit 1569470
-    # You are sent to gliffy.com in your browser to edit that diagram
-    > gliffy new -e "Class Diagram"
-    # You are sent to gliffy.com to edit the new diagram 
 

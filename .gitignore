@@ -5,3 +5,4 @@ html
 doc
 test/it_cred.rb
 test/functest_cred.rb
+junit_output.xml

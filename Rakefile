@@ -4,13 +4,19 @@ require 'hanna/rdoctask'
 require 'rcov/rcovtask'
 require 'rubygems'
 require 'rake/gempackagetask'
-$: << '../grancher/lib'
-require 'grancher/task'
 
-Grancher::Task.new do |g|
-  g.branch = 'gh-pages'
-  g.push_to = 'origin'
-  g.directory 'html'
+begin
+  $: << '../grancher/lib'
+  require 'grancher/task'
+
+  Grancher::Task.new do |g|
+    g.branch = 'gh-pages'
+    g.push_to = 'origin'
+    g.directory 'html'
+  end
+rescue
+  puts "cd ../ ; git clone git://github.com/judofyr/grancher.git"
+  puts "if you want to manage the GitHub Pages page"
 end
 
 Rake::RDocTask.new do |rd|
@@ -27,8 +33,7 @@ end
 
 { :test => { :desc => 'Runs Unit Tests', :prefix => 'tc_', :required_file => nil, :coverage => true },
   :inttest => { :desc => 'Runs Integration Tests', :prefix => 'int_', :required_file => 'it_cred.rb', :coverage => true },
-  :functest => { :desc => 'Runs Functional Tests', :prefix => 'func_documents', :required_file => 'functest_cred.rb', :coverage => true },
-  #:functest => { :desc => 'Runs Functional Tests', :prefix => 'func_', :required_file => 'functest_cred.rb', :coverage => true },
+  :functest => { :desc => 'Runs Functional Tests', :prefix => 'func_', :required_file => 'functest_cred.rb', :coverage => true },
   :alltest => { :desc => 'Runs All Tests at Once', :prefix => '', :required_file => 'functest_cred.rb', :coverage => true },
   :setup_account => { :desc => 'Sets up a Test Account', :prefix => 'setup_', :required_file => 'it_cred.rb', :coverage => false },
 }.each do |test_name,test_info|
@@ -44,7 +49,6 @@ end
       t.libs << 'test'
       t.libs << 'ext'
       t.test_files = FileList['test/' + test_info[:prefix] + '*.rb']
-      #t.warning = true
     end
     if test_info[:coverage]
       Rcov::RcovTask.new(('rcov_' + test_name.to_s).to_sym) do |t|

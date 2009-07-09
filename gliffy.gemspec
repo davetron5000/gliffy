@@ -40,7 +40,7 @@ lib/gliffy.rb
   s.rdoc_options << '--title' << 'Gliffy Ruby Client' << '--main' << 'README.rdoc' << '-ri'
   s.add_dependency('httparty', '>= 0.4.2')
   s.add_dependency('ruby-hmac', '>= 0.3.2')
-  s.add_dependency('davetron5000-gli', '>= 0.1.4')
+  s.add_dependency('davetron5000-gli', '>= 0.1.6')
   s.bindir = 'bin'
   s.executables << 'gliffy'
 end

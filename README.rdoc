@@ -90,6 +90,17 @@ Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy U
 
 = Development
 
+== Gems
+
+You will need:
+
+ * hanna 0.1.7, available via `gem install mislav-hanna`
+ * httparty 0.4.2 or better
+ * ruby-hmac 0.3.2 or better
+ * gli 0.1.6 or better
+ 
+All of these save for hanna are installed if you installed the gem.
+
 == Unit Tests
 
 Make sure you get at least 100% statement coverage of the code you write via Unit Tests.
@@ -130,3 +141,12 @@ Each functional test assumes the following:
 
 Each test will put data into Gliffy, query it, and remove it, thus leaving the account in the same state.
 
+To fully test the edit launch link, run
+
+    rake TEST_LINK=true functest
+
+This will print out the launch link and pause the testing.  Copy/Paste this into your browser to make sure it works and then come back to the console and hit return.  Do not do this for automated builds.
+
+== JUnit output
+
+I monkeypatched the Ruby unit test classes to output JUnit-style XML when the tests are run.  I believe this file gets overridden with each type of test, but you only really should care about it for the `test` target.  The file is called `junit_output.xml`.

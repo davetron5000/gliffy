@@ -52,37 +52,37 @@
             <h2>Methods</h2>
             <h3>public class</h3>
             <ol>
-              <li><a href="#M000014">new</a></li>
+              <li><a href="#M000019">new</a></li>
             </ol>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000017">account_admins</a></li>
-              <li><a href="#M000018">account_documents</a></li>
-              <li><a href="#M000019">account_folders</a></li>
-              <li><a href="#M000020">account_get</a></li>
-              <li><a href="#M000021">account_users</a></li>
-              <li><a href="#M000041">anything</a></li>
-              <li><a href="#M000016">delete_token</a></li>
-              <li><a href="#M000022">document_create</a></li>
-              <li><a href="#M000023">document_delete</a></li>
-              <li><a href="#M000027">document_edit_link</a></li>
-              <li><a href="#M000025">document_get</a></li>
-              <li><a href="#M000024">document_get_metadata</a></li>
-              <li><a href="#M000026">document_get_url</a></li>
-              <li><a href="#M000028">document_move</a></li>
-              <li><a href="#M000029">document_update</a></li>
-              <li><a href="#M000030">folder_add_user</a></li>
-              <li><a href="#M000031">folder_create</a></li>
-              <li><a href="#M000032">folder_delete</a></li>
-              <li><a href="#M000033">folder_documents</a></li>
-              <li><a href="#M000035">folder_remove_user</a></li>
-              <li><a href="#M000034">folder_users</a></li>
-              <li><a href="#M000015">update_token</a></li>
-              <li><a href="#M000036">user_create</a></li>
-              <li><a href="#M000037">user_delete</a></li>
-              <li><a href="#M000038">user_documents</a></li>
-              <li><a href="#M000039">user_folders</a></li>
-              <li><a href="#M000040">user_update</a></li>
+              <li><a href="#M000022">account_admins</a></li>
+              <li><a href="#M000023">account_documents</a></li>
+              <li><a href="#M000024">account_folders</a></li>
+              <li><a href="#M000025">account_get</a></li>
+              <li><a href="#M000026">account_users</a></li>
+              <li><a href="#M000046">anything</a></li>
+              <li><a href="#M000021">delete_token</a></li>
+              <li><a href="#M000027">document_create</a></li>
+              <li><a href="#M000028">document_delete</a></li>
+              <li><a href="#M000032">document_edit_link</a></li>
+              <li><a href="#M000030">document_get</a></li>
+              <li><a href="#M000029">document_get_metadata</a></li>
+              <li><a href="#M000031">document_get_url</a></li>
+              <li><a href="#M000033">document_move</a></li>
+              <li><a href="#M000034">document_update</a></li>
+              <li><a href="#M000035">folder_add_user</a></li>
+              <li><a href="#M000036">folder_create</a></li>
+              <li><a href="#M000037">folder_delete</a></li>
+              <li><a href="#M000038">folder_documents</a></li>
+              <li><a href="#M000040">folder_remove_user</a></li>
+              <li><a href="#M000039">folder_users</a></li>
+              <li><a href="#M000020">update_token</a></li>
+              <li><a href="#M000041">user_create</a></li>
+              <li><a href="#M000042">user_delete</a></li>
+              <li><a href="#M000043">user_documents</a></li>
+              <li><a href="#M000044">user_folders</a></li>
+              <li><a href="#M000045">user_update</a></li>
             </ol>
           </div>
           <div id='section'>
@@ -159,8 +159,8 @@
             </div>
             <div id='methods'>
               <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000014'>
-                <a name='M000014'>      </a>
+              <div class='public-class method' id='method-M000019'>
+                <a name='M000019'>      </a>
                 <div class='synopsis'>
                   <span class='name'>new</span>
                   <span class='arguments'>(api_root,edit_api_root,credentials,http=nil,logger=nil)</span>
@@ -191,15 +191,15 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000014-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000014-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_root</span>,<span class="ruby-identifier">edit_api_root</span>,<span class="ruby-identifier">credentials</span>,<span class="ruby-identifier">http</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">logger</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-ivar">@credentials</span> = <span class="ruby-identifier">credentials</span>&#x000A;      <span class="ruby-ivar">@request</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">api_root</span>,<span class="ruby-identifier">credentials</span>)&#x000A;      <span class="ruby-ivar">@edit_link_request</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">edit_api_root</span>,<span class="ruby-identifier">credentials</span>)&#x000A;      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">http</span> = <span class="ruby-identifier">http</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">http</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">logger</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDOUT</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">INFO</span>&#x000A;      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-ivar">@logger</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">has_access_token?</span>&#x000A;        <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-ivar">@error_callback</span> = <span class="ruby-keyword kw">nil</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 46</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_root</span>,<span class="ruby-identifier">edit_api_root</span>,<span class="ruby-identifier">credentials</span>,<span class="ruby-identifier">http</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">logger</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-ivar">@credentials</span> = <span class="ruby-identifier">credentials</span>&#x000A;      <span class="ruby-ivar">@request</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">api_root</span>,<span class="ruby-identifier">credentials</span>)&#x000A;      <span class="ruby-ivar">@edit_link_request</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">edit_api_root</span>,<span class="ruby-identifier">credentials</span>)&#x000A;      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">http</span> = <span class="ruby-identifier">http</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">http</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">logger</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDOUT</span>)&#x000A;      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">INFO</span>&#x000A;      <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-ivar">@logger</span>&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">has_access_token?</span>&#x000A;        <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-ivar">@error_callback</span> = <span class="ruby-keyword kw">nil</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
               <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000017'>
-                <a name='M000017'>      </a>
+              <div class='public-instance method' id='method-M000022'>
+                <a name='M000022'>      </a>
                 <div class='synopsis'>
                   <span class='name'>account_admins</span>
                   <span class='arguments'>()</span>
@@ -210,14 +210,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000017-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000017-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 81</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_admins</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/admins.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 81</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_admins</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/admins.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000018'>
-                <a name='M000018'>      </a>
+              <div class='public-instance method' id='method-M000023'>
+                <a name='M000023'>      </a>
                 <div class='synopsis'>
                   <span class='name'>account_documents</span>
                   <span class='arguments'>(show=nil)</span>
@@ -233,14 +233,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000018-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000018-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 87</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_documents</span>(<span class="ruby-identifier">show</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">show</span>.<span class="ruby-identifier">nil?</span>&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>,<span class="ruby-identifier">:public</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:public</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 87</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_documents</span>(<span class="ruby-identifier">show</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">show</span>.<span class="ruby-identifier">nil?</span>&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>)&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>,<span class="ruby-identifier">:public</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:public</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000019'>
-                <a name='M000019'>      </a>
+              <div class='public-instance method' id='method-M000024'>
+                <a name='M000024'>      </a>
                 <div class='synopsis'>
                   <span class='name'>account_folders</span>
                   <span class='arguments'>()</span>
@@ -251,14 +251,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000019-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000019-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 96</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_folders</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/folders.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 96</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_folders</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/folders.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000020'>
-                <a name='M000020'>      </a>
+              <div class='public-instance method' id='method-M000025'>
+                <a name='M000025'>      </a>
                 <div class='synopsis'>
                   <span class='name'>account_get</span>
                   <span class='arguments'>(show_users=true)</span>
@@ -274,14 +274,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 102</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_get</span>(<span class="ruby-identifier">show_users</span>=<span class="ruby-keyword kw">true</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}.xml&quot;</span>, <span class="ruby-identifier">:showUsers</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show_users</span>)[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000025-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 102</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_get</span>(<span class="ruby-identifier">show_users</span>=<span class="ruby-keyword kw">true</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}.xml&quot;</span>, <span class="ruby-identifier">:showUsers</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show_users</span>)[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000021'>
-                <a name='M000021'>      </a>
+              <div class='public-instance method' id='method-M000026'>
+                <a name='M000026'>      </a>
                 <div class='synopsis'>
                   <span class='name'>account_users</span>
                   <span class='arguments'>()</span>
@@ -292,27 +292,27 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 107</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_users</span> &#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/users.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000026-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 107</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">account_users</span> &#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{account_url}/users.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000041'>
-                <a name='M000041'>      </a>
+              <div class='public-instance method' id='method-M000046'>
+                <a name='M000046'>      </a>
                 <div class='synopsis'>
                   <span class='name'>anything</span>
                   <span class='arguments'>(method,url,params={},parse=false,link=false)</span>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000041-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000046-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000041-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 280</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">anything</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">parse</span>=<span class="ruby-keyword kw">false</span>,<span class="ruby-identifier">link</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">parse</span>,<span class="ruby-identifier">link</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000046-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 280</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">anything</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>={},<span class="ruby-identifier">parse</span>=<span class="ruby-keyword kw">false</span>,<span class="ruby-identifier">link</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">method</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">params</span>,<span class="ruby-identifier">parse</span>,<span class="ruby-identifier">link</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000016'>
-                <a name='M000016'>      </a>
+              <div class='public-instance method' id='method-M000021'>
+                <a name='M000021'>      </a>
                 <div class='synopsis'>
                   <span class='name'>delete_token</span>
                   <span class='arguments'>()</span>
@@ -323,14 +323,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000016-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000021-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000016-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 75</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_token</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-identifier">token_url</span>)&#x000A;      <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">clear_access_token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000021-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 75</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_token</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-identifier">token_url</span>)&#x000A;      <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">clear_access_token</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000022'>
-                <a name='M000022'>      </a>
+              <div class='public-instance method' id='method-M000027'>
+                <a name='M000027'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_create</span>
                   <span class='arguments'>(name,folder_path=nil,template_id=nil,type=:diagram)</span>
@@ -360,14 +360,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000022-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000022-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 118</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_create</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">folder_path</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">template_id</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:diagram</span>)&#x000A;      <span class="ruby-identifier">params</span> = { &#x000A;        <span class="ruby-identifier">:documentName</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,&#x000A;        <span class="ruby-identifier">:documentType</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>&#x000A;      }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:templateDiagramId</span>] = <span class="ruby-identifier">template_id</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">template_id</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:folderPath</span>] = <span class="ruby-identifier">normalize_folder_path</span>(<span class="ruby-identifier">folder_path</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">folder_path</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">documents</span> = <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">documents</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">documents</span>[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000027-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 118</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_create</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">folder_path</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">template_id</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:diagram</span>)&#x000A;      <span class="ruby-identifier">params</span> = { &#x000A;        <span class="ruby-identifier">:documentName</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,&#x000A;        <span class="ruby-identifier">:documentType</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>&#x000A;      }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:templateDiagramId</span>] = <span class="ruby-identifier">template_id</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">template_id</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:folderPath</span>] = <span class="ruby-identifier">normalize_folder_path</span>(<span class="ruby-identifier">folder_path</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">folder_path</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">documents</span> = <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{account_url}/documents.xml&quot;</span>,<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">documents</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-identifier">documents</span>[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000023'>
-                <a name='M000023'>      </a>
+              <div class='public-instance method' id='method-M000028'>
+                <a name='M000028'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_delete</span>
                   <span class='arguments'>(document_id)</span>
@@ -378,14 +378,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000023-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000023-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 131</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_delete</span>(<span class="ruby-identifier">document_id</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000028-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 131</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_delete</span>(<span class="ruby-identifier">document_id</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000027'>
-                <a name='M000027'>      </a>
+              <div class='public-instance method' id='method-M000032'>
+                <a name='M000032'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_edit_link</span>
                   <span class='arguments'>(document_id,return_url,return_text='Return')</span>
@@ -396,14 +396,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000027-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000032-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000027-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 178</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_edit_link</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">return_url</span>,<span class="ruby-identifier">return_text</span>=<span class="ruby-value str">'Return'</span>)&#x000A;      <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-ivar">@edit_link_request</span>.<span class="ruby-identifier">link_for</span>(<span class="ruby-identifier">:GET</span>,<span class="ruby-value str">''</span>,{ &#x000A;        <span class="ruby-identifier">:launchDiagramId</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">document_id</span>, &#x000A;        <span class="ruby-identifier">:returnURL</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">return_url</span>, &#x000A;        <span class="ruby-identifier">:returnButtonText=</span><span class="ruby-operator">&gt;</span> <span class="ruby-identifier">return_text</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000032-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 178</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_edit_link</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">return_url</span>,<span class="ruby-identifier">return_text</span>=<span class="ruby-value str">'Return'</span>)&#x000A;      <span class="ruby-identifier">update_token</span>&#x000A;      <span class="ruby-ivar">@edit_link_request</span>.<span class="ruby-identifier">link_for</span>(<span class="ruby-identifier">:GET</span>,<span class="ruby-value str">''</span>,{ &#x000A;        <span class="ruby-identifier">:launchDiagramId</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">document_id</span>, &#x000A;        <span class="ruby-identifier">:returnURL</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">return_url</span>, &#x000A;        <span class="ruby-identifier">:returnButtonText=</span><span class="ruby-operator">&gt;</span> <span class="ruby-identifier">return_text</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000025'>
-                <a name='M000025'>      </a>
+              <div class='public-instance method' id='method-M000030'>
+                <a name='M000030'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_get</span>
                   <span class='arguments'>(document_id,type=:jpeg,size=:L,version=nil)</span>
@@ -443,14 +443,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000025-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000025-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 151</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:jpeg</span>,<span class="ruby-identifier">size</span>=<span class="ruby-identifier">:L</span>,<span class="ruby-identifier">version</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = { <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span> }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>] = <span class="ruby-identifier">version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">version</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>),<span class="ruby-identifier">params</span>,<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:xml</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:svg</span>)&#x000A;        <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">response</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000030-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 151</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:jpeg</span>,<span class="ruby-identifier">size</span>=<span class="ruby-identifier">:L</span>,<span class="ruby-identifier">version</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = { <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span> }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>] = <span class="ruby-identifier">version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">version</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">response</span> = <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>),<span class="ruby-identifier">params</span>,<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:xml</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:svg</span>)&#x000A;        <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-identifier">response</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000024'>
-                <a name='M000024'>      </a>
+              <div class='public-instance method' id='method-M000029'>
+                <a name='M000029'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_get_metadata</span>
                   <span class='arguments'>(document_id,show_revisions=false)</span>
@@ -469,14 +469,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000024-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000024-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 138</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get_metadata</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">show_revisions</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_metadata_url</span>(<span class="ruby-identifier">document_id</span>),<span class="ruby-identifier">:showRevisions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show_revisions</span>)[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 138</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get_metadata</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">show_revisions</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_metadata_url</span>(<span class="ruby-identifier">document_id</span>),<span class="ruby-identifier">:showRevisions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">show_revisions</span>)[<span class="ruby-value">0</span>]&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000026'>
-                <a name='M000026'>      </a>
+              <div class='public-instance method' id='method-M000031'>
+                <a name='M000031'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_get_url</span>
                   <span class='arguments'>(document_id,type=:jpg,size=:L,version=nil)</span>
@@ -516,14 +516,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000026-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000026-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 171</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:jpg</span>,<span class="ruby-identifier">size</span>=<span class="ruby-identifier">:L</span>,<span class="ruby-identifier">version</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = { <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span> }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>] = <span class="ruby-identifier">version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">version</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>),<span class="ruby-identifier">params</span>,<span class="ruby-keyword kw">false</span>,<span class="ruby-keyword kw">true</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 171</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_get_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:jpg</span>,<span class="ruby-identifier">size</span>=<span class="ruby-identifier">:L</span>,<span class="ruby-identifier">version</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">params</span> = { <span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span> }&#x000A;      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>] = <span class="ruby-identifier">version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">version</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">type</span>),<span class="ruby-identifier">params</span>,<span class="ruby-keyword kw">false</span>,<span class="ruby-keyword kw">true</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000028'>
-                <a name='M000028'>      </a>
+              <div class='public-instance method' id='method-M000033'>
+                <a name='M000033'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_move</span>
                   <span class='arguments'>(document_id,new_path)</span>
@@ -534,14 +534,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000028-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000033-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000028-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 187</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_move</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">new_path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:move</span>,<span class="ruby-identifier">folders_url</span>(<span class="ruby-identifier">new_path</span>) <span class="ruby-operator">+</span> <span class="ruby-node">&quot;/documents/#{document_id}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000033-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 187</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_move</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">new_path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:move</span>,<span class="ruby-identifier">folders_url</span>(<span class="ruby-identifier">new_path</span>) <span class="ruby-operator">+</span> <span class="ruby-node">&quot;/documents/#{document_id}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000029'>
-                <a name='M000029'>      </a>
+              <div class='public-instance method' id='method-M000034'>
+                <a name='M000034'>      </a>
                 <div class='synopsis'>
                   <span class='name'>document_update</span>
                   <span class='arguments'>(document_id,options)</span>
@@ -572,14 +572,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000029-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000034-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000029-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 197</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_update</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:content</span>])&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>),{<span class="ruby-identifier">:content</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:content</span>]})&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>])&#x000A;        <span class="ruby-identifier">params</span> = {}&#x000A;        <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:documentName</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>]&#x000A;        <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:public</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>]&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">document_metadata_url</span>(<span class="ruby-identifier">document_id</span>),<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000034-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 197</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_update</span>(<span class="ruby-identifier">document_id</span>,<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:content</span>])&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">document_url</span>(<span class="ruby-identifier">document_id</span>),{<span class="ruby-identifier">:content</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:content</span>]})&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>])&#x000A;        <span class="ruby-identifier">params</span> = {}&#x000A;        <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:documentName</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name</span>]&#x000A;        <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:public</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:public</span>]&#x000A;        <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">document_metadata_url</span>(<span class="ruby-identifier">document_id</span>),<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000030'>
-                <a name='M000030'>      </a>
+              <div class='public-instance method' id='method-M000035'>
+                <a name='M000035'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_add_user</span>
                   <span class='arguments'>(path,username)</span>
@@ -590,14 +590,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000030-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000035-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000030-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 210</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_add_user</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">folder_users_url</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>),{<span class="ruby-identifier">:read</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:write</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000035-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 210</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_add_user</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">folder_users_url</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>),{<span class="ruby-identifier">:read</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:write</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000031'>
-                <a name='M000031'>      </a>
+              <div class='public-instance method' id='method-M000036'>
+                <a name='M000036'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_create</span>
                   <span class='arguments'>(path)</span>
@@ -617,14 +617,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000031-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000036-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000031-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 219</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_create</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{folders_url(path)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000036-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 219</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_create</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{folders_url(path)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000032'>
-                <a name='M000032'>      </a>
+              <div class='public-instance method' id='method-M000037'>
+                <a name='M000037'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_delete</span>
                   <span class='arguments'>(path)</span>
@@ -640,14 +640,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000032-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000037-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000032-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 225</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_delete</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;#{folders_url(path)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000037-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 225</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_delete</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;#{folders_url(path)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000033'>
-                <a name='M000033'>      </a>
+              <div class='public-instance method' id='method-M000038'>
+                <a name='M000038'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_documents</span>
                   <span class='arguments'>(path)</span>
@@ -663,14 +663,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000033-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000038-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000033-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 231</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_documents</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{folders_url(path)}/documents.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000038-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 231</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_documents</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{folders_url(path)}/documents.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000035'>
-                <a name='M000035'>      </a>
+              <div class='public-instance method' id='method-M000040'>
+                <a name='M000040'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_remove_user</span>
                   <span class='arguments'>(path,username)</span>
@@ -681,14 +681,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000035-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000035-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 242</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_remove_user</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">folder_users_url</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>),{<span class="ruby-identifier">:read</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:write</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000040-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 242</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_remove_user</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">folder_users_url</span>(<span class="ruby-identifier">path</span>,<span class="ruby-identifier">username</span>),{<span class="ruby-identifier">:read</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:write</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>})&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000034'>
-                <a name='M000034'>      </a>
+              <div class='public-instance method' id='method-M000039'>
+                <a name='M000039'>      </a>
                 <div class='synopsis'>
                   <span class='name'>folder_users</span>
                   <span class='arguments'>(path)</span>
@@ -704,14 +704,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000034-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000039-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000034-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 237</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_users</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{folders_url(path)}/users.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000039-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 237</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">folder_users</span>(<span class="ruby-identifier">path</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{folders_url(path)}/users.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000015'>
-                <a name='M000015'>      </a>
+              <div class='public-instance method' id='method-M000020'>
+                <a name='M000020'>      </a>
                 <div class='synopsis'>
                   <span class='name'>update_token</span>
                   <span class='arguments'>(force=false)</span>
@@ -728,14 +728,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000015-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000020-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000015-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 63</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_token</span>(<span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">has_access_token?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">force</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">&quot;Requesting new token &quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">force</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot; by force &quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot; since we have none &quot;</span>))&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">token_url</span>,&#x000A;                                   <span class="ruby-identifier">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">description</span>,&#x000A;                                   <span class="ruby-identifier">:protocol_override</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:https</span>)&#x000A;        <span class="ruby-ivar">@token</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">response</span>)&#x000A;        <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">update_access_token</span>(<span class="ruby-ivar">@token</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000020-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 63</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_token</span>(<span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">has_access_token?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">force</span>&#x000A;        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">&quot;Requesting new token &quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">force</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot; by force &quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot; since we have none &quot;</span>))&#x000A;        <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">token_url</span>,&#x000A;                                   <span class="ruby-identifier">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">description</span>,&#x000A;                                   <span class="ruby-identifier">:protocol_override</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:https</span>)&#x000A;        <span class="ruby-ivar">@token</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">response</span>)&#x000A;        <span class="ruby-ivar">@credentials</span>.<span class="ruby-identifier">update_access_token</span>(<span class="ruby-ivar">@token</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000036'>
-                <a name='M000036'>      </a>
+              <div class='public-instance method' id='method-M000041'>
+                <a name='M000041'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user_create</span>
                   <span class='arguments'>(username)</span>
@@ -751,14 +751,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000036-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000041-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000036-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 248</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_create</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{account_url}/users.xml&quot;</span>,{ <span class="ruby-identifier">:userName</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">username</span> })&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000041-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 248</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_create</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:create</span>,<span class="ruby-node">&quot;#{account_url}/users.xml&quot;</span>,{ <span class="ruby-identifier">:userName</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">username</span> })&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000037'>
-                <a name='M000037'>      </a>
+              <div class='public-instance method' id='method-M000042'>
+                <a name='M000042'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user_delete</span>
                   <span class='arguments'>(username)</span>
@@ -769,14 +769,14 @@
                   </p>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000037-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000042-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000037-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 253</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_delete</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;#{user_url(username)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000042-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 253</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_delete</span>(<span class="ruby-identifier">username</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:delete</span>,<span class="ruby-node">&quot;#{user_url(username)}.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000038'>
-                <a name='M000038'>      </a>
+              <div class='public-instance method' id='method-M000043'>
+                <a name='M000043'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user_documents</span>
                   <span class='arguments'>(username='$username')</span>
@@ -794,14 +794,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000038-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000043-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000038-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 260</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_documents</span>(<span class="ruby-identifier">username</span>=<span class="ruby-value str">'$username'</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">user_documents_helper</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">user_folders</span>(<span class="ruby-identifier">username</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000043-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 260</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_documents</span>(<span class="ruby-identifier">username</span>=<span class="ruby-value str">'$username'</span>)&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">user_documents_helper</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">user_folders</span>(<span class="ruby-identifier">username</span>))&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000039'>
-                <a name='M000039'>      </a>
+              <div class='public-instance method' id='method-M000044'>
+                <a name='M000044'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user_folders</span>
                   <span class='arguments'>(username='$username')</span>
@@ -818,14 +818,14 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000039-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000044-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000039-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 266</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_folders</span>(<span class="ruby-identifier">username</span>=<span class="ruby-value str">'$username'</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{user_url(username)}/folders.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000044-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 266</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_folders</span>(<span class="ruby-identifier">username</span>=<span class="ruby-value str">'$username'</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:get</span>,<span class="ruby-node">&quot;#{user_url(username)}/folders.xml&quot;</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
-              <div class='public-instance method' id='method-M000040'>
-                <a name='M000040'>      </a>
+              <div class='public-instance method' id='method-M000045'>
+                <a name='M000045'>      </a>
                 <div class='synopsis'>
                   <span class='name'>user_update</span>
                   <span class='arguments'>(username,options)</span>
@@ -856,10 +856,10 @@
                   </dl>
                 </div>
                 <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000040-source'); return false">
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000045-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000040-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 276</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_update</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">user_url</span>(<span class="ruby-identifier">username</span>),<span class="ruby-identifier">options</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000045-source'><span class="ruby-comment cmt"># File lib/gliffy/handle.rb, line 276</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user_update</span>(<span class="ruby-identifier">username</span>,<span class="ruby-identifier">options</span>)&#x000A;      <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">:update</span>,<span class="ruby-identifier">user_url</span>(<span class="ruby-identifier">username</span>),<span class="ruby-identifier">options</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

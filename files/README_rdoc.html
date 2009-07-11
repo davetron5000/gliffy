@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Jul 08 20:35:03 -0400 2009</span>
+          <span class='datetime'>Sat Jul 11 13:13:08 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -97,6 +97,18 @@
             <a href="../classes/Gliffy/Response.html">Gliffy::Response</a> object:
             </p>
             <pre>model = Response.from_http_response(response)</pre>
+            <h1>Command Line Client</h1>
+            <p>
+            This also comes with a command line client that can serve as an example of
+            using the API. The command-line client is quite usable in its own right:
+            </p>
+            <pre>gliffy help</pre>
+            <p>
+            This will list all the commands you can give to the <tt>gliffy</tt>
+            command. You can&#8217;t do <b>everything</b> with the command line that
+            you can with the full API, but you can do quite a bit
+            </p>
+            <pre># set up your account&#x000A;&gt; gliffy config&#x000A;&#x000A;# List all documents in your account&#x000A;&gt; gliffy ls&#x000A;&#x000A;# Create a new document&#x000A;&gt; gliffy new &quot;My New Document&quot;&#x000A;Created document 123456 - My New Document&#x000A;&#x000A;# Edit it&#x000A;&gt; gliffy edit 123456&#x000A;&#x000A;# Make a new folder&#x000A;&gt; gliffy mkdir awesome&#x000A;&#x000A;# Move our new document there&#x000A;&gt; gliffy mv 123456 awesome&#x000A;&#x000A;# Get it as a PNG&#x000A;&gt; gliffy get -t png 123456&#x000A;Wrote 123456_L.png&#x000A;&#x000A;# Get help on a command&#x000A;&gt; bin/gliffy help get&#x000A;view [options]&#x000A;    View a diagram as an image, or download it&#x000A;&#x000A;Options:&#x000A;    -p, --publicurl                                - Get the Public URL only (if&#x000A;                                                     possibe)&#x000A;    -s, --size=L, M, S, T                          - Size (default: L)&#x000A;    -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)&#x000A;    -u, --url                                      - Get the URL only&#x000A;    -v, --version=version number (omit for latest) - Version</pre>
             <h1>Design</h1>
             <h2>Domain Objects</h2>
             <p>

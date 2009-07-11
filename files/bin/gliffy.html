@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Wed Jul 08 21:51:03 -0400 2009</span>
+          <span class='datetime'>Sat Jul 11 13:09:59 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -40,7 +40,8 @@
             <h2>Methods</h2>
             <h3>public instance</h3>
             <ol>
-              <li><a href="#M000001">write_config</a></li>
+              <li><a href="#M000001">output_folder</a></li>
+              <li><a href="#M000002">write_config</a></li>
             </ol>
           </div>
           <div id='context'>
@@ -67,14 +68,27 @@
               <div class='public-instance method' id='method-M000001'>
                 <a name='M000001'>      </a>
                 <div class='synopsis'>
-                  <span class='name'>write_config</span>
-                  <span class='arguments'>(cred,config)</span>
+                  <span class='name'>output_folder</span>
+                  <span class='arguments'>(f)</span>
                 </div>
                 <div class='source'>
                   <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
                     [show source]
                   </a>
-                  <pre id='M000001-source'><span class="ruby-comment cmt"># File bin/gliffy, line 192</span>&#x000A;<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_config</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">config</span>)&#x000A;  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">config</span>,<span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">out</span>)&#x000A;  <span class="ruby-keyword kw">end</span>&#x000A;<span class="ruby-keyword kw">end</span></pre>
+                  <pre id='M000001-source'><span class="ruby-comment cmt"># File bin/gliffy, line 57</span>&#x000A;  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output_folder</span>(<span class="ruby-identifier">f</span>)&#x000A;    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">path</span>&#x000A;    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">child_folders</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">output_folder</span>(<span class="ruby-identifier">child</span>)&#x000A;    <span class="ruby-keyword kw">end</span>&#x000A;  <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000002'>
+                <a name='M000002'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>write_config</span>
+                  <span class='arguments'>(cred,config)</span>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000002-source'><span class="ruby-comment cmt"># File bin/gliffy, line 307</span>&#x000A;<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_config</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">config</span>)&#x000A;  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">config</span>,<span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">cred</span>,<span class="ruby-identifier">out</span>)&#x000A;  <span class="ruby-keyword kw">end</span>&#x000A;<span class="ruby-keyword kw">end</span></pre>
                 </div>
               </div>
             </div>

@@ -26,7 +26,16 @@ module Gliffy
   class Response
     @@normal_error_callback = Proc.new do |response,exception|
       if response
-        raise exception.class.new(exception.message + " : " + response.body)
+        message = response.inspect
+        if response['response'] && response['response']['error']
+          http_status = response['response']['error']['http_status']
+          if http_status = "404"
+            message = "Not Found"
+          else
+            message = "HTTP Status #{http_status}"
+          end
+        end
+        raise exception.class.new(message)
       else
         raise exception 
       end

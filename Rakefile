@@ -28,7 +28,6 @@ end
 spec = eval(File.read('gliffy.gemspec'))
  
 Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.need_tar = true
 end
 
 { :test => { :desc => 'Runs Unit Tests', :prefix => 'tc_', :required_file => nil, :coverage => true },

@@ -1,5 +1,5 @@
 require 'gliffy/handle'
 
-# :include: README.rdoc
+# :include: ../README.rdoc
 module Gliffy
 end

@@ -4,6 +4,9 @@ This is the Ruby client library for interacting with Gliffy[http://www.gliffy.co
 
     sudo gem install gliffy
 
+* Source - http://github.com/davetron5000/gliffy/tree/master
+* RDoc - http://davetron5000.github.com/gliffy
+
 = Overview
 
 The main entry point to Gliffy is Gliffy::Handle, which provides high-level access to most features available from the API.  You should instantiate one of these objects per <i>user session</i>.  To create it, you will need to create and populate an instance of the Credentials class.  This class is constructed almost entirely from static data about your Gliffy account, so you will probably configure an instance of this globally.
@@ -148,11 +151,15 @@ All of these save for hanna are installed if you installed the gem.
 
 == Unit Tests
 
-Make sure you get at least 100% statement coverage of the code you write via Unit Tests.
+    rake test
 
-Sometimes the test that two nonces shouldn't be the same fails.  This occurs, because they are generated in pretty much the same instant AND when the random number generator generates the same number twice in a row.  Usually if you run tests again, things pass.
+This will run unit tests and also create +junit_output.xml+ as a side-effect (via some monkeypatching of Ruby's unit test code); this should be a standard JUnit test result file you could use for integration into your CI server.
+
+Sometimes the test that two nonces shouldn't be the same fails.  This occurs because they are generated in pretty much the same instant AND when the random number generator generates the same number twice in a row.  Usually if you run tests again, things pass.  This will be *very* unlikely to happen in a production environment.
 
 == Integration Tests
+
+    rake inttest
 
 This code is capable of running integration tests against Gliffy's integration test servers.
 If you would like to run these tests, you must contact Gliffy for the information needed.
@@ -170,11 +177,13 @@ have the information from Gliffy, create the file `test/it_cred.rb` as follows:
 
 == Functional Tests
 
+    rake functest
+
 The functional tests perform actual workflows against a Gliffy server and, as such, are more fragile.  If something is wrong in your environment (or with Gliffy), you could leave the test account in a weird state.  As such, you should create a new account using a test-only API call.  This can be done via
 
     rake setup_account
 
-This requires that it_cred.rb is set up and runs test/setup_account.rb.  This will create the file functest_cred.rb with the necessary information to access the newly created account.  The accounts seem to get reset every day, so you will not be able to reliably automate this.  That being said, the only way to get 100% coverage is to run these tests.
+This requires that it_cred.rb is set up and will then run test/setup_account.rb.  This will create the file functest_cred.rb with the necessary information to access the newly created account.  The accounts seem to get reset every day, so you will not be able to reliably automate this.  That being said, the only way to get 100% coverage is to run these tests.
 
 Each functional test assumes the following:
 
@@ -191,7 +200,3 @@ To fully test the edit launch link, run
     rake TEST_LINK=true functest
 
 This will print out the launch link and pause the testing.  Copy/Paste this into your browser to make sure it works and then come back to the console and hit return.  Do not do this for automated builds.
-
-== JUnit output
-
-I monkeypatched the Ruby unit test classes to output JUnit-style XML when the tests are run.  I believe this file gets overridden with each type of test, but you only really should care about it for the `test` target.  The file is called `junit_output.xml`.

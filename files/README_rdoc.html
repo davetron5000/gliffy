@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sat Jul 11 13:13:08 -0400 2009</span>
+          <span class='datetime'>Sat Jul 11 13:37:22 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -45,6 +45,16 @@
             </p>
             <h1>Getting Started</h1>
             <pre>sudo gem install gliffy</pre>
+            <ul>
+            <li>Source - <a
+            href="http://github.com/davetron5000/gliffy/tree/master">github.com/davetron5000/gliffy/tree/master</a>
+            
+            </li>
+            <li>RDoc - <a
+            href="http://davetron5000.github.com/gliffy">davetron5000.github.com/gliffy</a>
+            
+            </li>
+            </ul>
             <h1>Overview</h1>
             <p>
             The main entry point to <a href="../classes/Gliffy.html">Gliffy</a> is <a
@@ -196,17 +206,22 @@
             All of these save for hanna are installed if you installed the gem.
             </p>
             <h2>Unit Tests</h2>
+            <pre>rake test</pre>
             <p>
-            Make sure you get at least 100% statement coverage of the code you write
-            via Unit Tests.
+            This will run unit tests and also create <tt>junit_output.xml</tt> as a
+            side-effect (via some monkeypatching of Ruby&#8217;s unit test code); this
+            should be a standard JUnit test result file you could use for integration
+            into your CI server.
             </p>
             <p>
             Sometimes the test that two nonces shouldn&#8217;t be the same fails. This
-            occurs, because they are generated in pretty much the same instant AND when
+            occurs because they are generated in pretty much the same instant AND when
             the random number generator generates the same number twice in a row.
-            Usually if you run tests again, things pass.
+            Usually if you run tests again, things pass. This will be <b>very</b>
+            unlikely to happen in a production environment.
             </p>
             <h2>Integration Tests</h2>
+            <pre>rake inttest</pre>
             <p>
             This code is capable of running integration tests against Gliffy&#8217;s
             integration test servers. If you would like to run these tests, you must
@@ -220,6 +235,7 @@
             </p>
             <pre>$account_id = # integration tests account id&#x000A;$username = # integration tests admin user name&#x000A;$oauth_consumer_key = # integration test account consumer key&#x000A;$oauth_consumer_secret = # integration test account consumer secret&#x000A;$api_root = # integration test server API endpoint&#x000A;$http_auth_username = # integration test server HTTP Auth username&#x000A;$http_auth_password = # integration test server HTTP Auth password</pre>
             <h2>Functional Tests</h2>
+            <pre>rake functest</pre>
             <p>
             The functional tests perform actual workflows against a <a
             href="../classes/Gliffy.html">Gliffy</a> server and, as such, are more
@@ -230,11 +246,12 @@
             </p>
             <pre>rake setup_account</pre>
             <p>
-            This requires that it_cred.rb is set up and runs test/setup_account.rb.
-            This will create the file functest_cred.rb with the necessary information
-            to access the newly created account. The accounts seem to get reset every
-            day, so you will not be able to reliably automate this. That being said,
-            the only way to get 100% coverage is to run these tests.
+            This requires that it_cred.rb is set up and will then run
+            test/setup_account.rb. This will create the file functest_cred.rb with the
+            necessary information to access the newly created account. The accounts
+            seem to get reset every day, so you will not be able to reliably automate
+            this. That being said, the only way to get 100% coverage is to run these
+            tests.
             </p>
             <p>
             Each functional test assumes the following:
@@ -268,13 +285,6 @@
             This will print out the launch link and pause the testing. Copy/Paste this
             into your browser to make sure it works and then come back to the console
             and hit return. Do not do this for automated builds.
-            </p>
-            <h2>JUnit output</h2>
-            <p>
-            I monkeypatched the Ruby unit test classes to output JUnit-style XML when
-            the tests are run. I believe this file gets overridden with each type of
-            test, but you only really should care about it for the `test` target. The
-            file is called `junit_output.xml`.
             </p>
           </div>
           <div id='section'>

@@ -15,15 +15,92 @@ default_value Etc.getpwuid.dir + '/.gliffyrc'
 arg_name 'path to gliffy config file'
 flag [:config]
 
-desc 'Use gob-go instead of the real gliffy (devs only)'
-switch [:gobgotest]
+#desc 'Use gob-go instead of the real gliffy (devs only)'
+#switch [:gobgotest]
+
+desc 'Delete a folder'
+arg_name 'path (relative to ROOT) of folders you want delete'
+command [:rmdir,:rd] do |c|
+  c.action do |global_options,options,args|
+    args.each do |path|
+      $handle.folder_delete(path)
+      puts "Deleted #{path}"
+    end
+  end
+end
+
+desc 'Create a new folder'
+arg_name 'folders you want created inside the ROOT folder'
+command [:mkdir,:md] do |c|
+  c.action do |global_options,options,args|
+    args.each do |path|
+      $handle.folder_create(path)
+      puts "Created #{path}"
+    end
+  end
+end
+
+desc 'Move diagram to a new folder'
+arg_name 'document_id full_folder_path'
+command [:mv,:move] do |c|
+  c.action do |global_options,options,args|
+    if args.length == 2
+      $handle.document_move(args[0],args[1])
+    else
+      raise "Must specify the document id and folder path only"
+    end
+  end
+end
+
+desc 'List folders'
+command [:lsf,:lsfolders] do |c|
+  def output_folder(f)
+    puts f.path
+    f.child_folders.each do |child|
+      output_folder(child)
+    end
+  end
+
+  c.action do |global_options,options,args|
+    folders = $handle.account_folders
+    folders.each do |folder|
+      output_folder(folder)
+    end
+  end
+end
 
 desc 'List diagram ids and names'
+arg_name 'Folder to list, omit for all folders'
 command [:ls,:list] do |c|
+
+  c.desc 'Show id, public?, versions, owner, update date, name'
+  c.switch :l
+
+  c.desc 'Sort by id'
+  c.switch :i
+
+  c.desc 'Sort by mod date'
+  c.switch :t
+
   c.action do |global_options,options,args|
-    documents = $handle.user_documents
-    documents.each do |doc|
-      puts "#{doc.document_id} - #{doc.name}"
+    if args.size == 1
+      documents = $handle.folder_documents(args[0])
+    elsif args.size == 0
+      documents = $handle.user_documents
+    else
+      raise "Either zero or one folder names are supported"
+    end
+
+    sorted = documents.sort{|a,b| a.name <=> b.name} if !options[:i] && !options[:t]
+    sorted = documents.sort{|a,b| a.mod_date <=> b.mod_date} if options[:t]
+    sorted = documents.sort{|a,b| a.document_id <=> b.document_id} if options[:i]
+
+    sorted.each do |doc|
+      if options[:l]
+        printf "%8d %s %4d %20s  %18s  %s\n",doc.document_id,doc.is_public? ? "P" : "-",doc.num_versions,doc.owner.username[0..19],doc.mod_date.strftime("%Y-%m-%d %H:%M:%S"),doc.name
+      else
+        puts "#{doc.document_id} - #{doc.name}"
+      end
     end
   end
 end
@@ -49,10 +126,22 @@ command :edit do |c|
   c.default_value 'Return'
   c.flag [:t,:text]
 
+  c.desc 'Command to run to open URL in browser'
+  c.default_value RUBY_PLATFORM =~ /^universal-darwin/ ? 'open' : nil
+  c.flag [:o,:openwith]
+
   c.action do |global_options,options,args|
     if args.length == 1
-      puts "Go to the URL in your browser"
-      puts $handle.document_edit_link(args[0],options[:u],options[:t])
+      url = $handle.document_edit_link(args[0],options[:u],options[:t])
+      opened = false
+      if options[:o]
+        opened = system "#{options[:o]} \"#{url}\""
+      end
+      if !opened
+        puts "Problem running #{options[:o]}" if options[:o]
+        puts "Go here in your browser"
+        puts url
+      end
     else
       $stderr.puts "Provide exactly one document id"
     end
@@ -76,17 +165,36 @@ command [:view,:get] do |c|
   c.arg_name 'version number (omit for latest)'
   c.flag [:v,:version]
 
+  c.desc 'Get the URL only'
+  c.switch [:u,:url]
+
+  c.desc 'Get the Public URL only (if possibe)'
+  c.switch [:p,:publicurl]
+
   c.action do |global_options,options,args|
     args.each do |document_id|
       version = options[:v]
       version_name = ''
       version_name = "_V#{version}" if version
-      bytes = $handle.document_get(document_id,options[:t].to_sym,options[:s].to_sym,version)
-      filename = "#{document_id}_#{options[:s]}#{version_name}.#{options[:t]}"
-      File.open(filename,'wb') do |f|
-        f.write(bytes)
+      if options[:u]
+        puts $handle.document_get_url(document_id,options[:t].to_sym,options[:s].to_sym,version)
+      elsif options[:p]
+        document = $handle.document_get_metadata(document_id)
+        if document.is_public?
+          # This isn't formally documented in the API so we put it here
+          puts "http://www.gliffy.com/pubdoc/#{document.document_id}/#{options[:s]}.jpg"
+        else
+          puts "Document is not public"
+          puts $handle.document_get_url(document_id,options[:t].to_sym,options[:s].to_sym,version)
+        end
+      else
+        bytes = $handle.document_get(document_id,options[:t].to_sym,options[:s].to_sym,version)
+        filename = "#{document_id}_#{options[:s]}#{version_name}.#{options[:t]}"
+        File.open(filename,'wb') do |f|
+          f.write(bytes)
+        end
+        puts "Wrote #{filename}"
       end
-      puts "Wrote #{filename}"
     end
   end
 end
@@ -94,9 +202,16 @@ end
 desc 'Create a new diagram'
 arg_name 'Name of the diagram'
 command :new do |c|
+
+  c.desc 'Full path to the folder in which this diagram should ilve'
+  c.flag [:f,:folder]
+
+  c.desc 'Id of a document to use as a template'
+  c.flag [:t,:template]
+
   c.action do |global_options,options,args|
     if args.length > 0
-      new_document = $handle.document_create(args.join(" "))
+      new_document = $handle.document_create(args.join(" "),options[:f],options[:t])
       puts "Created document #{new_document.document_id} - #{new_document.name}"
     else
       $stderr.puts "You must supply the diagram name"
@@ -154,7 +269,7 @@ pre do |global,command,options,args|
     $stderr.puts message if !message.nil?
     false
   else
-    if command.name != :config
+    if !command || command.name != :config
       if global[:gobgotest]
         puts "Going against gob-go -- developers only!"
         class HTTPartyAuth

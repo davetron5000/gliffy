@@ -61,6 +61,51 @@ You can manipulate the response directly, or attempt to parse it using the Gliff
 
     model = Response.from_http_response(response)
 
+= Command Line Client
+
+This also comes with a command line client that can serve as an example of using the API.  The command-line client is quite
+usable in its own right:
+
+    gliffy help
+
+This will list all the commands you can give to the +gliffy+ command.  You can't do *everything* with the command line that you can with the full API, but you can do quite a bit
+
+    # set up your account
+    > gliffy config
+
+    # List all documents in your account
+    > gliffy ls
+
+    # Create a new document
+    > gliffy new "My New Document"
+    Created document 123456 - My New Document
+
+    # Edit it
+    > gliffy edit 123456
+
+    # Make a new folder
+    > gliffy mkdir awesome
+
+    # Move our new document there
+    > gliffy mv 123456 awesome
+
+    # Get it as a PNG
+    > gliffy get -t png 123456
+    Wrote 123456_L.png
+
+    # Get help on a command
+    > bin/gliffy help get
+    view [options] 
+        View a diagram as an image, or download it
+
+    Options:
+        -p, --publicurl                                - Get the Public URL only (if
+                                                         possibe)
+        -s, --size=L, M, S, T                          - Size (default: L)
+        -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)
+        -u, --url                                      - Get the URL only
+        -v, --version=version number (omit for latest) - Version
+    
 = Design
 
 == Domain Objects

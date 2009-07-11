@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'gliffy'
-  s.version = '0.2.0'
+  s.version = '0.9.0'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/gliffy'

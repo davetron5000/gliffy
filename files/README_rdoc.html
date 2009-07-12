@@ -119,7 +119,7 @@
             you can with the full API, but you can do quite a bit
             </p>
             <pre># set up your account&#x000A;&gt; gliffy config&#x000A;&#x000A;# List all documents in your account&#x000A;&gt; gliffy ls&#x000A;&#x000A;# Create a new document&#x000A;&gt; gliffy new &quot;My New Document&quot;&#x000A;Created document 123456 - My New Document&#x000A;&#x000A;# Edit it&#x000A;&gt; gliffy edit 123456&#x000A;&#x000A;# Make a new folder&#x000A;&gt; gliffy mkdir awesome&#x000A;&#x000A;# Move our new document there&#x000A;&gt; gliffy mv 123456 awesome&#x000A;&#x000A;# Get it as a PNG&#x000A;&gt; gliffy get -t png 123456&#x000A;Wrote 123456_L.png&#x000A;&#x000A;# Get help on a command&#x000A;&gt; bin/gliffy help get&#x000A;view [options]&#x000A;    View a diagram as an image, or download it&#x000A;&#x000A;Options:&#x000A;    -p, --publicurl                                - Get the Public URL only (if&#x000A;                                                     possibe)&#x000A;    -s, --size=L, M, S, T                          - Size (default: L)&#x000A;    -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)&#x000A;    -u, --url                                      - Get the URL only&#x000A;    -v, --version=version number (omit for latest) - Version</pre>
-            <h1><tt>gliffy</tt> Command Line Reference</h1>
+            <h1><tt>gliffy</tt></h1>
             <pre>gliffy [global options] command_name [command-specific options] [--] arguments...</pre>
             <ul>
             <li>Use the command <tt>help</tt> to get a summary of commands
@@ -144,10 +144,13 @@
             <tt>/Users/davec/.gliffyrc</tt>)</em>
             
             </dd>
+            <dt><tt>--debug</tt></dt><dd>Show debug info
+            
+            </dd>
             </dl>
             <h2>Commands</h2>
             <dl>
-            <dt><tt>config</tt></dt><dd>Modify configuration (currently only create)
+            <dt><tt>config</tt></dt><dd>Create your configuration file
             
             </dd>
             <dt><tt>edit</tt></dt><dd>Edit a diagram
@@ -183,7 +186,13 @@
             </dl>
             <h3><tt>config </tt></h3>
             <p>
-            Modify configuration (currently only create)
+            Create your configuration file
+            </p>
+            <p>
+            This will ask you a series of questions that will create your gliffy
+            configuration file. This file will be used for subsequent requests of
+            gliffy and will need to contain your OAuth keys as well as some other
+            information.
             </p>
             <h4>Options</h4>
             <p>
@@ -203,11 +212,12 @@
             These options are specified <b>after</b> the command.
             </p>
             <dl>
-            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL in browser <em>( default: <tt>open</tt>)</em>
+            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
+            <tt>open</tt>)</em>
             
             </dd>
             <dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
-            href="../classes/Gliffy.html">Gliffy</a> <em>( default:
+            href="../classes/Gliffy.html">Gliffy</a> Editor <em>( default:
             <tt>Return</tt>)</em>
             
             </dd>
@@ -220,7 +230,7 @@
             <p>
             Shows list of commands or help for one command
             </p>
-            <h3><tt>ls Folder to list, omit for all folders</tt></h3>
+            <h3><tt>ls Folder to list (omit for all folders)</tt></h3>
             <p>
             List diagram ids and names
             </p>
@@ -232,6 +242,11 @@
             
             </li>
             </ul>
+            <p>
+            This shows you the diagrams available to you. By default this will be all
+            diagrams in all folders to which you have access. If you specify a folder
+            on the command line, you will see diagrams only in that folder
+            </p>
             <h4>Options</h4>
             <p>
             These options are specified <b>after</b> the command.
@@ -292,10 +307,26 @@
             These options are specified <b>after</b> the command.
             </p>
             <dl>
+            <dt><tt>-e</tt></dt><dd>Edit the diagram right after using -o
+            
+            </dd>
             <dt><tt>-f, --folder=arg</tt></dt><dd>Full path to the folder in which this diagram should ilve
             
             </dd>
-            <dt><tt>-t, --template=arg</tt></dt><dd>Id of a document to use as a template
+            <dt><tt>-m, --template=arg</tt></dt><dd>Id of a document to use as a template
+            
+            </dd>
+            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser (for -e only) <em>(
+            default: <tt>open</tt>)</em>
+            
+            </dd>
+            <dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
+            href="../classes/Gliffy.html">Gliffy</a> Editor (for -e only) <em>(
+            default: <tt>Return</tt>)</em>
+            
+            </dd>
+            <dt><tt>-u, --url=arg</tt></dt><dd>URL to return to after editing is complete (for -e only) <em>( default:
+            <tt><a href="http://www.gliffy.com">www.gliffy.com</a></tt>)</em>
             
             </dd>
             </dl>
@@ -352,7 +383,7 @@
             <dt><tt>-u, --url</tt></dt><dd>Get the URL only
             
             </dd>
-            <dt><tt>-v, --version=version number (omit for latest)</tt></dt><dd>Version
+            <dt><tt>-v, --version=version number (omit for latest, &quot;1&quot; is the first version)</tt></dt><dd>Version
             
             </dd>
             </dl>

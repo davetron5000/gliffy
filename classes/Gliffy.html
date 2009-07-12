@@ -138,6 +138,9 @@
             you can with the full API, but you can do quite a bit
             </p>
             <pre># set up your account&#x000A;&gt; gliffy config&#x000A;&#x000A;# List all documents in your account&#x000A;&gt; gliffy ls&#x000A;&#x000A;# Create a new document&#x000A;&gt; gliffy new &quot;My New Document&quot;&#x000A;Created document 123456 - My New Document&#x000A;&#x000A;# Edit it&#x000A;&gt; gliffy edit 123456&#x000A;&#x000A;# Make a new folder&#x000A;&gt; gliffy mkdir awesome&#x000A;&#x000A;# Move our new document there&#x000A;&gt; gliffy mv 123456 awesome&#x000A;&#x000A;# Get it as a PNG&#x000A;&gt; gliffy get -t png 123456&#x000A;Wrote 123456_L.png&#x000A;&#x000A;# Get help on a command&#x000A;&gt; bin/gliffy help get&#x000A;view [options]&#x000A;    View a diagram as an image, or download it&#x000A;&#x000A;Options:&#x000A;    -p, --publicurl                                - Get the Public URL only (if&#x000A;                                                     possibe)&#x000A;    -s, --size=L, M, S, T                          - Size (default: L)&#x000A;    -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)&#x000A;    -u, --url                                      - Get the URL only&#x000A;    -v, --version=version number (omit for latest) - Version</pre>
+            <p>
+            :include:gliffy.rdoc
+            </p>
             <h1>Design</h1>
             <h2>Domain Objects</h2>
             <p>

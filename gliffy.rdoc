@@ -1,4 +1,4 @@
-= <tt>gliffy</tt> Command Line Reference
+= <tt>gliffy</tt>
 
     gliffy [global options] command_name [command-specific options] [--] arguments...
 
@@ -10,8 +10,9 @@
 These options are available for any command and are specified before the name of the command
 
 [<tt>--config=path to gliffy config file</tt>] Location of your gliffy configuration <i>( default: <tt>/Users/davec/.gliffyrc</tt>)</i>
+[<tt>--debug</tt>] Show debug info
 == Commands
-[<tt>config</tt>] Modify configuration (currently only create)
+[<tt>config</tt>] Create your configuration file
 [<tt>edit</tt>] Edit a diagram
 [<tt>help</tt>] Shows list of commands or help for one command
 [<tt>ls</tt>] List diagram ids and names
@@ -25,9 +26,9 @@ These options are available for any command and are specified before the name of
 
 === <tt>config </tt>
 
-Modify configuration (currently only create)
+Create your configuration file
 
-
+This will ask you a series of questions that will create your gliffy configuration file.  This file will be used for subsequent requests of gliffy and will need to contain your OAuth keys as well as some other information.
 
 ==== Options
 These options are specified *after* the command.
@@ -42,21 +43,21 @@ Edit a diagram
 ==== Options
 These options are specified *after* the command.
 
-[<tt>-o, --openwith=arg</tt>] Command to run to open URL in browser <i>( default: <tt>open</tt>)</i>
-[<tt>-t, --text=arg</tt>] Text on the "Return" button in Gliffy <i>( default: <tt>Return</tt>)</i>
+[<tt>-o, --openwith=arg</tt>] Command to run to open URL for editing in browser <i>( default: <tt>open</tt>)</i>
+[<tt>-t, --text=arg</tt>] Text on the "Return" button in Gliffy Editor <i>( default: <tt>Return</tt>)</i>
 [<tt>-u, --url=arg</tt>] URL to return to after editing is complete <i>( default: <tt>http://www.gliffy.com</tt>)</i>
 === <tt>help [command]</tt>
 
 Shows list of commands or help for one command
 
-=== <tt>ls Folder to list, omit for all folders</tt>
+=== <tt>ls Folder to list (omit for all folders)</tt>
 
 List diagram ids and names
 
 *Aliases*
 * <tt><b>list</b></tt>
 
-
+This shows you the diagrams available to you.  By default this will be all diagrams in all folders to which you have access.  If you specify a folder on the command line, you will see diagrams only in that folder
 
 ==== Options
 These options are specified *after* the command.
@@ -94,8 +95,12 @@ Create a new diagram
 ==== Options
 These options are specified *after* the command.
 
+[<tt>-e</tt>] Edit the diagram right after using -o
 [<tt>-f, --folder=arg</tt>] Full path to the folder in which this diagram should ilve
-[<tt>-t, --template=arg</tt>] Id of a document to use as a template
+[<tt>-m, --template=arg</tt>] Id of a document to use as a template
+[<tt>-o, --openwith=arg</tt>] Command to run to open URL for editing in browser (for -e only) <i>( default: <tt>open</tt>)</i>
+[<tt>-t, --text=arg</tt>] Text on the "Return" button in Gliffy Editor (for -e only) <i>( default: <tt>Return</tt>)</i>
+[<tt>-u, --url=arg</tt>] URL to return to after editing is complete (for -e only) <i>( default: <tt>http://www.gliffy.com</tt>)</i>
 === <tt>rm </tt>
 
 Delete a diagram
@@ -126,4 +131,4 @@ These options are specified *after* the command.
 [<tt>-s, --size=L, M, S, T</tt>] Size <i>( default: <tt>L</tt>)</i>
 [<tt>-t, --type=jpeg, png, svg, xml</tt>] File Type <i>( default: <tt>jpeg</tt>)</i>
 [<tt>-u, --url</tt>] Get the URL only
-[<tt>-v, --version=version number (omit for latest)</tt>] Version
+[<tt>-v, --version=version number (omit for latest, "1" is the first version)</tt>] Version

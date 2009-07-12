@@ -108,7 +108,9 @@ This will list all the commands you can give to the +gliffy+ command.  You can't
         -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)
         -u, --url                                      - Get the URL only
         -v, --version=version number (omit for latest) - Version
-    
+   
+:include:gliffy.rdoc
+
 = Design
 
 == Domain Objects

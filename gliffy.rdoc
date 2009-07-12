@@ -1,0 +1,129 @@
+= <tt>gliffy</tt> Command Line Reference
+
+    gliffy [global options] command_name [command-specific options] [--] arguments...
+
+* Use the command +help+ to get a summary of commands
+* Use the command <tt>help command_name</tt> to get a help for +command_name+
+* Use <tt>--</tt> to stop command line argument processing; useful if your arguments have dashes in them
+
+== Global Options
+These options are available for any command and are specified before the name of the command
+
+[<tt>--config=path to gliffy config file</tt>] Location of your gliffy configuration <i>( default: <tt>/Users/davec/.gliffyrc</tt>)</i>
+== Commands
+[<tt>config</tt>] Modify configuration (currently only create)
+[<tt>edit</tt>] Edit a diagram
+[<tt>help</tt>] Shows list of commands or help for one command
+[<tt>ls</tt>] List diagram ids and names
+[<tt>lsf</tt>] List folders
+[<tt>mkdir</tt>] Create a new folder
+[<tt>mv</tt>] Move diagram to a new folder
+[<tt>new</tt>] Create a new diagram
+[<tt>rm</tt>] Delete a diagram
+[<tt>rmdir</tt>] Delete a folder
+[<tt>view</tt>] View a diagram as an image, or download it
+
+=== <tt>config </tt>
+
+Modify configuration (currently only create)
+
+
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>--force</tt>] Force a recreation of your config file, even if it exists
+=== <tt>edit </tt>
+
+Edit a diagram
+
+
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-o, --openwith=arg</tt>] Command to run to open URL in browser <i>( default: <tt>open</tt>)</i>
+[<tt>-t, --text=arg</tt>] Text on the "Return" button in Gliffy <i>( default: <tt>Return</tt>)</i>
+[<tt>-u, --url=arg</tt>] URL to return to after editing is complete <i>( default: <tt>http://www.gliffy.com</tt>)</i>
+=== <tt>help [command]</tt>
+
+Shows list of commands or help for one command
+
+=== <tt>ls Folder to list, omit for all folders</tt>
+
+List diagram ids and names
+
+*Aliases*
+* <tt><b>list</b></tt>
+
+
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-i</tt>] Sort by id
+[<tt>-l</tt>] Show id, public?, versions, owner, update date, name
+[<tt>-t</tt>] Sort by mod date
+=== <tt>lsf </tt>
+
+List folders
+
+*Aliases*
+* <tt><b>lsfolders</b></tt>
+
+=== <tt>mkdir folders you want created inside the ROOT folder</tt>
+
+Create a new folder
+
+*Aliases*
+* <tt><b>md</b></tt>
+
+=== <tt>mv document_id full_folder_path</tt>
+
+Move diagram to a new folder
+
+*Aliases*
+* <tt><b>move</b></tt>
+
+=== <tt>new Name of the diagram</tt>
+
+Create a new diagram
+
+
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-f, --folder=arg</tt>] Full path to the folder in which this diagram should ilve
+[<tt>-t, --template=arg</tt>] Id of a document to use as a template
+=== <tt>rm </tt>
+
+Delete a diagram
+
+*Aliases*
+* <tt><b>delete</b></tt>
+
+=== <tt>rmdir path (relative to ROOT) of folders you want delete</tt>
+
+Delete a folder
+
+*Aliases*
+* <tt><b>rd</b></tt>
+
+=== <tt>view </tt>
+
+View a diagram as an image, or download it
+
+*Aliases*
+* <tt><b>get</b></tt>
+
+
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-p, --publicurl</tt>] Get the Public URL only (if possibe)
+[<tt>-s, --size=L, M, S, T</tt>] Size <i>( default: <tt>L</tt>)</i>
+[<tt>-t, --type=jpeg, png, svg, xml</tt>] File Type <i>( default: <tt>jpeg</tt>)</i>
+[<tt>-u, --url</tt>] Get the URL only
+[<tt>-v, --version=version number (omit for latest)</tt>] Version

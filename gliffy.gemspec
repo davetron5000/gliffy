@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'gliffy'
-  s.version = '0.9.0'
+  s.version = '0.9.1'
   s.author = 'David Copeland'
   s.email = 'davidcopeland@naildrivin5.com'
   s.homepage = 'http://davetron5000.github.com/gliffy'
@@ -23,7 +23,7 @@ bin/gliffy
   s.rdoc_options << '--title' << 'Gliffy Ruby Client' << '--main' << 'README.rdoc' << '-ri'
   s.add_dependency('httparty', '>= 0.4.2')
   s.add_dependency('ruby-hmac', '>= 0.3.2')
-  s.add_dependency('davetron5000-gli', '>= 0.1.6')
+  s.add_dependency('gli', '>= 0.2.1')
   s.bindir = 'bin'
   s.executables << 'gliffy'
 end

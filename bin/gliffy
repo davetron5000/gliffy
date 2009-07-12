@@ -15,6 +15,9 @@ default_value Etc.getpwuid.dir + '/.gliffyrc'
 arg_name 'path to gliffy config file'
 flag [:config]
 
+desc 'Show debug info'
+switch [:debug]
+
 #desc 'Use gob-go instead of the real gliffy (devs only)'
 #switch [:gobgotest]
 
@@ -70,10 +73,12 @@ command [:lsf,:lsfolders] do |c|
 end
 
 desc 'List diagram ids and names'
-arg_name 'Folder to list, omit for all folders'
+long_desc 'This shows you the diagrams available to you.  By default this will be all diagrams in all folders to which you have access.  If you specify a folder on the command line, you will see diagrams only in that folder'
+arg_name 'Folder to list (omit for all folders)'
 command [:ls,:list] do |c|
 
   c.desc 'Show id, public?, versions, owner, update date, name'
+  c.long_desc 'This shows  more information about the diagrams.  The columsn shown are, in order: diagram id, "P" for public/"-" for not public, the number of versions of the diagram, the username of the diagram owner, the last updated date, and the diagram name'
   c.switch :l
 
   c.desc 'Sort by id'
@@ -122,11 +127,12 @@ command :edit do |c|
   c.default_value 'http://www.gliffy.com'
   c.flag [:u,:url]
 
-  c.desc 'Text on the "Return" button in Gliffy'
+  c.desc 'Text on the "Return" button in Gliffy Editor'
   c.default_value 'Return'
   c.flag [:t,:text]
 
-  c.desc 'Command to run to open URL in browser'
+  c.desc 'Command to run to open URL for editing in browser'
+  c.long_desc 'If defined, this command will be run with the URL for editing given to it.  Hopefully, this will pop up Gliffy in your browser.'
   c.default_value RUBY_PLATFORM =~ /^universal-darwin/ ? 'open' : nil
   c.flag [:o,:openwith]
 
@@ -162,13 +168,14 @@ command [:view,:get] do |c|
   c.flag [:s,:size]
 
   c.desc 'Version'
-  c.arg_name 'version number (omit for latest)'
+  c.arg_name 'version number (omit for latest, "1" is the first version)'
   c.flag [:v,:version]
 
   c.desc 'Get the URL only'
   c.switch [:u,:url]
 
   c.desc 'Get the Public URL only (if possibe)'
+  c.long_desc 'This is not strictly documented by the gliffy API, but, for public documents, this URL is more usable, as it can be requested any number of times.  The non-public URLs contain signature information that makes them one-time-use only.'
   c.switch [:p,:publicurl]
 
   c.action do |global_options,options,args|
@@ -207,19 +214,41 @@ command :new do |c|
   c.flag [:f,:folder]
 
   c.desc 'Id of a document to use as a template'
-  c.flag [:t,:template]
+  c.flag [:m,:template]
+
+  c.desc 'URL to return to after editing is complete (for -e only)'
+  c.default_value 'http://www.gliffy.com'
+  c.flag [:u,:url]
+
+  c.desc 'Text on the "Return" button in Gliffy Editor (for -e only)'
+  c.default_value 'Return'
+  c.flag [:t,:text]
+
+  c.desc 'Command to run to open URL for editing in browser (for -e only)'
+  c.long_desc 'If -e is specified and this is defined, this command will be run with the URL for editing given to it.  Hopefully, this will pop up Gliffy in your browser.'
+  c.default_value RUBY_PLATFORM =~ /^universal-darwin/ ? 'open' : nil
+  c.flag [:o,:openwith]
+
+  c.desc 'Edit the diagram right after using -o'
+  c.long_desc 'If you specified the -o option (or there is a system default ), this will open up your new diagram in Gliffy.'
+  c.switch [:e]
 
   c.action do |global_options,options,args|
     if args.length > 0
-      new_document = $handle.document_create(args.join(" "),options[:f],options[:t])
+      new_document = $handle.document_create(args.join(" "),options[:f],options[:m])
+      if options[:e]
+        GLI.commands[:edit].execute(global_options,options,[new_document.document_id])
+      else
       puts "Created document #{new_document.document_id} - #{new_document.name}"
+      end
     else
       $stderr.puts "You must supply the diagram name"
     end
   end
 end
 
-desc 'Modify configuration (currently only create)'
+desc 'Create your configuration file'
+long_desc 'This will ask you a series of questions that will create your gliffy configuration file.  This file will be used for subsequent requests of gliffy and will need to contain your OAuth keys as well as some other information.'
 command :config do |c|
 
   c.desc 'Force a recreation of your config file, even if it exists'
@@ -288,20 +317,11 @@ pre do |global,command,options,args|
           $config)
       end
       token = $handle.update_token
+      $handle.logger.level = Logger::DEBUG if global[:debug]
       write_config($config,global[:config])
     end
     true
   end
-end
-
-post do |global,command,options,args|
-  # Post logic here
-end
-
-on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  true
 end
 
 def write_config(cred,config)

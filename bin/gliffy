@@ -168,7 +168,7 @@ command [:view,:get] do |c|
   c.flag [:s,:size]
 
   c.desc 'Version'
-  c.arg_name 'version number (omit for latest, "1" is the first version)'
+  c.arg_name 'version number (1-based)'
   c.flag [:v,:version]
 
   c.desc 'Get the URL only'

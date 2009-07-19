@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Sun Jul 12 18:06:01 -0400 2009</span>
+          <span class='datetime'>Sun Jul 19 18:20:16 -0400 2009</span>
         </div>
       </div>
       <div id='content'>
@@ -92,6 +92,28 @@
             edit it:
             </p>
             <pre>def create&#x000A;  new_doc = session[:gliffy].document_create(params[:name])&#x000A;  redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,&#x000A;              {:returnURL =&gt; url_for(:controller =&gt; 'return_from_gliffy'),&#x000A;               :returnButtonText =&gt; 'Back to My Awesome Blog'}))&#x000A;end</pre>
+            <p>
+            It is recommended that you do not expose the <a
+            href="../classes/Gliffy.html">Gliffy</a> URLs directly in your views; since
+            each URL can be called one time only and they <b>must</b> be called in the
+            order generated, if you were to have, for example, a page with links to
+            images of your <a href="../classes/Gliffy.html">Gliffy</a> diagrams, the
+            browser may not request those links in the order that you need.
+            </p>
+            <p>
+            Instead, create a route like so:
+            </p>
+            <pre>map.resources :diagrams, :only =&gt; [:index,:new,:destroy,:edit,:show]</pre>
+            <p>
+            And implement all <a href="../classes/Gliffy.html">Gliffy</a> access in
+            your controller methods
+            </p>
+            <pre># diagrams_controller.rb&#x000A;class DiagramsController &lt; ApplicationController&#x000A;&#x000A;  Mime::Type.register 'image/jpeg', :jpg, [], [&quot;jpeg&quot;]&#x000A;  Mime::Type.register 'image/png', :png, [], [&quot;png&quot;]&#x000A;  Mime::Type.register 'image/svg+xml', :svg, [], [&quot;svg&quot;]&#x000A;&#x000A;  def index&#x000A;    @diagrams = self.gliffy_handle.folder_documents(APP_CONFIG['gliffy_folder']).sort{|a,b| a.name &lt;=&gt; b.name}&#x000A;  end&#x000A;&#x000A;  def show&#x000A;    size = params[:size] || :L&#x000A;    respond_to do |format|&#x000A;      format.jpg { send_data session[:gliffy].document_get(params[:id],:jpeg,size), :type =&gt; &quot;image/jpeg&quot;, :disposition =&gt; 'inline' }&#x000A;      format.png { send_data session[:gliffy].document_get(params[:id],:png,size), :type =&gt; &quot;image/png&quot;, :disposition =&gt; 'inline' }&#x000A;      format.svg { send_data session[:gliffy].document_get(params[:id],:svg,size), :type =&gt; &quot;image/svg+xml&quot;, :filename =&gt; params[:id] + &quot;.svg&quot; }&#x000A;      format.xml { send_data session[:gliffy].document_get(params[:id],:xml,size), :type =&gt; &quot;text/xml&quot;, :filename =&gt; params[:id] + &quot;.xml&quot; }&#x000A;    end&#x000A;  end&#x000A;&#x000A;# index.html.erb&#x000A;&lt;ul&gt;&#x000A;  &lt;% @diagrams.each do |diagram| %&gt;&#x000A;    &lt;li&gt;&lt;img src=&quot;&lt;%= diagram_path(diagram.document_id) %&gt;&quot; /&gt;&lt;/li&gt;&#x000A;  &lt;% end %&gt;&#x000A;&lt;/ul&gt;</pre>
+            <p>
+            This way, your application has links to your controller and the requests to
+            <a href="../classes/Gliffy.html">Gliffy</a> are constructed as the browser
+            makes requests to your application.
+            </p>
             <h2>Digging Deeper</h2>
             <p>
             If you wish to bypass the high-level API, you can interact with <a
@@ -371,6 +393,13 @@
             These options are specified <b>after</b> the command.
             </p>
             <dl>
+            <dt><tt>-O, --noopen</tt></dt><dd>Just print the url/filename; dont try to open it
+            
+            </dd>
+            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
+            <tt>open</tt>)</em>
+            
+            </dd>
             <dt><tt>-p, --publicurl</tt></dt><dd>Get the Public URL only (if possibe)
             
             </dd>
@@ -383,7 +412,7 @@
             <dt><tt>-u, --url</tt></dt><dd>Get the URL only
             
             </dd>
-            <dt><tt>-v, --version=version number (omit for latest, &quot;1&quot; is the first version)</tt></dt><dd>Version
+            <dt><tt>-v, --version=version number (1-based)</tt></dt><dd>Version
             
             </dd>
             </dl>

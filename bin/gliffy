@@ -178,30 +178,37 @@ command [:view,:get] do |c|
   c.long_desc 'This is not strictly documented by the gliffy API, but, for public documents, this URL is more usable, as it can be requested any number of times.  The non-public URLs contain signature information that makes them one-time-use only.'
   c.switch [:p,:publicurl]
 
+  c.desc 'Command to run to open URL for editing in browser'
+  c.long_desc 'If defined, this command will be run with the URL for editing given to it.  Hopefully, this will pop up Gliffy in your browser.'
+  c.default_value RUBY_PLATFORM =~ /^universal-darwin/ ? 'open' : nil
+  c.flag [:o,:openwith]
+
+  c.desc 'Just print the url/filename; don''t try to open it'
+  c.switch [:O,:noopen]
+
   c.action do |global_options,options,args|
     args.each do |document_id|
       version = options[:v]
       version_name = ''
       version_name = "_V#{version}" if version
+      opened = false
+      location = nil
       if options[:u]
-        puts $handle.document_get_url(document_id,options[:t].to_sym,options[:s].to_sym,version)
+        location = $handle.document_get_url(document_id,options[:t].to_sym,options[:s].to_sym,version)
       elsif options[:p]
-        document = $handle.document_get_metadata(document_id)
-        if document.is_public?
-          # This isn't formally documented in the API so we put it here
-          puts "http://www.gliffy.com/pubdoc/#{document.document_id}/#{options[:s]}.jpg"
-        else
-          puts "Document is not public"
-          puts $handle.document_get_url(document_id,options[:t].to_sym,options[:s].to_sym,version)
-        end
+        location = $handle.document_get_public_url(document_id,options[:s].to_sym)
       else
         bytes = $handle.document_get(document_id,options[:t].to_sym,options[:s].to_sym,version)
-        filename = "#{document_id}_#{options[:s]}#{version_name}.#{options[:t]}"
-        File.open(filename,'wb') do |f|
+        location = "#{document_id}_#{options[:s]}#{version_name}.#{options[:t]}"
+        File.open(location,'wb') do |f|
           f.write(bytes)
         end
-        puts "Wrote #{filename}"
       end
+      if options[:o] && !options[:O]
+        opened = system "#{options[:o]} \"#{location}\""
+        puts "Couldn't run #{options[:o]} to open file/url" if !opened
+      end
+      puts location if !opened
     end
   end
 end

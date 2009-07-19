@@ -51,6 +51,44 @@ Now you can use the gliffy handle in a controller or a view.  Perhaps you'd make
                    :returnButtonText => 'Back to My Awesome Blog'})) 
     end
 
+It is recommended that you do not expose the Gliffy URLs directly in your views; since each URL can be called one time only and they *must* be called in the order generated, if you were to have, for example, a page with links to images of your Gliffy diagrams, the browser may not request those links in the order that you need.
+
+Instead, create a route like so:
+
+    map.resources :diagrams, :only => [:index,:new,:destroy,:edit,:show]
+
+And implement all Gliffy access in your controller methods
+
+    # diagrams_controller.rb
+    class DiagramsController < ApplicationController
+
+      Mime::Type.register 'image/jpeg', :jpg, [], ["jpeg"] 
+      Mime::Type.register 'image/png', :png, [], ["png"] 
+      Mime::Type.register 'image/svg+xml', :svg, [], ["svg"] 
+
+      def index
+        @diagrams = self.gliffy_handle.folder_documents(APP_CONFIG['gliffy_folder']).sort{|a,b| a.name <=> b.name}
+      end
+
+      def show
+        size = params[:size] || :L
+        respond_to do |format|
+          format.jpg { send_data session[:gliffy].document_get(params[:id],:jpeg,size), :type => "image/jpeg", :disposition => 'inline' }
+          format.png { send_data session[:gliffy].document_get(params[:id],:png,size), :type => "image/png", :disposition => 'inline' }
+          format.svg { send_data session[:gliffy].document_get(params[:id],:svg,size), :type => "image/svg+xml", :filename => params[:id] + ".svg" }
+          format.xml { send_data session[:gliffy].document_get(params[:id],:xml,size), :type => "text/xml", :filename => params[:id] + ".xml" }
+        end
+      end
+
+    # index.html.erb
+    <ul>
+      <% @diagrams.each do |diagram| %>
+        <li><img src="<%= diagram_path(diagram.document_id) %>" /></li>
+      <% end %>
+    </ul>
+ 
+This way, your application has links to your controller and the requests to Gliffy are constructed as the browser makes requests to your application.
+
 == Digging Deeper
 
 If you wish to bypass the high-level API, you can interact with Gliffy directly via the Gliffy::Request class, which allows you to make arbitrary requests against the Gliffy API, but takes care of signing your URLs and all OAuth things that need to be done:

@@ -127,8 +127,10 @@ View a diagram as an image, or download it
 ==== Options
 These options are specified *after* the command.
 
+[<tt>-O, --noopen</tt>] Just print the url/filename; dont try to open it
+[<tt>-o, --openwith=arg</tt>] Command to run to open URL for editing in browser <i>( default: <tt>open</tt>)</i>
 [<tt>-p, --publicurl</tt>] Get the Public URL only (if possibe)
 [<tt>-s, --size=L, M, S, T</tt>] Size <i>( default: <tt>L</tt>)</i>
 [<tt>-t, --type=jpeg, png, svg, xml</tt>] File Type <i>( default: <tt>jpeg</tt>)</i>
 [<tt>-u, --url</tt>] Get the URL only
-[<tt>-v, --version=version number (omit for latest, "1" is the first version)</tt>] Version
+[<tt>-v, --version=version number (1-based)</tt>] Version

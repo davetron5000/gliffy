@@ -41,6 +41,11 @@ class TC_testHandle < Test::Unit::TestCase
     @s.shutdown
   end
 
+  def test_public_url
+    assert_equal('http://www.gliffy.com/pubdoc/10/L.jpg',@handle.document_get_public_url(10))
+    assert_equal('http://www.gliffy.com/pubdoc/10/T.jpg',@handle.document_get_public_url(10,:T))
+  end
+
   def test_bad_folder_users_request
     assert_raises(BadResponseException) do
       @handle.folder_users('a/b/c')

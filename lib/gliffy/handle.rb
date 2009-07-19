@@ -159,6 +159,17 @@ module Gliffy
       end
     end
 
+    # Gets the public link to the document, which is static
+    # and not dependent on the key or authorization.
+    # This isn't formally part of the Gliffy API, but is 
+    # convienient.  The document must be public
+    # and you can only get it in JPG format.
+    # [+document_id+] identifier of the document
+    # [+size+] size to show, from biggest to smallest: :L, :M, :S, :T
+    def document_get_public_url(document_id,size=:L)
+      "http://www.gliffy.com/pubdoc/#{document_id}/#{size.to_s}.jpg"
+    end
+
     # Get a link to a document
     # [+document_id+] identifier of the document
     # [+type+] document type.  Types known to work:

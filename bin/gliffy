@@ -18,6 +18,9 @@ flag [:config]
 desc 'Show debug info'
 switch [:debug]
 
+desc 'Show version'
+switch :version
+
 #desc 'Use gob-go instead of the real gliffy (devs only)'
 #switch [:gobgotest]
 
@@ -261,6 +264,10 @@ command :config do |c|
   c.desc 'Force a recreation of your config file, even if it exists'
   c.switch :force
 
+  c.desc 'Forget token (gets a new one next time)'
+  c.long_desc 'Sometimes your token can get corrupted or otherwise become unusable.  Using this will delete it, forcing a new one to be requested next time.'
+  c.switch :forget
+
   c.action do |global_options,options,args|
     if $config.nil? || options[:force]
       puts "What is account ID?"
@@ -286,6 +293,10 @@ command :config do |c|
       else
         puts "Aborted"
       end
+    elsif options[:forget]
+      $config.update_access_token(nil)
+      write_config($config,global_options[:config])
+      puts "Token deleted; if your next request fails, re-create your config with --force or contact Gliffy"
     else
       $stderr.puts "You already have a config; edit it by hand or use --force to recreate"
     end
@@ -293,44 +304,58 @@ command :config do |c|
 end
 
 pre do |global,command,options,args|
-  require 'yaml'
-  message = nil
-  begin
-  $config = File.open(global[:config]) { |f| YAML::load(f) }
-  rescue
-    message = "No config file found at #{global[:config]}\nUse #{$0} config to create one"
-    $config = nil
-  end
-  if $config.nil? && command.name != :config
-    $stderr.puts message if !message.nil?
+  if global[:version]
+    puts "#{$0} v#{Gliffy::GLIFFY_VERSION}"
     false
   else
-    if !command || command.name != :config
-      if global[:gobgotest]
-        puts "Going against gob-go -- developers only!"
-        class HTTPartyAuth
-          def post(url)
-            HTTParty.post(url,:basic_auth => {:username => 'gobgotest' , :password => 'gobgotest'})
-          end
-        end
-        $handle = Gliffy::Handle.new(
-          'gob-go-stable.gliffy.com/api/1.0',
-          'gob-go-stable.gliffy.com/gliffy',
-          $config,HTTPartyAuth.new)
-      else
-        $handle = Gliffy::Handle.new(
-          'www.gliffy.com/api/1.0',
-          'www.gliffy.com/gliffy',
-          $config)
-      end
-      token = $handle.update_token
-      $handle.logger.level = Logger::DEBUG if global[:debug]
-      write_config($config,global[:config])
+    require 'yaml'
+    message = nil
+    begin
+      $config = File.open(global[:config]) { |f| YAML::load(f) }
+    rescue
+      message = "No config file found at #{global[:config]}\nUse #{$0} config to create one"
+      $config = nil
     end
-    true
+    if $config.nil? && command.name != :config
+      $stderr.puts message if !message.nil?
+      false
+    else
+      if !command || command.name != :config
+        if global[:gobgotest]
+          puts "Going against gob-go -- developers only!"
+          class HTTPartyAuth
+            def post(url)
+              HTTParty.post(url,:basic_auth => {:username => 'gobgotest' , :password => 'gobgotest'})
+            end
+          end
+          $handle = Gliffy::Handle.new(
+            'gob-go-stable.gliffy.com/api/1.0',
+            'gob-go-stable.gliffy.com/gliffy',
+            $config,HTTPartyAuth.new)
+        else
+          $handle = Gliffy::Handle.new(
+            'www.gliffy.com/api/1.0',
+            'www.gliffy.com/gliffy',
+            $config)
+        end
+        token = $handle.update_token
+        $handle.logger.level = Logger::DEBUG if global[:debug]
+        write_config($config,global[:config])
+      end
+      true
+    end
   end
 end
 
+on_error do |ex|
+  raise ex
+  #if ex.kind_of? Gliffy::BadAuthorizationException
+  #  puts "Your token is bustedz"
+  #  false
+  #else
+  #  true
+  #end
+end
 def write_config(cred,config)
   File.open(config,'w') do |out|
     YAML.dump(cred,out)

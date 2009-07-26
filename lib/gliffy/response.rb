@@ -22,6 +22,12 @@ module Gliffy
       super(message)
     end
   end
+
+  class BadAuthorizationException < Exception
+    def initialize(message)
+      super(message)
+    end
+  end
   # Base class for all response from gliffy
   class Response
     @@normal_error_callback = Proc.new do |response,exception|
@@ -29,10 +35,17 @@ module Gliffy
         message = response.inspect
         if response['response'] && response['response']['error']
           http_status = response['response']['error']['http_status']
-          if http_status = "404"
-            message = "Not Found"
+          # It seems that HTTParty is not able to figure out the http-status when the contents of
+          # the tag is text.  Weird.  This hack seems to work reasonably well.
+          if !http_status
+            http_status = response.body.gsub(/^.*http-status=\"/,'').gsub(/\".*$/,'')
+          end
+          if http_status == '404'
+            message = 'Not Found'
+          elsif http_status == '401'
+            raise BadAuthorizationException.new(response['response']['error'])
           else
-            message = "HTTP Status #{http_status}"
+            message = "HTTP Status #{http_status} : #{response['response']['error']}"
           end
         end
         raise exception.class.new(message)

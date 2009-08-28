@@ -16,10 +16,23 @@ module Gliffy
       'oauth_timestamp' => true,
     }
 
-    # Ruby's SignedURL::encode doesn't encode spaces correctly
+    # Encodes each part of this url, accounting for some
+    # of the weirdness we are dealing with
+    def self.encodeParts(url)
+      parts = url.split(/\//).map do |part|
+        if part =~ /^\$/
+          part
+        else
+          encode(part)
+        end
+      end
+      parts.join('/')
+    end
+
+    # Ruby's CGI::encode doesn't encode spaces correctly
     def self.encode(string)
       string.gsub(/([^ a-zA-Z0-9_.-]+)/n) do
-      '%' + $1.unpack('H2' * $1.size).join('%').upcase
+        '%' + $1.unpack('H2' * $1.size).join('%').upcase
       end.gsub(' ', '%20')
     end
 

@@ -330,11 +330,12 @@ module Gliffy
     # [+parse+] if true, request is parsed; set to false to get the raw result back
     # [+link_only+] don't make a request just send the full link (useful for <img> tags)
     def make_request(method,url,params=nil,parse=true,link_only=false)
+      url = SignedURL::encodeParts(url)
       update_token
       if link_only
         @request.link_for(method,url,params)
       else
-        @logger.debug("Requesting #{url} with {#params.inspect}")
+        @logger.debug("Requesting #{url} with #{params.inspect}")
         response = @request.send(method,url,params)
         @logger.debug("Got back #{response.body}")
         if parse

@@ -24,6 +24,16 @@ class TC_testURL < Test::Unit::TestCase
     end
   end
 
+  def test_encode_parts
+    url = "/this/is/easy"
+    assert_equal url,SignedURL::encodeParts(url)
+    url = "this/has some spaces/and stuff"
+    assert_equal "this/has%20some%20spaces/and%20stuff",SignedURL::encodeParts(url)
+
+    url = "this/$account/has spaces/$username"
+    assert_equal "this/$account/has%20spaces/$username",SignedURL::encodeParts(url)
+  end
+
   def test_bad_param_override
     SignedURL::READ_ONLY_PARAMS.keys.each do |param|
       assert_raises(ArgumentError) do 

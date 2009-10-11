@@ -316,7 +316,11 @@ pre do |global,command,options,args|
       message = "No config file found at #{global[:config]}\nUse #{$0} config to create one"
       $config = nil
     end
-    if $config.nil? && command.name != :config
+    if !$config.nil? && !$config.kind_of?(Gliffy::Credentials)
+      message = "Your config file is corrupted; suggest recreating it with the config command"
+      $config = nil
+    end
+    if $config.nil? && (command.nil? || command.name != :config)
       $stderr.puts message if !message.nil?
       false
     else

@@ -118,3 +118,5 @@ task :update_version do
     file.puts "end"
   end
 end
+
+task :bamboo => [:setup_account, :functest]

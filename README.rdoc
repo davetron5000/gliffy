@@ -21,7 +21,7 @@ Suppose you have created a group blog application using Rails and wish to give B
     $gliffy_secret = 'your-secret-here'
     $gliffy_app_description = 'My Awesome Group Blog',
     $gliffy_account_id = 655321
-    $gliffy_root = 'www.gliffy.com/api/v1'
+    $gliffy_root = 'www.gliffy.com/api/1.0'
     $gliffy_edit_root = 'www.gliffy.com/gliffy'
 
 Then, in your <tt>sessions_controller.rb</tt>:

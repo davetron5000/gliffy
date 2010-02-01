@@ -182,7 +182,7 @@ Request implements the HTTP layer, and is based on HTTParty.  Since all Gliffy U
 
 You will need:
 
- * hanna 0.1.7, available via `gem install mislav-hanna`
+ * sdoc 0.2.16 or better
  * httparty 0.4.2 or better
  * ruby-hmac 0.3.2 or better
  * gli 0.1.6 or better

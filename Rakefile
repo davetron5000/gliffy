@@ -1,9 +1,10 @@
 require 'rake/clean'
 require 'rake/testtask'
-require 'hanna/rdoctask'
+require 'rake/rdoctask'
 require 'rcov/rcovtask'
 require 'rubygems'
 require 'rake/gempackagetask'
+require 'sdoc'
 
 begin
   $: << '../grancher/lib'
@@ -22,6 +23,8 @@ end
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
+  rd.options << '--fmt' << 'shtml'
+  rd.template = 'direct'
   rd.title = 'Ruby Client for Gliffy'
 end
 

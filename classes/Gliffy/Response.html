@@ -1,178 +1,302 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang='en'>
-  <head>
-    <title>: Gliffy::Response [Ruby Client for Gliffy]</title>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
-    <script type='text/javascript'>
-      //<![CDATA[
-        function popupCode(url) {
-          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-        }
-        
-        function toggleCode(id) {
-          var code = document.getElementById(id)
-        
-          code.style.display = code.style.display != 'block' ? 'block' : 'none'
-          return true
-        }
-        
-        // Make codeblocks hidden by default
-        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
-      //]]>
-    </script>
-  </head>
-  <body class='page'>
-    <div class='class' id='wrapper'>
-      <div class='header'>
-        <h1 class='name'>
-          <span class='type'>Class</span>
-          Gliffy::Response
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gliffy::Response</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+    <script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Gliffy::Response 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
         </h1>
-        <ol class='paths'>
-          <li>
-            <a href="../../files/lib/gliffy/response_rb.html">lib/gliffy/response.rb</a>
-          </li>
-        </ol>
-        <div class='parent'>
-          Parent:
-          <strong>Object</strong>
-        </div>
-      </div>
-      <div id='content'>
-        <div id='text'>
-          <div id='description'>
-            <p>
-            Base class for all response from gliffy
-            </p>
-          </div>
-          <div id='method-list'>
-            <h2>Methods</h2>
-            <h3>public class</h3>
-            <ol>
-              <li><a href="#M000006">from_http_response</a></li>
-              <li><a href="#M000008">new</a></li>
-              <li><a href="#M000007">verify</a></li>
-            </ol>
-            <h3>public instance</h3>
-            <ol>
-              <li><a href="#M000009">method_missing</a></li>
-            </ol>
-          </div>
-          <div id='section'>
-            <div id='attribute-list'>
-              <h2 class='section-bar'>Attributes</h2>
-              <div class='name-list'>
-                <table>
-                  <tr class='top-aligned-row context-row'>
-                    <td class='context-item-name'>body</td>
-                    <td class='context-item-value'>[R]</td>
-                    <td class='context-item-desc'></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-            <div id='methods'>
-              <h2>Public class methods</h2>
-              <div class='public-class method' id='method-M000006'>
-                <a name='M000006'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>from_http_response</span>
-                  <span class='arguments'>(response,error_callback=nil)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Factory for creating actual response subclasses. This takes the results of
-                  HTTParty&#8217;s response, which is a hash, essentially. This assumes that
-                  any checks for validity have been done.
-                  </p>
-                  <dl>
-                  <dt>error_response</dt><dd>Set this to a Proc to handle errors if you don&#8217;t want the default
-                  behavior. The proc will get two arguments:
-                  
-                  <dl>
-                  <dt><tt>response</tt></dt><dd>the raw response received (may be nil)
-                  
-                  </dd>
-                  <dt><tt>exception</tt></dt><dd>One of <a href="NoResponseException.html">NoResponseException</a>, <a
-                  href="BadResponseException.html">BadResponseException</a>, or <a
-                  href="RequestFailedException.html">RequestFailedException</a>. The message
-                  of that exception is a usable message if you want to ignore the exception
-                  
-                  </dd>
-                  </dl>
-                  </dd>
-                  </dl>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000006-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000006-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 52</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>=<span class="ruby-keyword kw">nil</span>)&#x000A;      <span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>)&#x000A;      <span class="ruby-identifier">root</span> = <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>]&#x000A;      <span class="ruby-identifier">klass</span> = <span class="ruby-keyword kw">nil</span>&#x000A;      <span class="ruby-identifier">root</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>&#x000A;        <span class="ruby-identifier">klassname</span> = <span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">key</span>)&#x000A;        <span class="ruby-keyword kw">begin</span>&#x000A;          <span class="ruby-identifier">this_klass</span> = <span class="ruby-constant">Gliffy</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">klassname</span>)&#x000A;        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>&#x000A;          <span class="ruby-identifier">this_klass</span> = <span class="ruby-keyword kw">nil</span>&#x000A;        <span class="ruby-keyword kw">end</span>&#x000A;        <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">this_klass</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">this_klass</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">klass</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">root</span>)&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-class method' id='method-M000008'>
-                <a name='M000008'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>new</span>
-                  <span class='arguments'>(params)</span>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000008-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000008-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 86</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)&#x000A;      <span class="ruby-ivar">@params</span> = <span class="ruby-identifier">params</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <div class='public-class method' id='method-M000007'>
-                <a name='M000007'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>verify</span>
-                  <span class='arguments'>(response,error_callback)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Verifies that the response represents success, calling the error callback
-                  if it doesn&#8217;t
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000007-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000007-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 71</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>)&#x000A;      <span class="ruby-identifier">error_callback</span> = <span class="ruby-ivar">@@error_callback</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">nil?</span>&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">NoResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'No response received at all'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">nil?</span> &#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">BadResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Not a Gliffy response'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>]&#x000A;      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">BadResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'No indication of success from Gliffy'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'success'</span>]&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'success'</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'true'</span>&#x000A;        <span class="ruby-identifier">error</span> = <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'error'</span>]&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">RequestFailedException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Request failed but no error inside response'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">error</span>&#x000A;        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">RequestFailedException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">error</span>))&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-              <h2>Public instance methods</h2>
-              <div class='public-instance method' id='method-M000009'>
-                <a name='M000009'>      </a>
-                <div class='synopsis'>
-                  <span class='name'>method_missing</span>
-                  <span class='arguments'>(symbol,*args)</span>
-                </div>
-                <div class='description'>
-                  <p>
-                  Implements access to the object information. Parameters should be typed
-                  appropriately. The names are those as defined by the <a
-                  href="../Gliffy.html">Gliffy</a> XSD, save for dashes are replaced with
-                  underscores.
-                  </p>
-                </div>
-                <div class='source'>
-                  <a class='source-toggle' href='#' onclick="toggleCode('M000009-source'); return false">
-                    [show source]
-                  </a>
-                  <pre id='M000009-source'><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 94</span>&#x000A;    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>&#x000A;        <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">symbol</span>]&#x000A;      <span class="ruby-keyword kw">else</span>&#x000A;        <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-identifier">args</span>)&#x000A;      <span class="ruby-keyword kw">end</span>&#x000A;    <span class="ruby-keyword kw">end</span></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id='footer-push'></div>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/gliffy/response_rb.html">lib/gliffy/response.rb</a></li>
+            
+        </ul>
     </div>
-    <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+Base class for all response from gliffy
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000037">from_http_response</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000048">method_missing</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000047">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>V</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000041">verify</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [R]
+            </td>
+            <td class='attr-name'>body</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000037">
+                    
+                    <a name="M000037"></a><b>from_http_response</b>(response,error_callback=nil)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Factory for creating actual response subclasses. This takes the results of
+HTTParty&#8217;s response, which is a hash, essentially. This assumes that
+any checks for validity have been done.
+</p>
+<dl>
+<dt>error_response</dt><dd>Set this to a Proc to handle errors if you don&#8217;t want the default
+behavior. The proc will get two arguments:
+
+<dl>
+<dt><tt>response</tt></dt><dd>the raw response received (may be nil)
+
+</dd>
+<dt><tt>exception</tt></dt><dd>One of <a href="NoResponseException.html">NoResponseException</a>, <a
+href="BadResponseException.html">BadResponseException</a>, or <a
+href="RequestFailedException.html">RequestFailedException</a>. The message
+of that exception is a usable message if you want to ignore the exception
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000037_source')" id="l_M000037_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L65" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000037_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 65</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>)
+      <span class="ruby-identifier">root</span> = <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>]
+      <span class="ruby-identifier">klass</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">root</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">klassname</span> = <span class="ruby-identifier">to_classname</span>(<span class="ruby-identifier">key</span>)
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">this_klass</span> = <span class="ruby-constant">Gliffy</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">klassname</span>)
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+          <span class="ruby-identifier">this_klass</span> = <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">this_klass</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">this_klass</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">klass</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">from_http_response</span>(<span class="ruby-identifier">root</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000047">
+                    
+                    <a name="M000047"></a><b>new</b>(params)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000047_source')" id="l_M000047_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L99" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000047_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 99</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">params</span>)
+      <span class="ruby-ivar">@params</span> = <span class="ruby-identifier">params</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000041">
+                    
+                    <a name="M000041"></a><b>verify</b>(response,error_callback)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Verifies that the response represents success, calling the error callback
+if it doesn&#8217;t
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000041_source')" id="l_M000041_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L84" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000041_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 84</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verify</span>(<span class="ruby-identifier">response</span>,<span class="ruby-identifier">error_callback</span>)
+      <span class="ruby-identifier">error_callback</span> = <span class="ruby-ivar">@@error_callback</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">NoResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'No response received at all'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">nil?</span> 
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">BadResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Not a Gliffy response'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>]
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">BadResponseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'No indication of success from Gliffy'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'success'</span>]
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'success'</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'true'</span>
+        <span class="ruby-identifier">error</span> = <span class="ruby-identifier">response</span>[<span class="ruby-value str">'response'</span>][<span class="ruby-value str">'error'</span>]
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">RequestFailedException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Request failed but no error inside response'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">error</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">error_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">response</span>,<span class="ruby-constant">RequestFailedException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">error</span>))
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000048">
+                    
+                    <a name="M000048"></a><b>method_missing</b>(symbol,*args)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Implements access to the object information. Parameters should be typed
+appropriately. The names are those as defined by the <a
+href="../Gliffy.html">Gliffy</a> XSD, save for dashes are replaced with
+underscores.
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000048_source')" id="l_M000048_source">show</a>
+                        
+                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L107" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000048_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 107</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@params</span>[<span class="ruby-identifier">symbol</span>]
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">symbol</span>,<span class="ruby-identifier">args</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
     </div>
   </body>
-</html>
+</html>    

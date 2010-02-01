@@ -1,597 +1,734 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang='en'>
-  <head>
-    <title>File: README.rdoc [Ruby Client for Gliffy]</title>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-    <link href='../rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
-    <script type='text/javascript'>
-      //<![CDATA[
-        function popupCode(url) {
-          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-        }
-        
-        function toggleCode(id) {
-          var code = document.getElementById(id)
-        
-          code.style.display = code.style.display != 'block' ? 'block' : 'none'
-          return true
-        }
-        
-        // Make codeblocks hidden by default
-        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
-      //]]>
-    </script>
-  </head>
-  <body class='page'>
-    <div class='file' id='wrapper'>
-      <div class='header'>
-        <div class='name'>README.rdoc</div>
-        <div class='paths'>
-          README.rdoc
-        </div>
-        <div class='last-update'>
-          Last Update:
-          <span class='datetime'>Sun Jul 19 18:20:16 -0400 2009</span>
-        </div>
-      </div>
-      <div id='content'>
-        <div id='text'>
-          <div id='description'>
-            <p>
-            This is the Ruby client library for interacting with <a
-            href="http://www.gliffy.com">Gliffy</a>. It&#8217;s main function is for
-            you to integrate <a href="../classes/Gliffy.html">Gliffy</a> documents into
-            the workflow of another application.
-            </p>
-            <h1>Getting Started</h1>
-            <pre>sudo gem install gliffy</pre>
-            <ul>
-            <li>Source - <a
-            href="http://github.com/davetron5000/gliffy/tree/master">github.com/davetron5000/gliffy/tree/master</a>
-            
-            </li>
-            <li>RDoc - <a
-            href="http://davetron5000.github.com/gliffy">davetron5000.github.com/gliffy</a>
-            
-            </li>
-            </ul>
-            <h1>Overview</h1>
-            <p>
-            The main entry point to <a href="../classes/Gliffy.html">Gliffy</a> is <a
-            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, which provides
-            high-level access to most features available from the API. You should
-            instantiate one of these objects per <em>user session</em>. To create it,
-            you will need to create and populate an instance of the Credentials class.
-            This class is constructed almost entirely from static data about your <a
-            href="../classes/Gliffy.html">Gliffy</a> account, so you will probably
-            configure an instance of this globally.
-            </p>
-            <p>
-            This is then used (along with the API root to <a
-            href="../classes/Gliffy.html">Gliffy</a>) to create an instance of <a
-            href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>. Objects of this
-            class provide access to the features you will need to integrate <a
-            href="../classes/Gliffy.html">Gliffy</a> into your app&#8217;s workflow.
-            </p>
-            <h2>Example</h2>
-            <p>
-            Suppose you have created a group blog application using Rails and wish to
-            give Blog authors the ability to use <a
-            href="../classes/Gliffy.html">Gliffy</a> diagrams. In
-            <tt>config/initializers/gliffy.rb</tt> you might configure values for the
-            Credential object
-            </p>
-            <pre>$gliffy_api_key = 'your-consumer-key-here'&#x000A;$gliffy_secret = 'your-secret-here'&#x000A;$gliffy_app_description = 'My Awesome Group Blog',&#x000A;$gliffy_account_id = 655321&#x000A;$gliffy_root = 'www.gliffy.com/api/v1'&#x000A;$gliffy_edit_root = 'www.gliffy.com/gliffy'</pre>
-            <p>
-            Then, in your <tt>sessions_controller.rb</tt>:
-            </p>
-            <pre>require 'gliffy'&#x000A;&#x000A;def create&#x000A;  self.current_user = User.authenticate(params[:email],params[:password])&#x000A;  if logged_in?&#x000A;    # Whatever you do when they log in successfully&#x000A;    # Then create the credentials object&#x000A;    cred = Credentials.new(\&#x000A;      $gliffy_api_key,&#x000A;      $gliffy_secret,&#x000A;      $gliffy_app_description,&#x000A;      $gliffy_account_id,&#x000A;      self.current_user.username)&#x000A;    session[:gliffy] = Gliffy::Handle.new($gliffy_root,$gliffy_edit_root,cred)&#x000A;end</pre>
-            <p>
-            Now you can use the gliffy handle in a controller or a view. Perhaps
-            you&#8217;d make an action to create a new document and send the user to
-            edit it:
-            </p>
-            <pre>def create&#x000A;  new_doc = session[:gliffy].document_create(params[:name])&#x000A;  redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,&#x000A;              {:returnURL =&gt; url_for(:controller =&gt; 'return_from_gliffy'),&#x000A;               :returnButtonText =&gt; 'Back to My Awesome Blog'}))&#x000A;end</pre>
-            <p>
-            It is recommended that you do not expose the <a
-            href="../classes/Gliffy.html">Gliffy</a> URLs directly in your views; since
-            each URL can be called one time only and they <b>must</b> be called in the
-            order generated, if you were to have, for example, a page with links to
-            images of your <a href="../classes/Gliffy.html">Gliffy</a> diagrams, the
-            browser may not request those links in the order that you need.
-            </p>
-            <p>
-            Instead, create a route like so:
-            </p>
-            <pre>map.resources :diagrams, :only =&gt; [:index,:new,:destroy,:edit,:show]</pre>
-            <p>
-            And implement all <a href="../classes/Gliffy.html">Gliffy</a> access in
-            your controller methods
-            </p>
-            <pre># diagrams_controller.rb&#x000A;class DiagramsController &lt; ApplicationController&#x000A;&#x000A;  Mime::Type.register 'image/jpeg', :jpg, [], [&quot;jpeg&quot;]&#x000A;  Mime::Type.register 'image/png', :png, [], [&quot;png&quot;]&#x000A;  Mime::Type.register 'image/svg+xml', :svg, [], [&quot;svg&quot;]&#x000A;&#x000A;  def index&#x000A;    @diagrams = self.gliffy_handle.folder_documents(APP_CONFIG['gliffy_folder']).sort{|a,b| a.name &lt;=&gt; b.name}&#x000A;  end&#x000A;&#x000A;  def show&#x000A;    size = params[:size] || :L&#x000A;    respond_to do |format|&#x000A;      format.jpg { send_data session[:gliffy].document_get(params[:id],:jpeg,size), :type =&gt; &quot;image/jpeg&quot;, :disposition =&gt; 'inline' }&#x000A;      format.png { send_data session[:gliffy].document_get(params[:id],:png,size), :type =&gt; &quot;image/png&quot;, :disposition =&gt; 'inline' }&#x000A;      format.svg { send_data session[:gliffy].document_get(params[:id],:svg,size), :type =&gt; &quot;image/svg+xml&quot;, :filename =&gt; params[:id] + &quot;.svg&quot; }&#x000A;      format.xml { send_data session[:gliffy].document_get(params[:id],:xml,size), :type =&gt; &quot;text/xml&quot;, :filename =&gt; params[:id] + &quot;.xml&quot; }&#x000A;    end&#x000A;  end&#x000A;&#x000A;# index.html.erb&#x000A;&lt;ul&gt;&#x000A;  &lt;% @diagrams.each do |diagram| %&gt;&#x000A;    &lt;li&gt;&lt;img src=&quot;&lt;%= diagram_path(diagram.document_id) %&gt;&quot; /&gt;&lt;/li&gt;&#x000A;  &lt;% end %&gt;&#x000A;&lt;/ul&gt;</pre>
-            <p>
-            This way, your application has links to your controller and the requests to
-            <a href="../classes/Gliffy.html">Gliffy</a> are constructed as the browser
-            makes requests to your application.
-            </p>
-            <h2>Digging Deeper</h2>
-            <p>
-            If you wish to bypass the high-level API, you can interact with <a
-            href="../classes/Gliffy.html">Gliffy</a> directly via the <a
-            href="../classes/Gliffy/Request.html">Gliffy::Request</a> class, which
-            allows you to make arbitrary requests against the <a
-            href="../classes/Gliffy.html">Gliffy</a> API, but takes care of signing
-            your URLs and all OAuth things that need to be done:
-            </p>
-            <pre># Create a Credentials object as normal&#x000A;request = Gliffy::Request.new('www.gliffy.com/api/v1',credentials)&#x000A;# The method name maps directly to Gliffy's &quot;action&quot; parameters&#x000A;response = request.delete('accounts/$account_id/documents/12345')</pre>
-            <p>
-            You can manipulate the response directly, or attempt to parse it using the
-            <a href="../classes/Gliffy/Response.html">Gliffy::Response</a> object:
-            </p>
-            <pre>model = Response.from_http_response(response)</pre>
-            <h1>Command Line Client</h1>
-            <p>
-            This also comes with a command line client that can serve as an example of
-            using the API. The command-line client is quite usable in its own right:
-            </p>
-            <pre>gliffy help</pre>
-            <p>
-            This will list all the commands you can give to the <tt>gliffy</tt>
-            command. You can&#8217;t do <b>everything</b> with the command line that
-            you can with the full API, but you can do quite a bit
-            </p>
-            <pre># set up your account&#x000A;&gt; gliffy config&#x000A;&#x000A;# List all documents in your account&#x000A;&gt; gliffy ls&#x000A;&#x000A;# Create a new document&#x000A;&gt; gliffy new &quot;My New Document&quot;&#x000A;Created document 123456 - My New Document&#x000A;&#x000A;# Edit it&#x000A;&gt; gliffy edit 123456&#x000A;&#x000A;# Make a new folder&#x000A;&gt; gliffy mkdir awesome&#x000A;&#x000A;# Move our new document there&#x000A;&gt; gliffy mv 123456 awesome&#x000A;&#x000A;# Get it as a PNG&#x000A;&gt; gliffy get -t png 123456&#x000A;Wrote 123456_L.png&#x000A;&#x000A;# Get help on a command&#x000A;&gt; bin/gliffy help get&#x000A;view [options]&#x000A;    View a diagram as an image, or download it&#x000A;&#x000A;Options:&#x000A;    -p, --publicurl                                - Get the Public URL only (if&#x000A;                                                     possibe)&#x000A;    -s, --size=L, M, S, T                          - Size (default: L)&#x000A;    -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)&#x000A;    -u, --url                                      - Get the URL only&#x000A;    -v, --version=version number (omit for latest) - Version</pre>
-            <h1><tt>gliffy</tt></h1>
-            <pre>gliffy [global options] command_name [command-specific options] [--] arguments...</pre>
-            <ul>
-            <li>Use the command <tt>help</tt> to get a summary of commands
-            
-            </li>
-            <li>Use the command <tt>help command_name</tt> to get a help for
-            <tt>command_name</tt>
-            
-            </li>
-            <li>Use <tt>--</tt> to stop command line argument processing; useful if your
-            arguments have dashes in them
-            
-            </li>
-            </ul>
-            <h2>Global Options</h2>
-            <p>
-            These options are available for any command and are specified before the
-            name of the command
-            </p>
-            <dl>
-            <dt><tt>--config=path to gliffy config file</tt></dt><dd>Location of your gliffy configuration <em>( default:
-            <tt>/Users/davec/.gliffyrc</tt>)</em>
-            
-            </dd>
-            <dt><tt>--debug</tt></dt><dd>Show debug info
-            
-            </dd>
-            </dl>
-            <h2>Commands</h2>
-            <dl>
-            <dt><tt>config</tt></dt><dd>Create your configuration file
-            
-            </dd>
-            <dt><tt>edit</tt></dt><dd>Edit a diagram
-            
-            </dd>
-            <dt><tt>help</tt></dt><dd>Shows list of commands or help for one command
-            
-            </dd>
-            <dt><tt>ls</tt></dt><dd>List diagram ids and names
-            
-            </dd>
-            <dt><tt>lsf</tt></dt><dd>List folders
-            
-            </dd>
-            <dt><tt>mkdir</tt></dt><dd>Create a new folder
-            
-            </dd>
-            <dt><tt>mv</tt></dt><dd>Move diagram to a new folder
-            
-            </dd>
-            <dt><tt>new</tt></dt><dd>Create a new diagram
-            
-            </dd>
-            <dt><tt>rm</tt></dt><dd>Delete a diagram
-            
-            </dd>
-            <dt><tt>rmdir</tt></dt><dd>Delete a folder
-            
-            </dd>
-            <dt><tt>view</tt></dt><dd>View a diagram as an image, or download it
-            
-            </dd>
-            </dl>
-            <h3><tt>config </tt></h3>
-            <p>
-            Create your configuration file
-            </p>
-            <p>
-            This will ask you a series of questions that will create your gliffy
-            configuration file. This file will be used for subsequent requests of
-            gliffy and will need to contain your OAuth keys as well as some other
-            information.
-            </p>
-            <h4>Options</h4>
-            <p>
-            These options are specified <b>after</b> the command.
-            </p>
-            <dl>
-            <dt><tt>--force</tt></dt><dd>Force a recreation of your config file, even if it exists
-            
-            </dd>
-            </dl>
-            <h3><tt>edit </tt></h3>
-            <p>
-            Edit a diagram
-            </p>
-            <h4>Options</h4>
-            <p>
-            These options are specified <b>after</b> the command.
-            </p>
-            <dl>
-            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
-            <tt>open</tt>)</em>
-            
-            </dd>
-            <dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
-            href="../classes/Gliffy.html">Gliffy</a> Editor <em>( default:
-            <tt>Return</tt>)</em>
-            
-            </dd>
-            <dt><tt>-u, --url=arg</tt></dt><dd>URL to return to after editing is complete <em>( default: <tt><a
-            href="http://www.gliffy.com">www.gliffy.com</a></tt>)</em>
-            
-            </dd>
-            </dl>
-            <h3><tt>help [command]</tt></h3>
-            <p>
-            Shows list of commands or help for one command
-            </p>
-            <h3><tt>ls Folder to list (omit for all folders)</tt></h3>
-            <p>
-            List diagram ids and names
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>list</tt></b>
-            
-            </li>
-            </ul>
-            <p>
-            This shows you the diagrams available to you. By default this will be all
-            diagrams in all folders to which you have access. If you specify a folder
-            on the command line, you will see diagrams only in that folder
-            </p>
-            <h4>Options</h4>
-            <p>
-            These options are specified <b>after</b> the command.
-            </p>
-            <dl>
-            <dt><tt>-i</tt></dt><dd>Sort by id
-            
-            </dd>
-            <dt><tt>-l</tt></dt><dd>Show id, public?, versions, owner, update date, name
-            
-            </dd>
-            <dt><tt>-t</tt></dt><dd>Sort by mod date
-            
-            </dd>
-            </dl>
-            <h3><tt>lsf </tt></h3>
-            <p>
-            List folders
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>lsfolders</tt></b>
-            
-            </li>
-            </ul>
-            <h3><tt>mkdir folders you want created inside the ROOT folder</tt></h3>
-            <p>
-            Create a new folder
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>md</tt></b>
-            
-            </li>
-            </ul>
-            <h3><tt>mv document_id full_folder_path</tt></h3>
-            <p>
-            Move diagram to a new folder
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>move</tt></b>
-            
-            </li>
-            </ul>
-            <h3><tt>new Name of the diagram</tt></h3>
-            <p>
-            Create a new diagram
-            </p>
-            <h4>Options</h4>
-            <p>
-            These options are specified <b>after</b> the command.
-            </p>
-            <dl>
-            <dt><tt>-e</tt></dt><dd>Edit the diagram right after using -o
-            
-            </dd>
-            <dt><tt>-f, --folder=arg</tt></dt><dd>Full path to the folder in which this diagram should ilve
-            
-            </dd>
-            <dt><tt>-m, --template=arg</tt></dt><dd>Id of a document to use as a template
-            
-            </dd>
-            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser (for -e only) <em>(
-            default: <tt>open</tt>)</em>
-            
-            </dd>
-            <dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
-            href="../classes/Gliffy.html">Gliffy</a> Editor (for -e only) <em>(
-            default: <tt>Return</tt>)</em>
-            
-            </dd>
-            <dt><tt>-u, --url=arg</tt></dt><dd>URL to return to after editing is complete (for -e only) <em>( default:
-            <tt><a href="http://www.gliffy.com">www.gliffy.com</a></tt>)</em>
-            
-            </dd>
-            </dl>
-            <h3><tt>rm </tt></h3>
-            <p>
-            Delete a diagram
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>delete</tt></b>
-            
-            </li>
-            </ul>
-            <h3><tt>rmdir path (relative to ROOT) of folders you want delete</tt></h3>
-            <p>
-            Delete a folder
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>rd</tt></b>
-            
-            </li>
-            </ul>
-            <h3><tt>view </tt></h3>
-            <p>
-            View a diagram as an image, or download it
-            </p>
-            <p>
-            <b>Aliases</b>
-            </p>
-            <ul>
-            <li><b><tt>get</tt></b>
-            
-            </li>
-            </ul>
-            <h4>Options</h4>
-            <p>
-            These options are specified <b>after</b> the command.
-            </p>
-            <dl>
-            <dt><tt>-O, --noopen</tt></dt><dd>Just print the url/filename; dont try to open it
-            
-            </dd>
-            <dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
-            <tt>open</tt>)</em>
-            
-            </dd>
-            <dt><tt>-p, --publicurl</tt></dt><dd>Get the Public URL only (if possibe)
-            
-            </dd>
-            <dt><tt>-s, --size=L, M, S, T</tt></dt><dd>Size <em>( default: <tt>L</tt>)</em>
-            
-            </dd>
-            <dt><tt>-t, --type=jpeg, png, svg, xml</tt></dt><dd>File Type <em>( default: <tt>jpeg</tt>)</em>
-            
-            </dd>
-            <dt><tt>-u, --url</tt></dt><dd>Get the URL only
-            
-            </dd>
-            <dt><tt>-v, --version=version number (1-based)</tt></dt><dd>Version
-            
-            </dd>
-            </dl>
-            <h1>Design</h1>
-            <h2>Domain Objects</h2>
-            <p>
-            Instead of creating explicit objects for each domain object in <a
-            href="../classes/Gliffy.html">Gliffy</a>, we always return a Response
-            object, that uses method_missing to implement accessors for data returned
-            from <a href="../classes/Gliffy.html">Gliffy</a>. These implicit accessors
-            should return typed values and are named accordingly:
-            </p>
-            <ul>
-            <li>If the name in the <a
-            href="http://www.gliffy.com/developer/apidocs/xsddoc/">XSD</a> has dashes,
-            underscores are used here
-            
-            </li>
-            <li>If the item is a boolean, its boolean value is available with a
-            &#8220;?&#8221; at the end
-            
-            </li>
-            <li>The id field is available as type_id, e.g. document_id
-            
-            </li>
-            <li>Date fields are converted to Time objects
-            
-            </li>
-            <li>Any field in the response that was not known about in this code will be
-            available as a String, based on the above rules
-            
-            </li>
-            </ul>
-            <p>
-            So, if you requested document meta data, you would have the following
-            accessors available:
-            </p>
-            <ul>
-            <li>document.document_id
-            
-            </li>
-            <li>document.is_private?
-            
-            </li>
-            <li>document.is_public?
-            
-            </li>
-            <li>document.num_versions
-            
-            </li>
-            <li>document.mod_date # returns a Time
-            
-            </li>
-            <li>document.create_date # returns a Time
-            
-            </li>
-            <li>document.published_date # returns a Time
-            
-            </li>
-            <li>document.owner # Returns a Response that responds to user accessors
-            
-            </li>
-            <li>document.versions # Returns an array of Response objects that act like
-            versions
-            
-            </li>
-            </ul>
-            <h2>HTTP Layer</h2>
-            <p>
-            Request implements the HTTP layer, and is based on HTTParty. Since all <a
-            href="../classes/Gliffy.html">Gliffy</a> URLs have an &#8220;action&#8221;
-            HTTP param in them, this action is the method name, followed by the URL on
-            which to perform that action (this is not a REST action, but specific to <a
-            href="../classes/Gliffy.html">Gliffy</a>). You can optionally include other
-            HTTP params, however those needed for authentication and signing are taken
-            care of. Request will examine the Credential object used to create the
-            Request object, sign the request, make the request and return the result.
-            It will look at the result only enough to determine if it&#8217;s an error,
-            or a failure. See the RubyDoc for more on how this works.
-            </p>
-            <h1>Development</h1>
-            <h2>Gems</h2>
-            <p>
-            You will need:
-            </p>
-            <pre>* hanna 0.1.7, available via `gem install mislav-hanna`&#x000A;* httparty 0.4.2 or better&#x000A;* ruby-hmac 0.3.2 or better&#x000A;* gli 0.1.6 or better</pre>
-            <p>
-            All of these save for hanna are installed if you installed the gem.
-            </p>
-            <h2>Unit Tests</h2>
-            <pre>rake test</pre>
-            <p>
-            This will run unit tests and also create <tt>junit_output.xml</tt> as a
-            side-effect (via some monkeypatching of Ruby&#8217;s unit test code); this
-            should be a standard JUnit test result file you could use for integration
-            into your CI server.
-            </p>
-            <p>
-            Sometimes the test that two nonces shouldn&#8217;t be the same fails. This
-            occurs because they are generated in pretty much the same instant AND when
-            the random number generator generates the same number twice in a row.
-            Usually if you run tests again, things pass. This will be <b>very</b>
-            unlikely to happen in a production environment.
-            </p>
-            <h2>Integration Tests</h2>
-            <pre>rake inttest</pre>
-            <p>
-            This code is capable of running integration tests against Gliffy&#8217;s
-            integration test servers. If you would like to run these tests, you must
-            contact <a href="../classes/Gliffy.html">Gliffy</a> for the information
-            needed. You could technically run integration tests against your own <a
-            href="../classes/Gliffy.html">Gliffy</a> account on their production
-            server, but this may delete or change your account&#8217;s data and is not
-            recommended. Once you have the information from <a
-            href="../classes/Gliffy.html">Gliffy</a>, create the file `test/it_cred.rb`
-            as follows:
-            </p>
-            <pre>$account_id = # integration tests account id&#x000A;$username = # integration tests admin user name&#x000A;$oauth_consumer_key = # integration test account consumer key&#x000A;$oauth_consumer_secret = # integration test account consumer secret&#x000A;$api_root = # integration test server API endpoint&#x000A;$http_auth_username = # integration test server HTTP Auth username&#x000A;$http_auth_password = # integration test server HTTP Auth password</pre>
-            <h2>Functional Tests</h2>
-            <pre>rake functest</pre>
-            <p>
-            The functional tests perform actual workflows against a <a
-            href="../classes/Gliffy.html">Gliffy</a> server and, as such, are more
-            fragile. If something is wrong in your environment (or with <a
-            href="../classes/Gliffy.html">Gliffy</a>), you could leave the test account
-            in a weird state. As such, you should create a new account using a
-            test-only API call. This can be done via
-            </p>
-            <pre>rake setup_account</pre>
-            <p>
-            This requires that it_cred.rb is set up and will then run
-            test/setup_account.rb. This will create the file functest_cred.rb with the
-            necessary information to access the newly created account. The accounts
-            seem to get reset every day, so you will not be able to reliably automate
-            this. That being said, the only way to get 100% coverage is to run these
-            tests.
-            </p>
-            <p>
-            Each functional test assumes the following:
-            </p>
-            <ul>
-            <li>The account name is &#8216;Ruby Client Test Account&#8217;
-            
-            </li>
-            <li>The account id is 1000001
-            
-            </li>
-            <li>The only user is testuser@gliffy.com
-            
-            </li>
-            <li>There are no documents/diagrams
-            
-            </li>
-            <li>The only folder is ROOT
-            
-            </li>
-            </ul>
-            <p>
-            Each test will put data into <a href="../classes/Gliffy.html">Gliffy</a>,
-            query it, and remove it, thus leaving the account in the same state.
-            </p>
-            <p>
-            To fully test the edit launch link, run
-            </p>
-            <pre>rake TEST_LINK=true functest</pre>
-            <p>
-            This will print out the launch link and pause the testing. Copy/Paste this
-            into your browser to make sure it works and then come back to the console
-            and hit return. Do not do this for automated builds.
-            </p>
-          </div>
-          <div id='section'>
-          </div>
-        </div>
-      </div>
-      <div id='footer-push'></div>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>README.rdoc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+    <script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            README.rdoc
+        </h1>
+        <ul class="files">
+            <li>README.rdoc</li>
+            <li>Last modified: Mon Feb 01 18:33:58 -0500 2010</li>
+        </ul>
     </div>
-    <div id='footer'>
-      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+This is the Ruby client library for interacting with <a
+href="http://www.gliffy.com">Gliffy</a>. It&#8217;s main function is for
+you to integrate <a href="../classes/Gliffy.html">Gliffy</a> documents into
+the workflow of another application.
+</p>
+<h1>Getting Started</h1>
+<pre>
+    sudo gem install gliffy
+</pre>
+<ul>
+<li>Source - <a
+href="http://github.com/davetron5000/gliffy/tree/master">github.com/davetron5000/gliffy/tree/master</a>
+
+</li>
+<li>RDoc - <a
+href="http://davetron5000.github.com/gliffy">davetron5000.github.com/gliffy</a>
+
+</li>
+</ul>
+<h1>Overview</h1>
+<p>
+The main entry point to <a href="../classes/Gliffy.html">Gliffy</a> is <a
+href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>, which provides
+high-level access to most features available from the API. You should
+instantiate one of these objects per <em>user session</em>. To create it,
+you will need to create and populate an instance of the Credentials class.
+This class is constructed almost entirely from static data about your <a
+href="../classes/Gliffy.html">Gliffy</a> account, so you will probably
+configure an instance of this globally.
+</p>
+<p>
+This is then used (along with the API root to <a
+href="../classes/Gliffy.html">Gliffy</a>) to create an instance of <a
+href="../classes/Gliffy/Handle.html">Gliffy::Handle</a>. Objects of this
+class provide access to the features you will need to integrate <a
+href="../classes/Gliffy.html">Gliffy</a> into your app&#8217;s workflow.
+</p>
+<h2>Example</h2>
+<p>
+Suppose you have created a group blog application using Rails and wish to
+give Blog authors the ability to use <a
+href="../classes/Gliffy.html">Gliffy</a> diagrams. In
+<tt>config/initializers/gliffy.rb</tt> you might configure values for the
+Credential object
+</p>
+<pre>
+    $gliffy_api_key = 'your-consumer-key-here'
+    $gliffy_secret = 'your-secret-here'
+    $gliffy_app_description = 'My Awesome Group Blog',
+    $gliffy_account_id = 655321
+    $gliffy_root = 'www.gliffy.com/api/1.0'
+    $gliffy_edit_root = 'www.gliffy.com/gliffy'
+</pre>
+<p>
+Then, in your <tt>sessions_controller.rb</tt>:
+</p>
+<pre>
+    require 'gliffy'
+
+    def create
+      self.current_user = User.authenticate(params[:email],params[:password])
+      if logged_in?
+        # Whatever you do when they log in successfully
+        # Then create the credentials object
+        cred = Credentials.new(\
+          $gliffy_api_key,
+          $gliffy_secret,
+          $gliffy_app_description,
+          $gliffy_account_id,
+          self.current_user.username)
+        session[:gliffy] = Gliffy::Handle.new($gliffy_root,$gliffy_edit_root,cred)
+    end
+</pre>
+<p>
+Now you can use the gliffy handle in a controller or a view. Perhaps
+you&#8217;d make an action to create a new document and send the user to
+edit it:
+</p>
+<pre>
+    def create
+      new_doc = session[:gliffy].document_create(params[:name])
+      redirect_to(session[:gliffy].document_edit_link(new_doc.document_id,
+                  {:returnURL =&gt; url_for(:controller =&gt; 'return_from_gliffy'),
+                   :returnButtonText =&gt; 'Back to My Awesome Blog'}))
+    end
+</pre>
+<p>
+It is recommended that you do not expose the <a
+href="../classes/Gliffy.html">Gliffy</a> URLs directly in your views; since
+each URL can be called one time only and they <b>must</b> be called in the
+order generated, if you were to have, for example, a page with links to
+images of your <a href="../classes/Gliffy.html">Gliffy</a> diagrams, the
+browser may not request those links in the order that you need.
+</p>
+<p>
+Instead, create a route like so:
+</p>
+<pre>
+    map.resources :diagrams, :only =&gt; [:index,:new,:destroy,:edit,:show]
+</pre>
+<p>
+And implement all <a href="../classes/Gliffy.html">Gliffy</a> access in
+your controller methods
+</p>
+<pre>
+    # diagrams_controller.rb
+    class DiagramsController &lt; ApplicationController
+
+      Mime::Type.register 'image/jpeg', :jpg, [], [&quot;jpeg&quot;]
+      Mime::Type.register 'image/png', :png, [], [&quot;png&quot;]
+      Mime::Type.register 'image/svg+xml', :svg, [], [&quot;svg&quot;]
+
+      def index
+        @diagrams = self.gliffy_handle.folder_documents(APP_CONFIG['gliffy_folder']).sort{|a,b| a.name &lt;=&gt; b.name}
+      end
+
+      def show
+        size = params[:size] || :L
+        respond_to do |format|
+          format.jpg { send_data session[:gliffy].document_get(params[:id],:jpeg,size), :type =&gt; &quot;image/jpeg&quot;, :disposition =&gt; 'inline' }
+          format.png { send_data session[:gliffy].document_get(params[:id],:png,size), :type =&gt; &quot;image/png&quot;, :disposition =&gt; 'inline' }
+          format.svg { send_data session[:gliffy].document_get(params[:id],:svg,size), :type =&gt; &quot;image/svg+xml&quot;, :filename =&gt; params[:id] + &quot;.svg&quot; }
+          format.xml { send_data session[:gliffy].document_get(params[:id],:xml,size), :type =&gt; &quot;text/xml&quot;, :filename =&gt; params[:id] + &quot;.xml&quot; }
+        end
+      end
+
+    # index.html.erb
+    &lt;ul&gt;
+      &lt;% @diagrams.each do |diagram| %&gt;
+        &lt;li&gt;&lt;img src=&quot;&lt;%= diagram_path(diagram.document_id) %&gt;&quot; /&gt;&lt;/li&gt;
+      &lt;% end %&gt;
+    &lt;/ul&gt;
+</pre>
+<p>
+This way, your application has links to your controller and the requests to
+<a href="../classes/Gliffy.html">Gliffy</a> are constructed as the browser
+makes requests to your application.
+</p>
+<h2>Digging Deeper</h2>
+<p>
+If you wish to bypass the high-level API, you can interact with <a
+href="../classes/Gliffy.html">Gliffy</a> directly via the <a
+href="../classes/Gliffy/Request.html">Gliffy::Request</a> class, which
+allows you to make arbitrary requests against the <a
+href="../classes/Gliffy.html">Gliffy</a> API, but takes care of signing
+your URLs and all OAuth things that need to be done:
+</p>
+<pre>
+    # Create a Credentials object as normal
+    request = Gliffy::Request.new('www.gliffy.com/api/v1',credentials)
+    # The method name maps directly to Gliffy's &quot;action&quot; parameters
+    response = request.delete('accounts/$account_id/documents/12345')
+</pre>
+<p>
+You can manipulate the response directly, or attempt to parse it using the
+<a href="../classes/Gliffy/Response.html">Gliffy::Response</a> object:
+</p>
+<pre>
+    model = Response.from_http_response(response)
+</pre>
+<h1>Command Line Client</h1>
+<p>
+This also comes with a command line client that can serve as an example of
+using the API. The command-line client is quite usable in its own right:
+</p>
+<pre>
+    gliffy help
+</pre>
+<p>
+This will list all the commands you can give to the <tt>gliffy</tt>
+command. You can&#8217;t do <b>everything</b> with the command line that
+you can with the full API, but you can do quite a bit
+</p>
+<pre>
+    # set up your account
+    &gt; gliffy config
+
+    # List all documents in your account
+    &gt; gliffy ls
+
+    # Create a new document
+    &gt; gliffy new &quot;My New Document&quot;
+    Created document 123456 - My New Document
+
+    # Edit it
+    &gt; gliffy edit 123456
+
+    # Make a new folder
+    &gt; gliffy mkdir awesome
+
+    # Move our new document there
+    &gt; gliffy mv 123456 awesome
+
+    # Get it as a PNG
+    &gt; gliffy get -t png 123456
+    Wrote 123456_L.png
+
+    # Get help on a command
+    &gt; bin/gliffy help get
+    view [options]
+        View a diagram as an image, or download it
+
+    Options:
+        -p, --publicurl                                - Get the Public URL only (if
+                                                         possibe)
+        -s, --size=L, M, S, T                          - Size (default: L)
+        -t, --type=jpeg, png, svg, xml                 - File Type (default: jpeg)
+        -u, --url                                      - Get the URL only
+        -v, --version=version number (omit for latest) - Version
+</pre>
+<h1><tt>gliffy</tt></h1>
+<pre>
+    gliffy [global options] command_name [command-specific options] [--] arguments...
+</pre>
+<ul>
+<li>Use the command <tt>help</tt> to get a summary of commands
+
+</li>
+<li>Use the command <tt>help command_name</tt> to get a help for
+<tt>command_name</tt>
+
+</li>
+<li>Use <tt>--</tt> to stop command line argument processing; useful if your
+arguments have dashes in them
+
+</li>
+</ul>
+<h2>Global Options</h2>
+<p>
+These options are available for any command and are specified before the
+name of the command
+</p>
+<dl>
+<dt><tt>--config=path to gliffy config file</tt></dt><dd>Location of your gliffy configuration <em>( default:
+<tt>/Users/davec/.gliffyrc</tt>)</em>
+
+</dd>
+<dt><tt>--debug</tt></dt><dd>Show debug info
+
+</dd>
+</dl>
+<h2>Commands</h2>
+<dl>
+<dt><tt>config</tt></dt><dd>Create your configuration file
+
+</dd>
+<dt><tt>edit</tt></dt><dd>Edit a diagram
+
+</dd>
+<dt><tt>help</tt></dt><dd>Shows list of commands or help for one command
+
+</dd>
+<dt><tt>ls</tt></dt><dd>List diagram ids and names
+
+</dd>
+<dt><tt>lsf</tt></dt><dd>List folders
+
+</dd>
+<dt><tt>mkdir</tt></dt><dd>Create a new folder
+
+</dd>
+<dt><tt>mv</tt></dt><dd>Move diagram to a new folder
+
+</dd>
+<dt><tt>new</tt></dt><dd>Create a new diagram
+
+</dd>
+<dt><tt>rm</tt></dt><dd>Delete a diagram
+
+</dd>
+<dt><tt>rmdir</tt></dt><dd>Delete a folder
+
+</dd>
+<dt><tt>view</tt></dt><dd>View a diagram as an image, or download it
+
+</dd>
+</dl>
+<h3><tt>config </tt></h3>
+<p>
+Create your configuration file
+</p>
+<p>
+This will ask you a series of questions that will create your gliffy
+configuration file. This file will be used for subsequent requests of
+gliffy and will need to contain your OAuth keys as well as some other
+information.
+</p>
+<h4>Options</h4>
+<p>
+These options are specified <b>after</b> the command.
+</p>
+<dl>
+<dt><tt>--force</tt></dt><dd>Force a recreation of your config file, even if it exists
+
+</dd>
+</dl>
+<h3><tt>edit </tt></h3>
+<p>
+Edit a diagram
+</p>
+<h4>Options</h4>
+<p>
+These options are specified <b>after</b> the command.
+</p>
+<dl>
+<dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
+<tt>open</tt>)</em>
+
+</dd>
+<dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
+href="../classes/Gliffy.html">Gliffy</a> Editor <em>( default:
+<tt>Return</tt>)</em>
+
+</dd>
+<dt><tt>-u, --url=arg</tt></dt><dd>URL to return to after editing is complete <em>( default: <tt><a
+href="http://www.gliffy.com">www.gliffy.com</a></tt>)</em>
+
+</dd>
+</dl>
+<h3><tt>help [command]</tt></h3>
+<p>
+Shows list of commands or help for one command
+</p>
+<h3><tt>ls Folder to list (omit for all folders)</tt></h3>
+<p>
+List diagram ids and names
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>list</tt></b>
+
+</li>
+</ul>
+<p>
+This shows you the diagrams available to you. By default this will be all
+diagrams in all folders to which you have access. If you specify a folder
+on the command line, you will see diagrams only in that folder
+</p>
+<h4>Options</h4>
+<p>
+These options are specified <b>after</b> the command.
+</p>
+<dl>
+<dt><tt>-i</tt></dt><dd>Sort by id
+
+</dd>
+<dt><tt>-l</tt></dt><dd>Show id, public?, versions, owner, update date, name
+
+</dd>
+<dt><tt>-t</tt></dt><dd>Sort by mod date
+
+</dd>
+</dl>
+<h3><tt>lsf </tt></h3>
+<p>
+List folders
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>lsfolders</tt></b>
+
+</li>
+</ul>
+<h3><tt>mkdir folders you want created inside the ROOT folder</tt></h3>
+<p>
+Create a new folder
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>md</tt></b>
+
+</li>
+</ul>
+<h3><tt>mv document_id full_folder_path</tt></h3>
+<p>
+Move diagram to a new folder
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>move</tt></b>
+
+</li>
+</ul>
+<h3><tt>new Name of the diagram</tt></h3>
+<p>
+Create a new diagram
+</p>
+<h4>Options</h4>
+<p>
+These options are specified <b>after</b> the command.
+</p>
+<dl>
+<dt><tt>-e</tt></dt><dd>Edit the diagram right after using -o
+
+</dd>
+<dt><tt>-f, --folder=arg</tt></dt><dd>Full path to the folder in which this diagram should ilve
+
+</dd>
+<dt><tt>-m, --template=arg</tt></dt><dd>Id of a document to use as a template
+
+</dd>
+<dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser (for -e only) <em>(
+default: <tt>open</tt>)</em>
+
+</dd>
+<dt><tt>-t, --text=arg</tt></dt><dd>Text on the &#8220;Return&#8221; button in <a
+href="../classes/Gliffy.html">Gliffy</a> Editor (for -e only) <em>(
+default: <tt>Return</tt>)</em>
+
+</dd>
+<dt><tt>-u, --url=arg</tt></dt><dd>URL to return to after editing is complete (for -e only) <em>( default:
+<tt><a href="http://www.gliffy.com">www.gliffy.com</a></tt>)</em>
+
+</dd>
+</dl>
+<h3><tt>rm </tt></h3>
+<p>
+Delete a diagram
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>delete</tt></b>
+
+</li>
+</ul>
+<h3><tt>rmdir path (relative to ROOT) of folders you want delete</tt></h3>
+<p>
+Delete a folder
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>rd</tt></b>
+
+</li>
+</ul>
+<h3><tt>view </tt></h3>
+<p>
+View a diagram as an image, or download it
+</p>
+<p>
+<b>Aliases</b>
+</p>
+<ul>
+<li><b><tt>get</tt></b>
+
+</li>
+</ul>
+<h4>Options</h4>
+<p>
+These options are specified <b>after</b> the command.
+</p>
+<dl>
+<dt><tt>-O, --noopen</tt></dt><dd>Just print the url/filename; dont try to open it
+
+</dd>
+<dt><tt>-o, --openwith=arg</tt></dt><dd>Command to run to open URL for editing in browser <em>( default:
+<tt>open</tt>)</em>
+
+</dd>
+<dt><tt>-p, --publicurl</tt></dt><dd>Get the Public URL only (if possibe)
+
+</dd>
+<dt><tt>-s, --size=L, M, S, T</tt></dt><dd>Size <em>( default: <tt>L</tt>)</em>
+
+</dd>
+<dt><tt>-t, --type=jpeg, png, svg, xml</tt></dt><dd>File Type <em>( default: <tt>jpeg</tt>)</em>
+
+</dd>
+<dt><tt>-u, --url</tt></dt><dd>Get the URL only
+
+</dd>
+<dt><tt>-v, --version=version number (1-based)</tt></dt><dd>Version
+
+</dd>
+</dl>
+<h1>Design</h1>
+<h2>Domain Objects</h2>
+<p>
+Instead of creating explicit objects for each domain object in <a
+href="../classes/Gliffy.html">Gliffy</a>, we always return a Response
+object, that uses method_missing to implement accessors for data returned
+from <a href="../classes/Gliffy.html">Gliffy</a>. These implicit accessors
+should return typed values and are named accordingly:
+</p>
+<ul>
+<li>If the name in the <a
+href="http://www.gliffy.com/developer/apidocs/xsddoc/">XSD</a> has dashes,
+underscores are used here
+
+</li>
+<li>If the item is a boolean, its boolean value is available with a
+&#8220;?&#8221; at the end
+
+</li>
+<li>The id field is available as type_id, e.g. document_id
+
+</li>
+<li>Date fields are converted to Time objects
+
+</li>
+<li>Any field in the response that was not known about in this code will be
+available as a String, based on the above rules
+
+</li>
+</ul>
+<p>
+So, if you requested document meta data, you would have the following
+accessors available:
+</p>
+<ul>
+<li>document.document_id
+
+</li>
+<li>document.is_private?
+
+</li>
+<li>document.is_public?
+
+</li>
+<li>document.num_versions
+
+</li>
+<li>document.mod_date # returns a Time
+
+</li>
+<li>document.create_date # returns a Time
+
+</li>
+<li>document.published_date # returns a Time
+
+</li>
+<li>document.owner # Returns a Response that responds to user accessors
+
+</li>
+<li>document.versions # Returns an array of Response objects that act like
+versions
+
+</li>
+</ul>
+<h2>HTTP Layer</h2>
+<p>
+Request implements the HTTP layer, and is based on HTTParty. Since all <a
+href="../classes/Gliffy.html">Gliffy</a> URLs have an &#8220;action&#8221;
+HTTP param in them, this action is the method name, followed by the URL on
+which to perform that action (this is not a REST action, but specific to <a
+href="../classes/Gliffy.html">Gliffy</a>). You can optionally include other
+HTTP params, however those needed for authentication and signing are taken
+care of. Request will examine the Credential object used to create the
+Request object, sign the request, make the request and return the result.
+It will look at the result only enough to determine if it&#8217;s an error,
+or a failure. See the RubyDoc for more on how this works.
+</p>
+<h1>Development</h1>
+<h2>Gems</h2>
+<p>
+You will need:
+</p>
+<pre>
+ * sdoc 0.2.16 or better
+ * httparty 0.4.2 or better
+ * ruby-hmac 0.3.2 or better
+ * gli 0.1.6 or better
+</pre>
+<p>
+All of these save for hanna are installed if you installed the gem.
+</p>
+<h2>Unit Tests</h2>
+<pre>
+    rake test
+</pre>
+<p>
+This will run unit tests and also create <tt>junit_output.xml</tt> as a
+side-effect (via some monkeypatching of Ruby&#8217;s unit test code); this
+should be a standard JUnit test result file you could use for integration
+into your CI server.
+</p>
+<p>
+Sometimes the test that two nonces shouldn&#8217;t be the same fails. This
+occurs because they are generated in pretty much the same instant AND when
+the random number generator generates the same number twice in a row.
+Usually if you run tests again, things pass. This will be <b>very</b>
+unlikely to happen in a production environment.
+</p>
+<h2>Integration Tests</h2>
+<pre>
+    rake inttest
+</pre>
+<p>
+This code is capable of running integration tests against Gliffy&#8217;s
+integration test servers. If you would like to run these tests, you must
+contact <a href="../classes/Gliffy.html">Gliffy</a> for the information
+needed. You could technically run integration tests against your own <a
+href="../classes/Gliffy.html">Gliffy</a> account on their production
+server, but this may delete or change your account&#8217;s data and is not
+recommended. Once you have the information from <a
+href="../classes/Gliffy.html">Gliffy</a>, create the file `test/it_cred.rb`
+as follows:
+</p>
+<pre>
+    $account_id = # integration tests account id
+    $username = # integration tests admin user name
+    $oauth_consumer_key = # integration test account consumer key
+    $oauth_consumer_secret = # integration test account consumer secret
+    $api_root = # integration test server API endpoint
+    $http_auth_username = # integration test server HTTP Auth username
+    $http_auth_password = # integration test server HTTP Auth password
+</pre>
+<h2>Functional Tests</h2>
+<pre>
+    rake functest
+</pre>
+<p>
+The functional tests perform actual workflows against a <a
+href="../classes/Gliffy.html">Gliffy</a> server and, as such, are more
+fragile. If something is wrong in your environment (or with <a
+href="../classes/Gliffy.html">Gliffy</a>), you could leave the test account
+in a weird state. As such, you should create a new account using a
+test-only API call. This can be done via
+</p>
+<pre>
+    rake setup_account
+</pre>
+<p>
+This requires that it_cred.rb is set up and will then run
+test/setup_account.rb. This will create the file functest_cred.rb with the
+necessary information to access the newly created account. The accounts
+seem to get reset every day, so you will not be able to reliably automate
+this. That being said, the only way to get 100% coverage is to run these
+tests.
+</p>
+<p>
+Each functional test assumes the following:
+</p>
+<ul>
+<li>The account name is &#8216;Ruby Client Test Account&#8217;
+
+</li>
+<li>The account id is 1000001
+
+</li>
+<li>The only user is testuser@gliffy.com
+
+</li>
+<li>There are no documents/diagrams
+
+</li>
+<li>The only folder is ROOT
+
+</li>
+</ul>
+<p>
+Each test will put data into <a href="../classes/Gliffy.html">Gliffy</a>,
+query it, and remove it, thus leaving the account in the same state.
+</p>
+<p>
+To fully test the edit launch link, run
+</p>
+<pre>
+    rake TEST_LINK=true functest
+</pre>
+<p>
+This will print out the launch link and pause the testing. Copy/Paste this
+into your browser to make sure it works and then come back to the console
+and hit return. Do not do this for automated builds.
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
     </div>
   </body>
 </html>

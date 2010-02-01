@@ -3,7 +3,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title>Gliffy::RequestFailedException</title>
+    <title>Gliffy::BadAuthorizationException</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
@@ -16,7 +16,7 @@
     <div class="banner">
         <h1>
             <span class="type">Class</span> 
-            Gliffy::RequestFailedException 
+            Gliffy::BadAuthorizationException 
             
                 <span class="parent">&lt; 
                     
@@ -34,15 +34,6 @@
     <div id="bodyContent">
         <div id="content">
     
-    <div class="description">
-        <p>
-Indicates that a valid <a href="../Gliffy.html">Gliffy</a> <response> was
-received and that it indicated failure. The message is the message sent by
-gliffy (if it was in the response)
-</p>
-
-    </div>
-    
 
     
 
@@ -58,7 +49,7 @@ gliffy (if it was in the response)
         <dd>
             <ul>
                 
-                <li><a href="#M000028">new</a></li>
+                <li><a href="#M000030">new</a></li>
                 
             </ul>
         </dd>
@@ -80,9 +71,9 @@ gliffy (if it was in the response)
             <div class="sectiontitle">Class Public methods</div>
             
             <div class="method">
-                <div class="title" id="M000028">
+                <div class="title" id="M000030">
                     
-                    <a name="M000028"></a><b>new</b>(message)
+                    <a name="M000030"></a><b>new</b>(message)
                     
                 </div>
                 
@@ -91,13 +82,13 @@ gliffy (if it was in the response)
                 
                 <div class="sourcecode">
                     <p class="source-link">
-                        Source: <a href="javascript:toggleSource('M000028_source')" id="l_M000028_source">show</a>
+                        Source: <a href="javascript:toggleSource('M000030_source')" id="l_M000030_source">show</a>
                         
-                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L21" target="_blank" class="github_url">on GitHub</a>
+                        | <a href="http://github.com/davetron5000/gliffy/blob/93d92d70fab93a15f0d8d83f036044605059a0c6/lib/gliffy/response.rb#L27" target="_blank" class="github_url">on GitHub</a>
                         
                     </p>
-                    <div id="M000028_source" class="dyn-source">
-                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 21</span>
+                    <div id="M000030_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/gliffy/response.rb, line 27</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">message</span>)
       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">message</span>)
     <span class="ruby-keyword kw">end</span></pre>
